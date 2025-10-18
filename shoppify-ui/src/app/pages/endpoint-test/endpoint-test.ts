@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-endpoint-test',
@@ -41,15 +43,32 @@ export class EndpointTest implements OnInit {
     });
   }
 
+  renderError(err:string){
+    Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: err,
+
+});
+  }
+
+  renderOk(okMsg:string){
+    Swal.fire({
+  title: "Operacion realizada!",
+  text: okMsg,
+  icon: "success"
+});
+  }
+
 editProducto(id: number) {
    const pr: Product = {
     id,
-    name: 'Mouse Inalámbrico',
+    name: 'Mousea Inalámbrico',
     price: 59.99,
     unitPrice: 15.0,
     stock: 120,
-    sku: 'WM-1212345',
-    barcode: '01234asdasd567890122',
+    sku: 'WM-121222345',
+    barcode: '0123422a2asdasd567890122',
     description: 'Mouse ergonómico inalámbrico con receptor USB',
     brand: 'Logitech',
     categories: [],
@@ -59,11 +78,12 @@ editProducto(id: number) {
 
   this.productService.put(pr).subscribe({
     next: (response) => {
-      console.log('Producto actualizado correctamente:', response);
+      this.renderOk("Producto actualizado correctamente.")
+      this.renderProducts()
 
     },
     error: (err) => {
-      console.error('Error al actualizar el producto:', err);
+      this.renderError(err.error.message)
     },
     complete: () => {
       console.log('Edición finalizada');

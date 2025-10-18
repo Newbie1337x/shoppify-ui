@@ -1,22 +1,26 @@
-<p>endpoint</p>
-
 @if (products.length > 0) {
-  <li>
-@for (p of products; track p.id) {
+  <section id="productosTest">
+    <h2>🧩 Productos (Debug)</h2>
 
-      <ul>
-        <label>{{p.id}}</label>
-        <label>{{p.barcode}}</label>
-        <label>{{p.name}}</label>
-         <label>{{p.price}}</label>
-          <label>{{p.imageUrl}}</label>
-      </ul>
+    <ul>
+      @for (p of products; track p.id) {
+        <li>
+          <div class="product-info">
+            <span><b>ID:</b> {{ p.id }}</span>
+            <span><b>Barcode:</b> {{ p.barcode }}</span>
+            <span><b>Nombre:</b> {{ p.name }}</span>
+            <span><b>Precio:</b> ${{ p.price }}</span>
+            <span><b>Imagen:</b> {{ p.imageUrl || '(sin imagen)' }}</span>
+          </div>
 
-      <nav id="actions">
-        <button (click)="deleteProducto(p.id)">Borrar</button>
-        <button (click)="editProducto(p.id)">Editar</button>
-      </nav>
-    }
-</li>
+          <div class="actions">
+            <button class="btn-delete" (click)="deleteProducto(p.id)">Borrar</button>
+            <button class="btn-edit" (click)="editProducto(p.id)">Editar</button>
+          </div>
+        </li>
+      }
+    </ul>
+  </section>
+} @else {
+  <p class="no-products">No hay productos cargados.</p>
 }
-
