@@ -1,0 +1,22 @@
+<p>endpoint</p>
+
+@if (products.length > 0) {
+  <li>
+@for (p of products; track p.id) {
+
+      <ul>
+        <label>{{p.id}}</label>
+        <label>{{p.barcode}}</label>
+        <label>{{p.name}}</label>
+         <label>{{p.price}}</label>
+          <label>{{p.imageUrl}}</label>
+      </ul>
+
+      <nav id="actions">
+        <button (click)="deleteProducto(p.id)">Borrar</button>
+        <button (click)="editProducto(p.id)">Editar</button>
+      </nav>
+    }
+</li>
+}
+
