@@ -1,0 +1,79 @@
+#productosTest {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+#productosTest h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+#productosTest ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#productosTest li {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px dashed #999;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#productosTest li:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: monospace;
+}
+
+.actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+}
+
+.btn-edit {
+  background: #3498db;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: #2c82c9;
+}
+
+.no-products {
+  text-align: center;
+  font-style: italic;
+  color: gray;
+}
