@@ -1,0 +1,33 @@
+<footer class="footer">
+
+    <div class="footer-desplegable" [class.show]="mostrarRedes">
+    <div class="redes">
+      <a href="https://facebook.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" />
+      </a>
+      <a href="https://instagram.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" />
+      </a>
+      <a href="https://x.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X" />
+      </a>
+      <a href="https://youtube.com" target="_blank">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" />
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-fixed">
+    <button class="toggle-btn" (click)="toggleRedes()">
+      {{ mostrarRedes ? 'Menos información ▾' : 'Más información ▴' }}
+    </button>
+    <p>
+      Copyright © 1945–2025 Shoppify S.R.L.<br>
+      Av. SiempreViva 123, Piso 2, C.P. 1264, Springfield, EEUU
+    </p>
+    <p>
+      <a href="#">Contacto</a>
+    </p>
+  </div>
+
+</footer>
