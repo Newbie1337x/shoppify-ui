@@ -1,0 +1,32 @@
+<form [formGroup]="fg"
+      class="search-bar search-wrapper"
+      role="search"
+      (submit)="onSubmit()">
+
+  <label class="visually-hidden" for="product-search">Buscar productos</label>
+
+  <input
+    #searchInput
+    formControlName="search"
+    id="product-search"
+    type="search"
+    placeholder="Buscar productos"
+    aria-label="Buscar productos"
+    autocomplete="off"
+  />
+
+  <button type="submit" aria-label="Buscar">
+    <img src="image/lupa.png" alt="">
+  </button>
+
+  @if (results?.length) {
+    <ul class="suggestions">
+      @for (p of results; track p.id) {
+        <li (click)="selectSuggestion(p)" title="{{ p.name }}">
+          <img class="sugg-icon" src="image/lupa.png" alt="">
+          <span class="sugg-text">{{ p.name }}</span>
+        </li>
+      }
+    </ul>
+  }
+</form>

@@ -1,0 +1,162 @@
+/* ----- HEADER GENERAL ----- */
+header {
+  display: flex;
+  flex-direction: column;
+  background-color: #212121;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+/* ----- BARRA SUPERIOR ----- */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 48px;
+  gap: 24px;
+}
+
+/* Permitir que el componente de búsqueda crezca en el header */
+.header-top app-search-bar {
+  flex: 0 1 40%;
+  min-width: 320px;
+  max-width: 640px;
+}
+
+/* Asegura que logo e iconos no se encojan */
+.header-top .brand,
+.header-top .header-icons {
+  flex: 0 0 auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+#logo {
+  height: 70px;
+  transition: filter 0.3s ease;
+}
+
+.brand:hover #logo {
+  filter: drop-shadow(0 0 8px #ffffff);
+}
+
+/* ----- BUSCADOR ----- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px 12px;
+  width: 40%;
+  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar:hover {
+  border-color: #888;
+  background-color: #242424;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+}
+
+.search-bar:focus-within {
+  border-color: #fff;
+  background-color: #2a2a2a;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+.search-bar input::placeholder {
+  color: #aaa;
+}
+
+.search-bar button {
+  margin-left: 8px;
+}
+
+.search-bar img {
+  height: 18px;
+}
+
+/* ----- ACCIONES ----- */
+header button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+header button img {
+  display: block;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+header button:hover img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #ffffff);
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.header-icons img {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* keeps icon color consistent */
+}
+
+/* ----- NAVBAR INFERIOR ----- */
+.header-bottom {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-bottom ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header-bottom a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.header-bottom a:hover {
+  color: #ff3b00;
+}
