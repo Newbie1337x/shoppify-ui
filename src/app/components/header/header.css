@@ -119,18 +119,92 @@ header button:hover img {
   filter: drop-shadow(0 0 6px #ffffff);
 }
 
+/* Make CoreUI avatar behave like other header icons */
+header button c-avatar,
+header button c-avatar img,
+header button c-avatar .avatar {
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+header button:hover c-avatar,
+header button:hover c-avatar img,
+header button:hover c-avatar .avatar {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #ffffff);
+}
+
 .header-icons {
   display: flex;
   align-items: center;
   gap: 22px;
 }
 
+/* Normalize icon buttons sizing and centering */
+.header-icons button {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure dropdown aligns to the right of the avatar in the header */
+.header-icons c-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.header-icons .dropdown-toggle { /* remove CoreUI default paddings/caret */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-icons .dropdown-toggle::after { display: none !important; }
+.header-icons .dropdown-menu {
+  right: 0;
+  left: auto;
+  min-width: 180px;
+  z-index: 1080;
+}
+
 .header-icons img {
   height: 30px;
   width: 30px;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* keeps icon color consistent */
+  filter: brightness(0) invert(1);
 }
+
+
+.header-icons c-avatar {
+  --cui-avatar-size: 30px;
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+.header-icons c-avatar img {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+
+.header-icons c-avatar .avatar,
+.header-icons c-avatar > span {
+  width: 30px ;
+  height: 30px ;
+  display: inline-block ;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+
 
 /* ----- NAVBAR INFERIOR ----- */
 .header-bottom {

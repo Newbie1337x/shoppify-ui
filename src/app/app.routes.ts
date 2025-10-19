@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
 
+import { SearchResults } from './pages/search-results/search-results';
+
 export const routes: Routes = [
-  {
-    path: 'search/:q',
-    loadComponent: () => import('./pages/search-results/search-results').then(m => m.SearchResults)
-  }
+  
+    {path: 'search/:q', component: SearchResults},
+
+    
+  
 ];
