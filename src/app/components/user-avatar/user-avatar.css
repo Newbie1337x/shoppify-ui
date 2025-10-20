@@ -1,6 +1,4 @@
-﻿/* Componente mínimo para avatar/menú de usuario (sin CoreUI) */
-
-:host { display: inline-flex; }
+﻿:host { display: inline-flex; }
 
 .ua { position: relative; display: inline-flex; align-items: center; }
 
