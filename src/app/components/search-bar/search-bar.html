@@ -3,7 +3,7 @@
       role="search"
       (submit)="onSubmit()">
 
-  <label class="visually-hidden" for="product-search">Buscar productos</label>
+
 
   <input
     #searchInput
@@ -19,7 +19,7 @@
     <img src="image/lupa.png" alt="">
   </button>
 
-  @if (results?.length) {
+  @if (results.length) {
     <ul class="suggestions">
       @for (p of results; track p.id) {
         <li (click)="selectSuggestion(p)" title="{{ p.name }}">

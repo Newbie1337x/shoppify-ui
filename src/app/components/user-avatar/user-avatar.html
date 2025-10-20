@@ -1,0 +1,13 @@
+<!-- Dropdown de usuario sin CoreUI, similar al footer (toggle por clase) -->
+<div class="ua">
+  <button class="ua-toggle" type="button" aria-label="Cuenta" (click)="toggleMenu()" [attr.aria-expanded]="showMenu">
+    <img class="ua-avatar" [src]="avatarSrc" alt="Usuario" />
+  </button>
+  <ul class="ua-menu" [class.show]="showMenu" role="menu">
+    <li role="none"><a role="menuitem" routerLink="/cuenta">Mi cuenta</a></li>
+    <li role="none"><a role="menuitem" routerLink="/compras">Compras</a></li>
+    <li role="none"><a role="menuitem" routerLink="/favo">Favoritos</a></li>
+    <li role="separator"><hr></li>
+    <li role="none"><a role="menuitem" routerLink="">Salir</a></li>
+  </ul>
+</div>
