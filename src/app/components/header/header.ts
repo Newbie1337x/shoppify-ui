@@ -13,4 +13,23 @@ import { UserAvatar } from '../user-avatar/user-avatar';
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {}
+export class Header {
+
+  mostrarNav = false;
+  mostrarBusquedaMovil = false;
+
+  toggleNav() {
+    this.mostrarNav = !this.mostrarNav;
+    if (this.mostrarNav) {
+      this.mostrarBusquedaMovil = false;
+    }
+  }
+
+  toggleBusquedaMovil() {
+    this.mostrarBusquedaMovil = !this.mostrarBusquedaMovil;
+    if (this.mostrarBusquedaMovil) {
+      this.mostrarNav = false;
+    }
+  }
+
+}
