@@ -1,80 +1,99 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { CartProduct } from '../../models/cartProduct';
 import { ProductService } from '../../services/product-service';
 import { TransactionService } from '../../services/transaction-service';
 import { Transaction } from '../../models/transaction';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cart-page',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css'
 })
 export class CartPage implements OnInit{
 
-  cartItems: CartProduct[] = []
+  cartItems = signal<CartProduct[]>([])
+  checkoutForm!: FormGroup;
 
   constructor(
     private pService: ProductService,
-    private tService: TransactionService  
+    private tService: TransactionService,
+    private fb: FormBuilder  
   ){}
 
   ngOnInit(): void {
-    
+    this.checkoutForm = this.fb.group({
+      paymentMethod: ['CASH', Validators.required],
+      type: ['SALE', Validators.required],
+      storeName: ['', Validators.required],
+      description: ['']
+    });
   }
 
-  total(){
-    return this.cartItems.reduce((sum, prod) => sum + prod.subtotal, 0)
-  }
+  total = computed(() =>
+    this.cartItems().reduce((sum, item) => sum + item.subtotal, 0)
+  )
 
   addToCart(product: Product){
-    const exist = this.cartItems.find( p => p.productId === product.id)
-    if(exist){
-      exist.quantity++
-      exist.subtotal = exist.quantity * exist.price
-    } else{
-      this.cartItems.push({
+    const items = [...this.cartItems()];
+    const existing = items.find(i => i.productId === product.id);
+    if (existing) {
+      existing.quantity++;
+      existing.subtotal = existing.quantity * existing.price;
+    } else {
+      items.push({
         productId: product.id,
         name: product.name,
         price: product.price,
         quantity: 1,
         subtotal: product.price
-      })
+      });
     }
+    this.cartItems.set(items);
   }
 
   removeFromCart(id: number){
-    this.cartItems = this.cartItems.filter(p => p.productId !== id)
+    this.cartItems.set(this.cartItems().filter(i => i.productId !== id));
   }
 
-  prepareTransaction(pM: string, desc: string, type: string, store: string ): Transaction{
+  prepareTransaction(): Transaction{
+    const formValue = this.checkoutForm.value;
     return {
       total: this.total(),
       dateTime: new Date().toString(),
-      paymentMethod: pM,
-      description: desc,
-      type: type,
-      storeName: store,
-      detailTransactions: this.cartItems.map( prod => ({
-        quantity: prod.quantity,
-        subtotal: prod.subtotal,
-        productId: prod.productId
+      paymentMethod: formValue.paymentMethod,
+      description: formValue.description,
+      type: formValue.type,
+      storeName: formValue.storeName,
+      detailTransactions: this.cartItems().map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        subtotal: item.subtotal
       }))
-    }
+    };
   }
 
-  checkout(
-    paymentMethod: string,
-    description: string,
-    type: string,
-    storeName: string){
-    const transaction = this.prepareTransaction(paymentMethod,description,type,storeName)
-    this.tService.post(transaction).subscribe({
-      next: (transaction) => {
-    console.log('Transacción lista:', transaction);
-  },
-    error: (err) => console.error('Error preparando transacción', err)
-  });
+  onSubmit(){
+    if (this.checkoutForm.valid && this.cartItems().length) {
+      const payload = this.prepareTransaction();
+      console.log('Payload a enviar:', payload);
+      this.tService.post(payload).subscribe({
+        next: (transaction) => {
+          console.log('Transacción lista:', transaction);
+        },
+        error: (err) => console.error('Error preparando transacción', err)
+      });
+    }}
+
+   updateQuantity(item: CartProduct, newQty: number) {
+    const items = [...this.cartItems()];
+    const idx = items.findIndex(i => i.productId === item.productId);
+    if (idx >= 0) {
+      items[idx].quantity = newQty;
+      items[idx].subtotal = newQty * items[idx].price;
+      this.cartItems.set(items);
+    }
   }
 }

@@ -9,7 +9,7 @@ import { ResponseList } from '../models/hal/responseList';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class BaseService<T extends { id: number }> {
+export abstract class BaseService<T extends { id?: number }> {
   readonly API_URL = environment.apiUrl;
   abstract endpoint: string;
   
