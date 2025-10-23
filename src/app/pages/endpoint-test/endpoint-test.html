@@ -10,7 +10,7 @@
             <span><b>Barcode:</b> {{ p.barcode }}</span>
             <span><b>Nombre:</b> {{ p.name }}</span>
             <span><b>Precio:</b> ${{ p.price }}</span>
-            <span><b>Imagen:</b> {{ p.imageUrl || '(sin imagen)' }}</span>
+            <span><b>Imagen:</b> {{ p.imgURL || '(sin imagen)' }}</span>
           </div>
 
           <div class="actions">
@@ -18,8 +18,20 @@
             <button class="btn-edit" (click)="editProducto(p.id)">Editar</button>
           </div>
         </li>
+
+
+  
       }
     </ul>
+  </section>
+<h3>Test de Product Cards</h3>
+  <section id="testProductCards">
+
+  @for (p of products; track p.id) {
+      
+        <app-product-card id="product-card" [product]="p" [isMostrarCuotas]=true [isMostrarStock]=true></app-product-card>
+  }
+
   </section>
 } @else {
   <p class="no-products">No hay productos cargados.</p>

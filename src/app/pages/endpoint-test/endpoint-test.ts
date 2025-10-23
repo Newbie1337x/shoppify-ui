@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
 import Swal from 'sweetalert2';
+import { ProductCard } from "../../components/product-card/product-card";
 
 
 @Component({
   selector: 'app-endpoint-test',
-  imports: [],
+  imports: [ProductCard],
   templateUrl: './endpoint-test.html',
   styleUrl: './endpoint-test.css'
 })
@@ -73,7 +74,7 @@ editProducto(id: number) {
     brand: 'Logitech',
     categories: [],
     providers: [],
-    imageUrl: ""
+    imgURL: ""
   };
 
   this.productService.put(pr).subscribe({

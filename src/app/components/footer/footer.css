@@ -2,10 +2,9 @@
   background-color: #212121;
   text-align: center;
   padding: 10px;
-  position: fixed;
-  bottom: 0;
   width: 100%;
   font-family: 'Segoe UI', sans-serif;
+  margin-top: auto;
 }
 
 .footer-fixed {
