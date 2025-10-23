@@ -18,10 +18,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
             <td>
-              <input type="number"
-                     min="1"
-                     [value]="item.quantity"
-                     (input)="updateQuantity(item, $any($event.target).value)">
+              <input type="number" min="1" [value]="item.quantity" (input)="updateQuantity(item, $any($event.target).value)">
             </td>
             <td>{{ item.subtotal }}</td>
             <td>
@@ -49,7 +46,7 @@
           </select>
         </label>
 
-        <label>
+        <label [class.hidden]="!isAdmin">
           Tipo de transacción:
           <select formControlName="type" required>
             <option value="SALE">Venta</option>
@@ -57,28 +54,26 @@
           </select>
         </label>
 
-        <label>
+        <label [class.hidden]="!isAdmin">
           Tienda:
           <input type="text" formControlName="storeName" required placeholder="Nombre de la tienda">
         </label>
 
-        <label class="description">
+        <label class="description" [class.hidden]="!isAdmin">
           Descripción:
           <textarea formControlName="description" rows="2"
                     placeholder="Notas de la venta..."></textarea>
         </label>
       </div>
 
-      <button type="submit"
-              [disabled]="checkoutForm.invalid || cartItems().length === 0"
-              class="checkout-btn">
+      <button type="submit" [disabled]="checkoutForm.invalid || cartItems().length === 0" class="checkout-btn">
         Finalizar transacción
       </button>
     </form>
   } @else {
     <div class="empty-cart">
       <h3>Tu carrito está vacío 😕</h3>
-      <p>Agrega algunos productos para comenzar.</p>
+      <p>Agrega algunos productos para comenzar 💪.</p>
     </div>
   }
 </div>
