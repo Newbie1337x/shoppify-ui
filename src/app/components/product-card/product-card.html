@@ -1,5 +1,5 @@
 @if (product) {
-    <div id="card">
+    <div id="card" (click)="getDetails(product.id)">
         @if (product.imgURL){
             <img [src]="product.imgURL" [alt]="product.name || 'Producto'">
         }
