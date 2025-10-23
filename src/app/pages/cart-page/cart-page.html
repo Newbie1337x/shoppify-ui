@@ -2,40 +2,35 @@
   <h2>🛒 Tu carrito</h2>
 
   @if (cartItems().length > 0) {
-    <table class="cart-table">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Subtotal</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for ( item of cartItems(); track item.productId) {
-          <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-            <td>
-              <input type="number" min="1" [value]="item.quantity" (input)="updateQuantity(item, $any($event.target).value)">
-            </td>
-            <td>{{ item.subtotal }}</td>
-            <td>
-              <button class="remove-btn" (click)="removeFromCart(item.productId)">
-                ❌
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    <div class="cart-list">
+      @for (item of cartItems(); track item.id) {
+        <div class="cart-item">
+          <app-product-card class="product-card" [product]="item"></app-product-card>
 
-    <div class="cart-summary">
-      <p><strong>Total:</strong> {{ total() }}</p>
+          <div class="cart-controls">
+            <div class="quantity-control">
+              <label>Cantidad:</label>
+              <input type="number"
+                     min="1"
+                     [value]="item.stock"
+                     (input)="updateQuantity(item, $any($event.target).value)">
+            </div>
+
+            <p class="item-subtotal">
+              Subtotal: <strong>${{ item.price * item.stock }}</strong>
+            </p>
+
+            <button class="remove-btn" (click)="removeFromCart(item.id)">Eliminar del carrito ❌</button>
+          </div>
+        </div>
+      }
     </div>
 
-    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <div class="cart-summary">
+      <p><strong>Total:</strong> ${{ total() }}</p>
+    </div>
+
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
       <div class="form-grid">
         <label>
           Método de pago:
@@ -46,29 +41,30 @@
           </select>
         </label>
 
-        @if (isAdmin !== false) 
-        {<label>
-          Tipo de transacción:
-          <select formControlName="type" required>
-            <option value="SALE">Venta</option>
-            <option value="PURCHASE">Compra</option>
-          </select>
-        </label>
+        @if (isAdmin !== false) {
+          <label>
+            Tipo de transacción:
+            <select formControlName="type" required>
+              <option value="SALE">Venta</option>
+              <option value="PURCHASE">Compra</option>
+            </select>
+          </label>
 
-        <label>
-          Tienda:
-          <input type="text" formControlName="storeName" required placeholder="Nombre de la tienda">
-        </label>
+          <label>
+            Tienda:
+            <input type="text" formControlName="storeName" required placeholder="Nombre de la tienda">
+          </label>
 
-        <label class="description">
-          Descripción:
-          <textarea formControlName="description" rows="2"
-                    placeholder="Notas de la venta..."></textarea>
-        </label>
-      }
+          <label class="description">
+            Descripción:
+            <textarea formControlName="description" rows="2" placeholder="Notas de la venta..."></textarea>
+          </label>
+        }
       </div>
 
-      <button type="submit" [disabled]="checkoutForm.invalid || cartItems().length === 0" class="checkout-btn">
+      <button type="submit"
+              [disabled]="checkoutForm.invalid || cartItems().length === 0"
+              class="checkout-btn">
         Finalizar transacción
       </button>
     </form>

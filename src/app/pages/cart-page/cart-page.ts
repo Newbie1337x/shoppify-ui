@@ -1,12 +1,13 @@
 import { Component, computed, OnInit } from '@angular/core';
-import { CartProduct } from '../../models/cartProduct';
 import { TransactionService } from '../../services/transaction-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart-service';
+import { ProductCard } from "../../components/product-card/product-card";
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-cart-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ProductCard],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css'
 })
@@ -35,14 +36,14 @@ export class CartPage implements OnInit{
   }
 
   total = computed(() =>
-    this.cartItems().reduce((sum, item) => sum + item.subtotal, 0)
+    this.cartItems().reduce((sum, item) => sum + item.price * item.stock, 0)
   )
 
   removeFromCart(id: number) {
     this.cService.removeFromCart(id)
   }
 
-  updateQuantity(item: CartProduct, newQty: number) {
+  updateQuantity(item: Product, newQty: number) {
     this.cService.updateQuantity(item, newQty)
   }
 

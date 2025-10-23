@@ -11,17 +11,18 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: px 20px;
+  padding: 10px 20px;
   background-color: #212121;
   color: white;
 }
 
-.footer a{
-    color: white;
+.footer a {
+  color: white;
+  transition: filter 0.3s ease;
 }
 
-.footer a:hover{
-    color: rgb(204, 49, 49);
+.footer a:hover {
+  filter: drop-shadow(0 0 8px #ffffff);
 }
 
 .toggle-btn {
@@ -31,10 +32,11 @@
   cursor: pointer;
   transition: color 0.3s ease;
   color: white;
+  transition: filter 0.3s ease;
 }
 
 .toggle-btn:hover {
-  color: rgb(204, 49, 49);
+  filter: drop-shadow(0 0 8px #ffffff);
 }
 
 .footer-desplegable {
