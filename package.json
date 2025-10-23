@@ -34,6 +34,7 @@
     "@coreui/coreui": "^5.4.3",
     "@coreui/icons-angular": "~5.5.17",
     "@popperjs/core": "~2.11.8",
+    "@sweetalert2/ngx-sweetalert2": "^14.0.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.3",
     "tslib": "^2.3.0",
