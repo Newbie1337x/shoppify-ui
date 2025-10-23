@@ -1,6 +1,5 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { CartProduct } from '../../models/cartProduct';
-import { ProductService } from '../../services/product-service';
 import { TransactionService } from '../../services/transaction-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart-service';
@@ -13,12 +12,10 @@ import { CartService } from '../../services/cart-service';
 })
 export class CartPage implements OnInit{
 
-  cartItems = this.cService.cartItems
   checkoutForm!: FormGroup
   isAdmin = false
 
   constructor(
-    private pService: ProductService,
     private tService: TransactionService,
     private fb: FormBuilder,
     private cService: CartService
@@ -31,6 +28,10 @@ export class CartPage implements OnInit{
       storeName: ["", Validators.required],
       description: [""]
     })
+  }
+
+  get cartItems() {
+    return this.cService.cartItems;
   }
 
   total = computed(() =>

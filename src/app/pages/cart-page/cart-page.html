@@ -46,7 +46,8 @@
           </select>
         </label>
 
-        <label [class.hidden]="!isAdmin">
+        @if (isAdmin !== false) 
+        {<label>
           Tipo de transacción:
           <select formControlName="type" required>
             <option value="SALE">Venta</option>
@@ -54,16 +55,17 @@
           </select>
         </label>
 
-        <label [class.hidden]="!isAdmin">
+        <label>
           Tienda:
           <input type="text" formControlName="storeName" required placeholder="Nombre de la tienda">
         </label>
 
-        <label class="description" [class.hidden]="!isAdmin">
+        <label class="description">
           Descripción:
           <textarea formControlName="description" rows="2"
                     placeholder="Notas de la venta..."></textarea>
         </label>
+      }
       </div>
 
       <button type="submit" [disabled]="checkoutForm.invalid || cartItems().length === 0" class="checkout-btn">
