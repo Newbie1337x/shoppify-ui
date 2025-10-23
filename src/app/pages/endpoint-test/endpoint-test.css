@@ -77,3 +77,34 @@ button {
   font-style: italic;
   color: gray;
 }
+
+
+
+#testProductCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 3%;
+}
+
+#testProductCards app-product-card {
+  margin: 0;
+  justify-self: center;
+}
+
+#testCategoryCards {
+  padding: 3%;
+}
+
+#testCategoryCards .category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+#testCategoryCards .category-grid app-category-card {
+  margin: 0;
+  justify-self: center;
+}
+
+

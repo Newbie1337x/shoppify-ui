@@ -10,7 +10,7 @@ export interface Product extends HalResource{
   barcode: string;
   description: string;
   brand: string;
-  imageUrl: string;
+  imgURL: string;
   categories: string[];
   providers: number[];
 }
