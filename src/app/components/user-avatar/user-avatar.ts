@@ -19,7 +19,7 @@ export class UserAvatar {
 
   toggleMenu() {
     if (!this.user) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
       return;
     }
 

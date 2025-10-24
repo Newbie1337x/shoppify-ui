@@ -6,26 +6,27 @@ import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
 
 export const routes: Routes = [
-  
-    {
-        path: 'auth',
-        component: Auth,
-        children: [
-          { path: '', redirectTo: 'login', pathMatch: 'full' }
-        ]
-      },
 
-    {
-        path: '',
-        component: Main,
-        children: [
-          { path: 'search/:q', component: SearchResults },
-       {path: 'categories/:id', component:SearchResults},
-       {path: 'products/:id', component:SearchResults},
-        {path: 'login', component:Login},
-          { path: '', redirectTo: 'home', pathMatch: 'full' }
-        ]
-      }
-    
-  
+  {
+    path: 'auth',
+    component: Auth,
+    children: [
+      { path: 'login', component: Login },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '**', redirectTo: 'login' }
+    ]
+  },
+
+  {
+    path: '',
+    component: Main,
+    children: [
+      { path: 'search/:q', component: SearchResults },
+      { path: 'categories/:id', component: SearchResults },
+      { path: 'products/:id', component: SearchResults },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
+    ]
+  }
+
+
 ];
