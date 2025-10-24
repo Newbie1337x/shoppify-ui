@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './footer.css'
 })
 export class Footer {
-
   mostrarRedes = false;
 
   toggleRedes() {
     this.mostrarRedes = !this.mostrarRedes;
   }
 }
+

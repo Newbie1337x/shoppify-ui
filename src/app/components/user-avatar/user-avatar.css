@@ -43,11 +43,8 @@
   box-shadow: 0 4px 14px rgba(0,0,0,0.2);
   list-style: none;
   margin: 0;
-  display: none;
   z-index: 1080;
 }
-
-.ua-menu.show { display: block; }
 
 .ua-menu a {
   display: block;
