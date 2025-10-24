@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: 'login.html',
   styleUrl: 'login.css'
 })
@@ -28,16 +28,15 @@ export class Login implements OnInit {
   }
 
   onsubmit() {
-  this.login()
-   
-    ;
+  this.login();
   }
 
 
   login(){
     this.authService.login(this.fg.value).subscribe({
        next: (data)=>{
-        alert("Logeado de forma exitosa.")
+        alert("Logeado de forma exitosa. "+ data.token)
+        
        },
        error(err) {
          alert("Hubo un error al logearse.")

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { register } from '../models/auth/register';
+import { RegisterPayload } from '../models/auth/registerPayload';
 import { AuthResponse } from '../models/auth/authResponse';
 import { environment } from '../../environments/environment';
 import { Credentials } from '../models/auth/credentials';
@@ -14,8 +14,8 @@ export class AuthService {
   
 constructor(private http:HttpClient){}
 
-register(register:register){
-return this.http.post<AuthResponse>(`${this.API_URL}/register`,register)
+register(payload: RegisterPayload){
+return this.http.post<AuthResponse>(`${this.API_URL}/register`,payload)
 }
 
 login(credential:Credentials){
