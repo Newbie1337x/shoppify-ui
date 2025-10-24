@@ -1,5 +1,5 @@
-import { Component, OnInit, Provider } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -7,11 +7,17 @@ import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category-service';
 import { ProviderService } from '../../services/provider-service';
 import { Category } from '../../models/category';
-import { combineLatest, filter, map, Observable, startWith } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, startWith } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { Provider } from '../../models/provider';
 
 @Component({
   selector: 'app-product-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatButtonModule, MatOptionModule],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css'
 })
@@ -27,7 +33,6 @@ export class ProductForm implements OnInit {
   brand!: FormControl
 
   id!: string
-  products!: Product[]
   repeatedProduct!: Product | undefined
 
   categories!: Category[]
@@ -43,6 +48,8 @@ export class ProductForm implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getCategories()
+    this.getProviders()
     this.form = this.fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
@@ -50,12 +57,12 @@ export class ProductForm implements OnInit {
       unitPrice: ['', [Validators.required, Validators.min(0), Validators.max(100000000)]],
       stock: ['', [Validators.required, Validators.min(0), Validators.max(100000)]],
       sku: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(6), Validators.maxLength(12)]],
-      barcode: ['', [Validators.required, Validators.minLength(12), Validators.maxLength(12)]],
+      barcode: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(12), Validators.maxLength(12)]],
       description: ['', [Validators.maxLength(500)]],
       brand: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
       imgURL: [''],
-      categories: this.fb.array([], Validators.required),
-      providers: this.fb.array([], Validators.required)
+      categories: [[], Validators.required],
+      providers: [[], Validators.required]
     })
     this.name = this.form.controls['name'] as FormControl
     this.price = this.form.controls['price'] as FormControl
@@ -75,15 +82,28 @@ export class ProductForm implements OnInit {
 
     combineLatest([
       this.productService.getList(),
-      this.sku.valueChanges.pipe(startWith(this.sku.value))
+      this.sku.valueChanges.pipe(startWith(this.sku.value), debounceTime(300), distinctUntilChanged())
     ]).pipe(
-        filter(([products]) => !!products), 
-        map(([products, sku]) => products.find(p =>
-          p.id !== Number(this.id) &&
-          p.sku?.trim().toLowerCase() === sku?.trim().toLowerCase()
-        ))
-      )
-      .subscribe(repeated => this.repeatedProduct = repeated)
+      filter(([products]) => !!products),
+      map(([products, sku]) => products.find(p =>
+        p.id !== Number(this.id) &&
+        p.sku?.trim().toLowerCase() === sku?.trim().toLowerCase()
+      ))
+    ).subscribe({
+      next: data => this.repeatedProduct = data,
+      error: () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ocurrio un problema al obtener los productos",
+          confirmButtonText: "Volver"
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.router.navigate([''])
+          }
+        })
+      }
+    })
   }
 
   getProductByID() {
@@ -113,12 +133,35 @@ export class ProductForm implements OnInit {
           title: "Oops...",
           text: "Ocurrio un problema al obtener las categorias",
           confirmButtonText: "Volver"
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.router.navigate([''])
+          }
+        })
+      }
+    })
+  }
+
+  getProviders() {
+    this.providerService.getList().subscribe({
+      next: data => { this.providers = data },
+      error: () => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ocurrio un problema al obtener las categorias",
+          confirmButtonText: "Volver"
+        }).then((res) => {
+          if (res.isConfirmed) {
+            this.router.navigate([''])
+          }
         })
       }
     })
   }
 
   submitForm() {
+    console.log(this.form.valid)
     if (this.form.valid && !this.repeatedProduct) {
       if (Number(this.id)) {
         this.productService.patch(this.form.value).subscribe({

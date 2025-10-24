@@ -1,10 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
     <!-- ID -->
     @if (this.id) {
-        <fieldset>
-            <label>ID</label>
-            <input type="text" formControlName="id">
-        </fieldset>
+    <fieldset>
+        <label>ID</label>
+        <input type="text" formControlName="id">
+    </fieldset>
     }
 
     <!-- Name -->
@@ -18,7 +18,7 @@
             }@else if (this.name.hasError("minlength") || this.name.hasError("maxlength")) {
                 <h5>El nombre debe tener entre 2 y 50 caracteres</h5>
             }
-        }   
+        }
     </fieldset>
 
     <!-- Price -->
@@ -32,7 +32,7 @@
             }@else if (this.price.hasError("max") || this.price.hasError("min")) {
                 <h5>El precio debe tener un valor entre $0 y $100.000.000</h5>
             }
-        }   
+        }
     </fieldset>
 
     <!-- Unit Price -->
@@ -46,7 +46,7 @@
             }@else if (this.unitPrice.hasError("max") || this.unitPrice.hasError("min")) {
                 <h5>El precio unitario debe tener un valor entre $0 y $100.000.000</h5>
             }
-        }   
+        }
     </fieldset>
 
     <!-- Stock -->
@@ -60,7 +60,7 @@
             }@else if (this.stock.hasError("max") || this.stock.hasError("min")) {
                 <h5>El stock tiene que tener un valor entre 0 y 100.000</h5>
             }
-        }   
+        }
     </fieldset>
 
     <!-- SKU -->
@@ -73,8 +73,24 @@
                 <h5>El SKU es obligatorio</h5>
             }@else if (this.sku.hasError("minlength") || this.sku.hasError("maxlength")) {
                 <h5>El SKU debe tener entre 6 y 12 caracteres</h5>
+            }@else if (this.repeatedProduct) {
+                <h5>El SKU ya esta en uso</h5>
             }
-        }   
+        }
+    </fieldset>
+
+    <!-- Bar Code -->
+    <fieldset>
+        <label for="barcode-input">Codigo de Barras</label>
+        <input type="text" id="barcode-input" formControlName="barcode">
+
+        @if(this.barcode.touched) {
+            @if (this.barcode.hasError("required") || this.barcode.hasError("pattern")) {
+                <h5>El barcode es obligatorio</h5>
+            }@else if (this.barcode.hasError("minlength") || this.barcode.hasError("maxlength")) {
+                <h5>El barcode debe tener entre 6 y 12 caracteres</h5>
+            }
+        }
     </fieldset>
 
     <!-- Description -->
@@ -85,7 +101,7 @@
 
         @if(this.description.touched && this.description.hasError("maxlength")) {
             <h5>La descripcion debe tener un maximo de 500 caracteres</h5>
-        }   
+        }
     </fieldset>
 
     <!-- Brand -->
@@ -99,17 +115,39 @@
             }@else if (this.brand.hasError("minlength") || this.brand.hasError("maxlength")) {
                 <h5>La marca debe tener entre 2 y 50 caracteres</h5>
             }
-        }   
+        }
     </fieldset>
 
     <!-- Image -->
-     <fieldset>
+    <fieldset>
         <label for="image-input">Image URL</label>
-        <input type="text" id="image-input" formControlName="imgURL" placeholder="Ingrese la url de la imagen del producto">
-     </fieldset>
+        <input type="text" id="image-input" formControlName="imgURL"
+            placeholder="Ingrese la url de la imagen del producto">
+    </fieldset>
 
-     <!-- Categories -->
-      <fieldset>
-        
-      </fieldset>
+    <!-- Categories -->
+    <fieldset>
+        <mat-form-field appearance="fill">
+            <mat-label>Categorías</mat-label>
+            <mat-select multiple formControlName="categories">
+                @for (category of categories; track $index) {
+                <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </fieldset>
+
+    <!-- Providers -->
+    <fieldset>
+        <mat-form-field appearance="fill">
+            <mat-label>Proveedores</mat-label>
+            <mat-select multiple formControlName="providers">
+                @for (provider of providers; track $index) {
+                    <mat-option [value]="provider.id"> {{provider.name.toUpperCase()}} </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </fieldset>
+
+    <input type="submit" id="submit-button" value="Enviar">
 </form>

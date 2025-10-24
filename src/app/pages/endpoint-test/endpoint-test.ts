@@ -3,11 +3,12 @@ import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
 import Swal from 'sweetalert2';
 import { ProductCard } from "../../components/product-card/product-card";
+import { ProductForm } from '../../components/product-form/product-form';
 
 
 @Component({
   selector: 'app-endpoint-test',
-  imports: [ProductCard],
+  imports: [ProductCard, ProductForm],
   templateUrl: './endpoint-test.html',
   styleUrl: './endpoint-test.css'
 })
