@@ -2,16 +2,31 @@ import { Routes } from '@angular/router';
 
 import { SearchResults } from './pages/search-results/search-results';
 import { Login } from './pages/login/login';
-import { Register } from './pages/register/register';
+import { Main } from './layouts/main/main';
+import { Auth } from './layouts/auth/auth';
 
 export const routes: Routes = [
-  
-    {path: 'search/:q', component: SearchResults},
-       {path: 'categories/:id', component:SearchResults},
-       {path: 'products/:id', component:SearchResults},
-        {path: 'login', component:Login},
-          {path: 'register', component:Register},
 
-    
-  
+  {
+    path: 'auth',
+    component: Auth,
+    children: [
+      { path: 'login', component: Login },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '**', redirectTo: 'login' }
+    ]
+  },
+
+  {
+    path: '',
+    component: Main,
+    children: [
+      { path: 'search/:q', component: SearchResults },
+      { path: 'categories/:id', component: SearchResults },
+      { path: 'products/:id', component: SearchResults },
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
+    ]
+  }
+
+
 ];
