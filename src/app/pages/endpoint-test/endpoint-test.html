@@ -18,22 +18,18 @@
             <button class="btn-edit" (click)="editProducto(p.id)">Editar</button>
           </div>
         </li>
-
-
-  
       }
     </ul>
   </section>
-<h3>Test de Product Cards</h3>
-  <section id="testProductCards">
 
-  @for (p of products; track p.id) {
-      
-        <app-product-card id="product-card" [product]="p" [isMostrarCuotas]=true [isMostrarStock]=true></app-product-card>
-  }
-
+  <section class="test-block">
+    <h3>Test de Product Cards</h3>
+    <div id="testProductCards">
+      @for (p of products; track p.id) {
+        <app-product-card [product]="p" [isMostrarCuotas]="true" [isMostrarStock]="true"></app-product-card>
+      }
+    </div>
   </section>
 } @else {
   <p class="no-products">No hay productos cargados.</p>
 }
-<app-product-form></app-product-form>
