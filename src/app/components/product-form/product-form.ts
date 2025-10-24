@@ -13,7 +13,14 @@ import { Product } from '../../models/product';
 })
 export class ProductForm implements OnInit{
   form!: FormGroup
+  name!: FormControl
+  price!: FormControl
+  unitPrice!: FormControl
+  stock!: FormControl
   sku!: FormControl 
+  barcode!: FormControl
+  description!: FormControl
+  brand!: FormControl 
 
   id!: string
   products!: Product[]
@@ -42,7 +49,14 @@ export class ProductForm implements OnInit{
       categories: this.fb.array([], Validators.required),
       providers: this.fb.array([], Validators.required)
     })
+    this.name = this.form.controls['name'] as FormControl
+    this.price = this.form.controls['price'] as FormControl
+    this.unitPrice = this.form.controls['unitPrice'] as FormControl
+    this.stock = this.form.controls['stock'] as FormControl
     this.sku = this.form.controls['sku'] as FormControl
+    this.barcode = this.form.controls['barcode'] as FormControl
+    this.description = this.form.controls['description'] as FormControl
+    this.brand = this.form.controls['brand'] as FormControl
 
     this.id = this.route.snapshot.params['id']
     if(this.id) {
