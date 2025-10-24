@@ -1,15 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EndpointTest } from "./pages/endpoint-test/endpoint-test";
-import { Header } from "./components/header/header";
-import { Footer } from './components/footer/footer';
+
+import { HeaderAuth } from "./components/header-auth/header-auth";
 
 
 
 @Component({
   selector: 'app-root',
  
-  imports: [RouterOutlet, EndpointTest, Header,Footer],
+  imports: [RouterOutlet, EndpointTest, Header, Footer, HeaderAuth],
 
 
   templateUrl: './app.html',

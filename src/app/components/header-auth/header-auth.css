@@ -1,0 +1,64 @@
+/* ----- HEADER AUTH SIMPLIFICADO ----- */
+.header-auth {
+  display: flex;
+  flex-direction: column;
+  background-color: #212121;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ----- BARRA SUPERIOR SIMPLIFICADA ----- */
+.header-auth .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 40px;
+  width: 100%;
+}
+
+.header-auth .brand-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.header-auth .brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-auth #logo {
+  height: 64px;
+  transition: filter 0.3s ease;
+}
+
+.header-auth .brand:hover #logo {
+  filter: drop-shadow(0 0 8px #ffffff);
+}
+
+/* Brillo accesible con foco (teclado) */
+.header-auth .brand:focus-visible #logo {
+  filter: drop-shadow(0 0 10px #ffffff) brightness(1.15);
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .header-auth .header-top {
+    padding: 10px 20px;
+  }
+  
+  .header-auth #logo {
+    height: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-auth .header-top {
+    padding: 10px 12px;
+  }
+
+  .header-auth #logo {
+    height: 36px;
+  }
+}
