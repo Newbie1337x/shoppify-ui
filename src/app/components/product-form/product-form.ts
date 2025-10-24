@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,8 +44,16 @@ export class ProductForm implements OnInit {
     private categoryService: CategoryService,
     private providerService: ProviderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) { }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    const backdrop = document.querySelector('.cdk-overlay-backdrop');
+    if (backdrop) {
+      (backdrop as HTMLElement).click();
+    }
+  }
 
   ngOnInit(): void {
     this.getCategories()
@@ -104,6 +112,12 @@ export class ProductForm implements OnInit {
         })
       }
     })
+  }
+
+  DynamicDescription(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
   }
 
   getProductByID() {

@@ -10,3 +10,43 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.custom-select-panel {
+  background: rgba(33, 33, 33, 0.98) !important;
+  border: 1px solid #3a3a3a;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  margin-top: 8px;
+  overflow: hidden;
+  color: white;
+}
+
+.custom-select-panel .mat-optgroup,
+.custom-select-panel .mat-option {
+  border-radius: 0 !important;
+}
+
+.custom-select-panel .mat-option {
+  color: #ffffff !important;
+  background: transparent !important;
+  padding: 12px 16px !important;
+  transition: background 0.15s ease;
+}
+
+.custom-select-panel .mat-option:hover {
+  background: rgba(255, 117, 67, 0.12) !important;
+}
+
+.custom-select-panel .mat-option.mat-selected {
+  background: rgba(255, 117, 67, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.custom-select-panel .mat-option.mat-selected:hover {
+  background: rgba(255, 117, 67, 0.25) !important;
+}
+
+.cdk-overlay-container {
+  position: fixed;
+}

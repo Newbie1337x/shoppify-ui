@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
+<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form">
     <!-- ID -->
     @if (this.id) {
     <fieldset>
@@ -9,7 +9,7 @@
 
     <!-- Name -->
     <fieldset>
-        <label for="name-input">Nombre</label>
+        <label for="name-input">Nombre*</label>
         <input type="text" id="name-input" formControlName="name">
 
         @if(this.name.touched) {
@@ -23,7 +23,7 @@
 
     <!-- Price -->
     <fieldset>
-        <label for="price-input">Precio</label>
+        <label for="price-input">Precio*</label>
         <input type="number" id="price-input" formControlName="price">
 
         @if(this.price.touched) {
@@ -37,7 +37,7 @@
 
     <!-- Unit Price -->
     <fieldset>
-        <label for="unit-price-input">Precio Unitario</label>
+        <label for="unit-price-input">Precio Unitario*</label>
         <input type="number" id="unit-price-input" formControlName="unitPrice">
 
         @if(this.unitPrice.touched) {
@@ -51,7 +51,7 @@
 
     <!-- Stock -->
     <fieldset>
-        <label for="stock-input">Stock</label>
+        <label for="stock-input">Stock*</label>
         <input type="number" id="stock-input" formControlName="stock">
 
         @if(this.stock.touched) {
@@ -65,7 +65,7 @@
 
     <!-- SKU -->
     <fieldset>
-        <label for="sku-input">SKU</label>
+        <label for="sku-input">SKU*</label>
         <input type="text" id="sku-input" formControlName="sku">
 
         @if(this.sku.touched) {
@@ -81,7 +81,7 @@
 
     <!-- Bar Code -->
     <fieldset>
-        <label for="barcode-input">Codigo de Barras</label>
+        <label for="barcode-input">Codigo de Barras*</label>
         <input type="text" id="barcode-input" formControlName="barcode">
 
         @if(this.barcode.touched) {
@@ -96,8 +96,10 @@
     <!-- Description -->
     <fieldset>
         <label for="description-input">Descripcion</label>
-        <textarea id="description-input" formControlName="description"></textarea>
-        <h6>{{this.description.value.length}}/500</h6>
+        <textarea id="description-input" formControlName="description" (input)="DynamicDescription($event)"></textarea>
+        <h6 [class.over-limit]="this.description.value.length > 500">
+            {{this.description.value.length}}/500
+        </h6>
 
         @if(this.description.touched && this.description.hasError("maxlength")) {
             <h5>La descripcion debe tener un maximo de 500 caracteres</h5>
@@ -106,7 +108,7 @@
 
     <!-- Brand -->
     <fieldset>
-        <label for="brand-input">Marca</label>
+        <label for="brand-input">Marca*</label>
         <input type="text" id="brand-input" formControlName="brand">
 
         @if(this.brand.touched) {
@@ -129,7 +131,7 @@
     <fieldset>
         <mat-form-field appearance="fill">
             <mat-label>Categorías</mat-label>
-            <mat-select multiple formControlName="categories">
+            <mat-select multiple formControlName="categories" panelClass="custom-select-panel">
                 @for (category of categories; track $index) {
                 <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
                 }
@@ -141,7 +143,7 @@
     <fieldset>
         <mat-form-field appearance="fill">
             <mat-label>Proveedores</mat-label>
-            <mat-select multiple formControlName="providers">
+            <mat-select multiple formControlName="providers" panelClass="custom-select-panel">
                 @for (provider of providers; track $index) {
                     <mat-option [value]="provider.id"> {{provider.name.toUpperCase()}} </mat-option>
                 }
