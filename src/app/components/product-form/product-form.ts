@@ -104,7 +104,8 @@ export class ProductForm implements OnInit {
           icon: "error",
           title: "Oops...",
           text: "Ocurrio un problema al obtener los productos",
-          confirmButtonText: "Volver"
+          confirmButtonText: "Volver",
+          confirmButtonColor: "#ff7543"
         }).then((res) => {
           if (res.isConfirmed) {
             this.router.navigate([''])
@@ -128,7 +129,8 @@ export class ProductForm implements OnInit {
           icon: "error",
           title: "Oops...",
           text: "Ocurrio un problema al obtener el producto",
-          confirmButtonText: "Volver"
+          confirmButtonText: "Volver",
+          confirmButtonColor: "#ff7543"
         }).then((res) => {
           if (res.isConfirmed) {
             this.router.navigate([''])
@@ -146,7 +148,8 @@ export class ProductForm implements OnInit {
           icon: "error",
           title: "Oops...",
           text: "Ocurrio un problema al obtener las categorias",
-          confirmButtonText: "Volver"
+          confirmButtonText: "Volver",
+          confirmButtonColor: "#ff7543"
         }).then((res) => {
           if (res.isConfirmed) {
             this.router.navigate([''])
@@ -164,7 +167,8 @@ export class ProductForm implements OnInit {
           icon: "error",
           title: "Oops...",
           text: "Ocurrio un problema al obtener las categorias",
-          confirmButtonText: "Volver"
+          confirmButtonText: "Volver",
+          confirmButtonColor: "#ff7543"
         }).then((res) => {
           if (res.isConfirmed) {
             this.router.navigate([''])
@@ -183,7 +187,8 @@ export class ProductForm implements OnInit {
             Swal.fire({
               title: "Producto editado con exito!",
               icon: "success",
-              confirmButtonText: "Volver"
+              confirmButtonText: "Volver",
+              confirmButtonColor: "#ff7543"
             })
           },
           error: () => {
@@ -191,7 +196,8 @@ export class ProductForm implements OnInit {
               icon: "error",
               title: "Oops...",
               text: "Ocurrio un problema al editar el producto",
-              confirmButtonText: "Volver"
+              confirmButtonText: "Volver",
+              confirmButtonColor: "#ff7543"
             })
           }
         })
@@ -201,7 +207,12 @@ export class ProductForm implements OnInit {
             Swal.fire({
               title: "Producto agregado con exito!",
               icon: "success",
-              confirmButtonText: "Volver"
+              confirmButtonText: "Volver",
+              confirmButtonColor: "#ff7543"
+            }).then((res) => {
+              if (res.isConfirmed) {
+                this.router.navigate([''])
+              }
             })
           },
           error: () => {
@@ -209,7 +220,8 @@ export class ProductForm implements OnInit {
               icon: "error",
               title: "Oops...",
               text: "Ocurrio un problema al cargar el producto",
-              confirmButtonText: "Volver"
+              confirmButtonText: "Volver",
+              confirmButtonColor: "#ff7543"
             })
           }
         })
