@@ -1,0 +1,22 @@
+<section class="search-results">
+  <header class="sr-header">
+    <h1>Resultados</h1>
+  </header>
+
+  @if (!results.length) {
+    <p class="sr-empty">No se encontraron productos.</p>
+  }
+
+
+  @if (results.length) {
+    <ul class="sr-list">
+      @for (p of results; track p.id) {
+        <li class="sr-item" title="{{ p.name }}">
+          <p class="sr-name">{{ p.name }}</p>
+          <p class="sr-meta">SKU: {{ p.sku }} • Stock: {{ p.stock }}</p>
+        </li>
+      }
+    </ul>
+  }
+</section>
+

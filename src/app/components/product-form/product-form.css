@@ -1,0 +1,223 @@
+/* Estilos base del componente */
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #f5f5f7;
+  padding: 4rem 1.5rem;
+}
+
+#product-form {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: 32px;
+  background: rgba(33, 33, 33, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+fieldset label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e5e4ea;
+}
+
+fieldset input,
+fieldset textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 14px;
+  background: rgba(18, 18, 18, 0.9);
+  font-size: 0.95rem;
+  color: #f7f7f9;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+fieldset input[type="number"]::-webkit-inner-spin-button,
+fieldset input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+fieldset input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+fieldset input:focus,
+fieldset textarea:focus {
+  outline: none;
+  border-color: #ff7543;
+  background: rgba(28, 28, 28, 0.95);
+  box-shadow: 0 0 0 4px rgba(255, 117, 67, 0.18);
+}
+
+fieldset input::placeholder,
+fieldset textarea::placeholder {
+  color: #8f8f93;
+}
+
+fieldset textarea {
+  min-height: 100px;
+  max-height: 400px;
+  resize: none;
+  overflow-y: auto;
+}
+
+fieldset textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+fieldset textarea::-webkit-scrollbar-track {
+  background: rgba(18, 18, 18, 0.5);
+  border-radius: 10px;
+}
+
+fieldset textarea::-webkit-scrollbar-thumb {
+  background: #ff7543;
+  border-radius: 10px;
+}
+
+fieldset textarea::-webkit-scrollbar-thumb:hover {
+  background: #ff8358;
+}
+
+fieldset h5 {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ff5a6d;
+}
+
+fieldset h6 {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #8f8f93;
+  text-align: right;
+  transition: color 0.2s ease;
+}
+
+fieldset h6.over-limit {
+  color: #ff5a6d;
+  font-weight: 500;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: rgba(18, 18, 18, 0.9);
+  border: 1px solid #3a3a3a;
+  border-radius: 14px;
+  padding: 0.5rem 1rem;
+}
+
+::ng-deep .mat-form-field-appearance-fill:hover .mat-form-field-flex {
+  background: rgba(18, 18, 18, 0.95);
+}
+
+::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
+  background: rgba(28, 28, 28, 0.95);
+  border-color: #ff7543;
+  box-shadow: 0 0 0 4px rgba(255, 117, 67, 0.18);
+}
+
+::ng-deep .mat-form-field-label,
+::ng-deep .mat-select-value {
+  color: #f7f7f9 !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-select-arrow {
+  color: #ff7543;
+}
+
+::ng-deep .mat-pseudo-checkbox {
+  border: none !important;
+  background: transparent !important;
+}
+
+::ng-deep .mat-pseudo-checkbox::after {
+  color: #ff7543 !important;
+  font-size: 1.1rem;
+}
+
+::ng-deep .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
+
+
+fieldset:has(textarea),
+fieldset:has(#image-input),
+fieldset:has(#brand-input),
+fieldset:has(.mat-form-field),
+fieldset:has(#id-input) {
+  grid-column: 1 / -1;
+}
+
+#submit-button {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.95rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff7543 0%, #ff5a6d 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+#submit-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+#submit-button:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
+#submit-button:disabled {
+  cursor: not-allowed;
+  background: #5f3e36;
+  opacity: 0.65;
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 2rem 1rem;
+  }
+  
+  #product-form {
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+    grid-template-columns: 1fr;
+  }
+  
+  #submit-button {
+    font-size: 0.95rem;
+  }
+}

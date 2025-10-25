@@ -1,0 +1,19 @@
+<div class="ua">
+  <button
+    class="ua-toggle"
+    type="button"
+    aria-label="Cuenta"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="showMenu">
+    <img class="ua-avatar" [src]="avatarSrc" alt="Usuario" />
+  </button>
+
+  @if (showMenu && user) {
+    <ul class="ua-menu" role="menu">
+      <li><a role="menuitem" routerLink="/cuenta" (click)="hideMenu()">Mi cuenta</a></li>
+      <li><a role="menuitem" routerLink="/compras" (click)="hideMenu()">Compras</a></li>
+      <li><a role="menuitem" routerLink="/favo" (click)="hideMenu()">Favoritos</a></li>
+      <li><a role="menuitem" routerLink="/logout" (click)="hideMenu()">Cerrar sesion</a></li>
+    </ul>
+  }
+</div>

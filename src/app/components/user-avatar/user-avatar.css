@@ -1,0 +1,56 @@
+﻿:host { display: inline-flex; }
+
+.ua { position: relative; display: inline-flex; align-items: center; }
+
+.ua-toggle {
+  background: transparent;
+  border: 0;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ua-avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: contain; /* igual que el carrito */
+  filter: brightness(0) invert(1);
+  display: block;
+  border-radius: 50%; /* si quieres circular */
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.ua-toggle:hover .ua-avatar {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #ffffff);
+}
+
+.ua-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  list-style: none;
+  margin: 0;
+  z-index: 1080;
+}
+
+.ua-menu a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ua-menu a:hover { background: #f5f5f5; }
