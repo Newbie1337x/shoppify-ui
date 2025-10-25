@@ -3,7 +3,7 @@
     @if (this.id) {
     <fieldset>
         <label>ID</label>
-        <input type="text" formControlName="id">
+        <input type="text" id="id-input" formControlName="id" readonly>
     </fieldset>
     }
 
@@ -73,7 +73,7 @@
                 <h5>El SKU es obligatorio</h5>
             }@else if (this.sku.hasError("minlength") || this.sku.hasError("maxlength")) {
                 <h5>El SKU debe tener entre 6 y 12 caracteres</h5>
-            }@else if (this.repeatedProduct) {
+            }@else if (this.repeatedFields?.includes('sku')) {
                 <h5>El SKU ya esta en uso</h5>
             }
         }
@@ -88,7 +88,9 @@
             @if (this.barcode.hasError("required") || this.barcode.hasError("pattern")) {
                 <h5>El barcode es obligatorio</h5>
             }@else if (this.barcode.hasError("minlength") || this.barcode.hasError("maxlength")) {
-                <h5>El barcode debe tener entre 6 y 12 caracteres</h5>
+                <h5>El barcode debe tener 12 caracteres</h5>
+            }@else if (this.repeatedFields?.includes('barcode')) {
+                <h5>El barcode ya esta en uso</h5>
             }
         }
     </fieldset>
@@ -137,18 +139,10 @@
                 }
             </mat-select>
         </mat-form-field>
-    </fieldset>
 
-    <!-- Providers -->
-    <fieldset>
-        <mat-form-field appearance="fill">
-            <mat-label>Proveedores</mat-label>
-            <mat-select multiple formControlName="providers" panelClass="custom-select-panel">
-                @for (provider of providers; track $index) {
-                    <mat-option [value]="provider.id"> {{provider.name.toUpperCase()}} </mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+        @if (this.categoryControl.touched && this.categoryControl.hasError('required')){
+            <h5>Se debe elegir al menos una categoria</h5>
+        }
     </fieldset>
 
     <input type="submit" id="submit-button" value="Enviar">

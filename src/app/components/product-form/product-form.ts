@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import { Provider } from '../../models/provider';
 
 @Component({
   selector: 'app-product-form',
@@ -31,18 +30,20 @@ export class ProductForm implements OnInit {
   barcode!: FormControl
   description!: FormControl
   brand!: FormControl
+  categoryControl!: FormControl
 
   id!: string
   repeatedProduct!: Product | undefined
+  repeatedFields!: string[] | undefined
 
   categories!: Category[]
-  providers!: Provider[]
+
+  change = output<void>()
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private providerService: ProviderService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
@@ -57,7 +58,6 @@ export class ProductForm implements OnInit {
 
   ngOnInit(): void {
     this.getCategories()
-    this.getProviders()
     this.form = this.fb.group({
       id: [''],
       name: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
@@ -70,7 +70,6 @@ export class ProductForm implements OnInit {
       brand: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
       imgURL: [''],
       categories: [[], Validators.required],
-      providers: [[], Validators.required]
     })
     this.name = this.form.controls['name'] as FormControl
     this.price = this.form.controls['price'] as FormControl
@@ -80,6 +79,7 @@ export class ProductForm implements OnInit {
     this.barcode = this.form.controls['barcode'] as FormControl
     this.description = this.form.controls['description'] as FormControl
     this.brand = this.form.controls['brand'] as FormControl
+    this.categoryControl = this.form.controls['categories'] as FormControl
 
     this.id = this.route.snapshot.params['id']
     if (this.id) {
@@ -90,15 +90,28 @@ export class ProductForm implements OnInit {
 
     combineLatest([
       this.productService.getList(),
-      this.sku.valueChanges.pipe(startWith(this.sku.value), debounceTime(300), distinctUntilChanged())
+      this.sku.valueChanges.pipe(startWith(this.sku.value), debounceTime(300), distinctUntilChanged()),
+      this.barcode.valueChanges.pipe(startWith(this.barcode.value), debounceTime(300), distinctUntilChanged())
     ]).pipe(
       filter(([products]) => !!products),
-      map(([products, sku]) => products.find(p =>
-        p.id !== Number(this.id) &&
-        p.sku?.trim().toLowerCase() === sku?.trim().toLowerCase()
-      ))
+      map(([products, sku, barcode]) => {
+        const product = products.find(p =>
+          p.id !== Number(this.id) &&
+          (p.sku?.trim().toLowerCase() === sku?.trim().toLowerCase() ||
+            p.barcode?.trim().toLowerCase() === barcode?.trim().toLowerCase())
+        )
+        if (!product) return undefined;
+
+        const repeatedFields: string[] = [];
+        if (product.sku?.trim().toLowerCase() === sku?.trim().toLowerCase()) repeatedFields.push('sku');
+        if (product.barcode?.trim().toLowerCase() === barcode?.trim().toLowerCase()) repeatedFields.push('barcode');
+
+        return { product, repeatedFields };
+      })
     ).subscribe({
-      next: data => this.repeatedProduct = data,
+      next: data => {
+        this.repeatedProduct = data?.product || undefined, 
+        this.repeatedFields = data?.repeatedFields || []},
       error: () => {
         Swal.fire({
           icon: "error",
@@ -159,27 +172,7 @@ export class ProductForm implements OnInit {
     })
   }
 
-  getProviders() {
-    this.providerService.getList().subscribe({
-      next: data => { this.providers = data },
-      error: () => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Ocurrio un problema al obtener las categorias",
-          confirmButtonText: "Volver",
-          confirmButtonColor: "#ff7543"
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.router.navigate([''])
-          }
-        })
-      }
-    })
-  }
-
   submitForm() {
-    console.log(this.form.valid)
     if (this.form.valid && !this.repeatedProduct) {
       if (Number(this.id)) {
         this.productService.patch(this.form.value).subscribe({
@@ -198,6 +191,10 @@ export class ProductForm implements OnInit {
               text: "Ocurrio un problema al editar el producto",
               confirmButtonText: "Volver",
               confirmButtonColor: "#ff7543"
+            }).then((res) => {
+              if(res.isConfirmed) {
+                this.router.navigate(['/products'])
+              }
             })
           }
         })
@@ -211,7 +208,8 @@ export class ProductForm implements OnInit {
               confirmButtonColor: "#ff7543"
             }).then((res) => {
               if (res.isConfirmed) {
-                this.router.navigate([''])
+                this.change.emit()
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }
             })
           },
