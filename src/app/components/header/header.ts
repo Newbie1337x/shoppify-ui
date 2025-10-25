@@ -5,16 +5,11 @@ import { UserAvatar } from '../user-avatar/user-avatar';
 
 @Component({
   selector: 'app-header',
-  imports: [
-    RouterLink,
-    SearchBar,
-    UserAvatar
-  ],
+  imports: [RouterLink, SearchBar, UserAvatar],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-
   mostrarNav = false;
   mostrarBusquedaMovil = false;
 
@@ -31,5 +26,5 @@ export class Header {
       this.mostrarNav = false;
     }
   }
-
 }
+

@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { User } from '../../models/auth/user';
 
-// Componente mínimo para el avatar/menú de usuario en el header.
-// Aísla la UI para poder añadir lógica de usuario más adelante
-// (foto personalizada, estados de sesión, opciones dinámicas, etc.).
 @Component({
   selector: 'app-user-avatar',
   standalone: true,
@@ -12,11 +10,24 @@ import { RouterLink } from '@angular/router';
   styleUrl: './user-avatar.css'
 })
 export class UserAvatar {
+  @Input() user: User | null = null;
   @Input() avatarSrc: string = 'image/user.png';
+
   showMenu = false;
 
-  // Emula el dropdown del footer: manejo simple por clase .show
+  constructor(private router: Router) {}
+
   toggleMenu() {
+    if (!this.user) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
     this.showMenu = !this.showMenu;
   }
+
+  hideMenu() {
+    this.showMenu = false;
+  }
 }
+
