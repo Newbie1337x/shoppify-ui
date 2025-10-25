@@ -6,6 +6,7 @@ import { EndpointTest } from './pages/endpoint-test/endpoint-test';
 import { Login } from './pages/login/login';
 import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
+import { Profile } from './pages/profile/profile';
 
 export const routes: Routes = [
 
@@ -27,7 +28,8 @@ export const routes: Routes = [
       { path: 'search/:q', component: SearchResults },
       { path: 'categories/:id', component: SearchResults },
       { path: 'products', component: EndpointTest},
-      { path: 'products/edit/:id', component: EditProductPage}
+      { path: 'products/edit/:id', component: EditProductPage},
+      { path: 'profile', component: Profile}
     ]
   },
 ];

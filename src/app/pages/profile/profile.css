@@ -1,0 +1,176 @@
+/* === CONTENEDOR GENERAL === */
+.profile-page {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #1c1c1c;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  color: #f5f5f5;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  border: 3px solid #0056b3;
+}
+
+/* === TITULOS === */
+.profile-page h1,
+.profile-page h2 {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* === ESTRUCTURA PRINCIPAL === */
+.profile-main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+.user-profile {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  padding: 2rem;
+  color: #f5f5f5;
+  
+}
+
+.profile-card {
+  background-color: #2b2b2b;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  border: 3px solid #0056b3;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 2px solid #555;
+}
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-edit:hover {
+  background-color: #0056b3;
+}
+
+.account-settings {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  border: 3px solid #0056b3;
+}
+
+.setting-item {
+  margin-bottom: 1.2rem;
+}
+
+.btn-setting {
+  width: 100%;
+  background: #292929;
+  color: #f5f5f5;
+  border: 1px solid #3a3a3a;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-setting:hover {
+  background: #3a3a3a;
+}
+
+.setting-desc {
+  font-size: 0.85rem;
+  color: #a0a0a0;
+  margin-top: 0.4rem;
+}
+
+
+/* === DESEADOS === */
+.wish-list {
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  border: 3px solid #0056b3;
+}
+
+.wish-items {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wish-list h2 {
+  margin-bottom: 1rem;
+}
+
+.wish-list p {
+  text-align: center;
+  color: #aaa;
+}
+
+.wish-list button {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  display: block;
+  margin: 1rem auto 0;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.wish-list button:hover {
+  background: #0056b3;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .profile-main {
+    grid-template-columns: 1fr;
+  }
+
+  .user-info, .account-settings {
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 1rem;
+  }
+
+  .user-photo img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .account-settings button,
+  .user-info button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+

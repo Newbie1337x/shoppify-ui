@@ -1,15 +1,12 @@
 
-/* CoreUI global CSS removido para evitar conflictos con el footer */
-
 *{
     padding: 0;
     margin: 0;
-
     box-sizing: border-box;
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: aliceblue; }
 
 
 .custom-select-panel {
