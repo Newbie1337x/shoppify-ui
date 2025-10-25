@@ -4,6 +4,7 @@ import { SearchResults } from './pages/search-results/search-results';
 import { Login } from './pages/login/login';
 import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
+import { Register } from './pages/register/register';
 
 export const routes: Routes = [
 
@@ -12,6 +13,7 @@ export const routes: Routes = [
     component: Auth,
     children: [
       { path: 'login', component: Login },
+      { path: 'register', component: Register },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
     ]
