@@ -182,6 +182,11 @@ export class ProductForm implements OnInit {
               icon: "success",
               confirmButtonText: "Volver",
               confirmButtonColor: "#ff7543"
+            }).then((res) => {
+              if(res.isConfirmed) {
+                this.form.reset()
+                this.router.navigate(['/products'])
+              }
             })
           },
           error: () => {
