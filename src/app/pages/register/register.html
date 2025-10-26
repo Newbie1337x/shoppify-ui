@@ -1,0 +1,111 @@
+<section class="register-page">
+  <div class="register-shell">
+    <aside class="promo-panel">
+      <div class="promo-content">
+        <span class="promo-eyebrow">Bienvenido</span>
+        <h1 class="promo-title">Convertite en uno de nuestros clientes</h1>
+        <p class="promo-copy">
+          Unite para enterarte de ofertas y conseguir los mejores productos en un solo lugar.
+        </p>
+        <div class="promo-cta">
+          <span class="promo-subtext">Ya tenes cuenta?</span>
+          <a class="promo-button" routerLink="/login">Inici&aacute; sesi&oacute;n</a>
+        </div>
+      </div>
+      <div class="promo-shape"></div>
+    </aside>
+
+    <div class="form-panel">
+      <header class="form-header">
+  
+        <h2 class="form-title">Crear cuenta</h2>
+        <p class="form-description">Completa tus datos para comenzar en segundos.</p>
+      </header>
+
+      <form class="register-form" [formGroup]="fg" (ngSubmit)="onsubmit()">
+        <label class="form-label" for="username">Nombre de usuario</label>
+        <input
+          id="username"
+          class="form-input"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+          placeholder="ej. pepito-123"
+        />
+
+        <label class="form-label" for="email">E-mail</label>
+        <input
+          id="email"
+          class="form-input"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="tu-correo@ejemplo.com"
+        />
+
+        <label class="form-label" for="password">Contraseña;a</label>
+        <input
+          id="password"
+          class="form-input"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          placeholder="M&iacute;nimo 8 caracteres"
+        />
+
+        <div class="name-row">
+          <div class="field">
+            <label class="form-label" for="firstName">Nombre</label>
+            <input
+              id="firstName"
+              class="form-input"
+              type="text"
+              formControlName="firstName"
+              autocomplete="given-name"
+              placeholder="Nombre"
+            />
+          </div>
+          <div class="field">
+            <label class="form-label" for="lastName">Apellido</label>
+            <input
+              id="lastName"
+              class="form-input"
+              type="text"
+              formControlName="lastName"
+              autocomplete="family-name"
+              placeholder="Apellido"
+            />
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <div class="field">
+            <label class="form-label" for="dni">DNI</label>
+            <input
+              id="dni"
+              class="form-input"
+              type="text"
+              formControlName="dni"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="Sin puntos"
+            />
+          </div>
+          <div class="field">
+            <label class="form-label" for="phone">Telefono</label>
+            <input
+              id="phone"
+              class="form-input"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              placeholder="+54 9 11 1234-5678"
+            />
+          </div>
+        </div>
+
+        <button class="action-button" type="submit" [disabled]="fg.invalid">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+</section>

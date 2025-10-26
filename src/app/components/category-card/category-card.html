@@ -1,0 +1,14 @@
+@if (category) {
+    <div id="card" (click)="getDetails(category.id)">
+        @if (category.imgUrl) {
+            <img [src]="category.imgUrl" [alt]="category.name || 'Categoria'">
+        }
+        @else {
+            <img [src]="'https://placehold.co/600x400?text=' + (category.name || 'Categoria')" [alt]="category.name || 'Categoria'">
+        }
+
+        <div class="card-body">
+            <b id="category-Name">{{ category.name }}</b>
+        </div>
+    </div>
+}

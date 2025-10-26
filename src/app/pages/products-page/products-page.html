@@ -1,0 +1,29 @@
+@if (this.products.length > 0) {
+  <section id="products-list">
+      @for (p of refinedProducts; track p.id) {
+        <div class="product-card">
+          <app-product-card [product]="p" [isMostrarCuotas]="true" [isMostrarStock]="true"></app-product-card>
+          <div class="actions">
+              <button class="btn-delete" (click)="deleteProduct(p.id)">
+                <span class="btn-icon">🗑️</span>
+                <span class="btn-text">Borrar</span>
+              </button>
+              <button class="btn-edit" (click)="editProduct(p.id)">
+                <span class="btn-icon">✏️</span>
+                <span class="btn-text">Editar</span>
+              </button>
+          </div>
+        </div>
+      }
+  </section>
+} @else {
+  <p id="no-products">No hay productos cargados.</p>
+}
+
+<app-products-refiner [products]="this.products" [categories]="this.categories" (outputProducts)="refinedProducts = $event"></app-products-refiner>
+
+<section id="add-products">
+  <h3>Cargar Productos</h3>
+
+  <app-product-form (change)="renderProducts()"></app-product-form>
+</section>

@@ -1,0 +1,348 @@
+:host {
+  display: block;
+  min-height: auto;
+  color: #f5f5f7;
+  padding: 1rem 1.5rem;
+}
+
+#refined-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  background: #1a1a1a;
+  margin: 1vw 5vw;
+  padding: 2vw;
+  border-radius: 50px;
+}
+
+.refined-form-title {
+  max-width: 900px;
+  margin: 0 auto 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+#filter-section .refined-form-title {
+  grid-column: 1 / -1;
+  margin-bottom: 1.5rem;
+}
+
+.refined-form-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #ff7543 0%, #ff5a6d 100%);
+  border-radius: 999px;
+}
+
+#filter-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 32px;
+  background: rgba(33, 33, 33, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+  align-items: start;
+}
+
+#filter-section select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.9);
+  font-size: 0.8rem;
+  color: #f7f7f9;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff7543' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+}
+
+#filter-section select:hover {
+  background-color: rgba(12, 12, 12, 0.95);
+}
+
+.filter-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.filter-fieldset label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e5e4ea;
+}
+
+.filter-fieldset input,
+.filter-fieldset select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.9);
+  font-size: 0.8rem;
+  color: #f7f7f9;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.filter-fieldset input:focus,
+.filter-fieldset select:focus {
+  outline: none;
+  border-color: #ff7543;
+  background: rgba(28, 28, 28, 0.95);
+  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+}
+
+.filter-fieldset input::placeholder {
+  color: #8f8f93;
+}
+
+.filter-fieldset select:hover {
+  background-color: rgba(12, 12, 12, 0.95);
+}
+
+.filter-fieldset select option {
+  background: rgba(18, 18, 18, 0.95);
+  color: #f7f7f9;
+  padding: 0.5rem;
+  transition: background 0.2s ease, font-size 0.2s ease;
+}
+
+#filter-section fieldset.category-fieldset {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+}
+
+#filter-section fieldset.category-fieldset mat-form-field {
+  display: block;
+  width: 100%;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+  margin: 0;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding: 0 0;
+  border-top: 0;
+  width: auto;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: rgba(18, 18, 18, 0.9);
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  padding: 0.6rem 0.75rem;
+  align-items: center;
+  min-height: auto;
+  height: auto;
+}
+
+::ng-deep .mat-form-field-appearance-fill:hover .mat-form-field-flex {
+  background: rgba(18, 18, 18, 0.95);
+}
+
+::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
+  background: rgba(28, 28, 28, 0.95);
+  border-color: #ff7543;
+  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+}
+
+::ng-deep .mat-form-field-label {
+  color: #8f8f93 !important;
+  font-size: 0.8rem;
+  font-weight: 400;
+  top: 1.4em;
+}
+
+::ng-deep .mat-form-field-label.mat-form-field-empty {
+  top: 1.4em;
+}
+
+::ng-deep .mat-form-field-should-float .mat-form-field-label {
+  display: none;
+}
+
+::ng-deep .mat-select-value,
+::ng-deep .mat-select-value-text {
+  color: #ffffff !important;
+  font-size: 0.8rem;
+}
+
+::ng-deep .mat-select-placeholder {
+  color: #8f8f93 !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-select-arrow {
+  color: #ff7543;
+}
+
+::ng-deep .mat-select-panel {
+  background: rgba(18, 18, 18, 0.98);
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  margin-top: 0.5rem;
+}
+
+::ng-deep .mat-option {
+  color: #ffffff !important;
+  font-size: 0.8rem;
+  height: 2.5rem;
+  transition: background 0.2s ease, font-size 0.15s ease;
+}
+
+::ng-deep .mat-option:hover {
+  background: rgba(28, 28, 28, 0.95) !important;
+  font-size: 0.83rem;
+}
+
+::ng-deep .mat-option.mat-selected {
+  background: rgba(255, 117, 67, 0.08) !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-pseudo-checkbox {
+  border: none !important;
+  background: transparent !important;
+}
+
+::ng-deep .mat-pseudo-checkbox::after {
+  color: #ff7543 !important;
+  font-size: 1rem;
+}
+
+::ng-deep .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
+
+
+#order-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 32px;
+  background: rgba(33, 33, 33, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+  align-items: start;
+  padding-bottom: 3rem;
+}
+
+#order-section .refined-form-title {
+  grid-column: 1 / -1;
+  margin-bottom: 1.5rem
+}
+
+#order-section fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+#order-section fieldset label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e5e4ea;
+}
+
+#order-section fieldset select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.9);
+  font-size: 0.8rem;
+  color: #f7f7f9;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff7543' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+}
+
+#order-section fieldset select:hover {
+  background-color: rgba(12, 12, 12, 0.95);
+}
+
+#order-section fieldset select:focus {
+  outline: none;
+  border-color: #ff7543;
+  background: rgba(28, 28, 28, 0.95);
+  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+}
+
+#order-section fieldset select option {
+  background: rgba(18, 18, 18, 0.95);
+  color: #f7f7f9;
+  padding: 0.5rem;
+  transition: background 0.2s ease, font-size 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  #refined-form {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  #filter-section {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+    border-radius: 20px;
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+  
+  #filter-section fieldset.category-fieldset {
+    grid-column: 1 / -1;
+  }
+
+  #order-section {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+    border-radius: 20px;
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+}
