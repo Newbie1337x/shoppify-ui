@@ -1,0 +1,30 @@
+<h2>Editar perfil</h2>
+
+<form (ngSubmit)="guardar()">
+  <label>
+    Nombre:
+    <input [(ngModel)]="data.firstName" name="firstName" />
+  </label>
+  <label>
+    Apellido:
+    <input [(ngModel)]="data.lastName" name="lastName" />
+  </label>
+  <label>
+    DNI:
+    <input [(ngModel)]="data.dni" name="dni">
+  </label>
+  <label>
+    Telefono:
+    <input [(ngModel)]="data.phone" name="phone">
+  </label>
+  <label>
+    Foto de perfil, coloca el url de tu foto favorita!
+    <input [(ngModel)]="data.img" name="img">
+  </label>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+  </div>
+</form>
+

@@ -1,14 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductCard } from "../../components/product-card/product-card";
-
-
-interface User {
-  fullName: string;
-  email: string;
-  registerDate: Date;
-  photoURL: string;
-}
+import { UserService } from '../../services/user-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../models/auth/user';
+import { EditProfileForm } from '../../components/edit-profile-form/edit-profile-form';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -16,45 +13,70 @@ interface User {
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile {
+export class Profile implements OnInit{
 
-
-  user: User;
+  id!: number
+  user!: User;
+  userMail!: string  //TODO
   wishList: Product[] = [];
   displayCount = 4;
 
-  constructor() {
-    this.user = {fullName: '', email: '', registerDate: new Date(), photoURL: ''};
-  }
+  constructor(
+    private uService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
+    this.id = this.route.snapshot.params["id"]
+    this.uService.get(this.id).subscribe({
+      next: u => {
+        this.user = u
+        console.log(u)
+      },
+      error: (e) =>{
+        console.log(e)
+        alert("Error al obtener tu perfil :c")
+        this.router.navigate(["/"])
+      }
+    })
     
-    this.user = {
-      fullName: 'Juan Pérez',
-      email: 'juan.perez@example.com',
-      registerDate: new Date(2023, 5, 15),
-      photoURL: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftopdezmelhores.com.br%2Fwp-content%2Fuploads%2F2023%2F10%2Fimage-112.png&f=1&nofb=1&ipt=17e0a892eb7270c5c4701cb37248a2d3a3cfcc79eeb7a9b7466882d2928ff896'
-    };
-
-    
-    this.wishList = [
-      
-    ];
   }
 
   editarPerfil() {
+    const dialogRef = this.dialog.open(EditProfileForm, {
+      width: '400px',
+      data: this.user,
+      disableClose: true
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.uService.patch(result).subscribe({
+          next: () => {
+            this.user = result;
+            alert('Perfil actualizado con éxito!');
+          },
+          error: (e) => console.error('Error al actualizar', e)
+        })
+      }
+    })
   }
 
   editarConfiguracion() {
+    this.router.navigate([""])  //TODO
   }
 
   verCompras() {
+    this.router.navigate([""])  //TODO
   }
 
   ayuda() {
+    this.router.navigate([""])  //TODO
   }
 
   verMas() {
-    this.displayCount += 4;
+    this.router.navigate([""]) //TODO
   }
 }
