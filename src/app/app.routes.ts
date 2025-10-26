@@ -5,6 +5,7 @@ import { Login } from './pages/login/login';
 import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
 import { Register } from './pages/register/register';
+import { Home } from './pages/home/home';
 
 export const routes: Routes = [
 
@@ -23,10 +24,13 @@ export const routes: Routes = [
     path: '',
     component: Main,
     children: [
+      { path: 'home', component:Home},
       { path: 'search/:q', component: SearchResults },
       { path: 'categories/:id', component: SearchResults },
       { path: 'products/:id', component: SearchResults },
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
+      { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  
+
     ]
   }
 
