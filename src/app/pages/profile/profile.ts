@@ -46,7 +46,7 @@ export class Profile implements OnInit{
 
   editarPerfil() {
     const dialogRef = this.dialog.open(EditProfileForm, {
-      width: '400px',
+      width: '450px',
       data: this.user,
       disableClose: true
     })
@@ -55,10 +55,10 @@ export class Profile implements OnInit{
       if (result) {
         this.uService.patch(result).subscribe({
           next: () => {
-            this.user = result;
-            alert('Perfil actualizado con éxito!');
+            this.user = result
+            alert('Perfil actualizado con éxito ✅')
           },
-          error: (e) => console.error('Error al actualizar', e)
+          error: (e) => console.error('Error al actualizar el perfil', e)
         })
       }
     })

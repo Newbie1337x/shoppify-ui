@@ -1,30 +1,53 @@
-<h2>Editar perfil</h2>
+<h2 mat-dialog-title>Editar perfil</h2>
 
-<form (ngSubmit)="guardar()">
-  <label>
-    Nombre:
-    <input [(ngModel)]="data.firstName" name="firstName" />
-  </label>
-  <label>
-    Apellido:
-    <input [(ngModel)]="data.lastName" name="lastName" />
-  </label>
-  <label>
-    DNI:
-    <input [(ngModel)]="data.dni" name="dni">
-  </label>
-  <label>
-    Telefono:
-    <input [(ngModel)]="data.phone" name="phone">
-  </label>
-  <label>
-    Foto de perfil, coloca el url de tu foto favorita!
-    <input [(ngModel)]="data.img" name="img">
-  </label>
+<form [formGroup]="form" (ngSubmit)="guardar()" mat-dialog-content>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="firstName" />
+    @if (form.controls['firstName']?.hasError('required')) {
+      <mat-error>El nombre es obligatorio</mat-error>
+    }
+  </mat-form-field>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" type="submit">Guardar</button>
-    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="lastName" />
+    @if (form.controls['lastName']?.hasError('required')) {
+      <mat-error>El apellido es obligatorio</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>DNI</mat-label>
+    <input matInput formControlName="dni" maxlength="8" />
+    @if (form.controls['dni']?.hasError('required')) {
+      <mat-error>El DNI es obligatorio</mat-error>
+    }
+    @if (form.controls['dni']?.hasError('minlength') || form.get('dni')?.hasError('maxlength')) {
+      <mat-error>El DNI debe tener 8 dígitos</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Teléfono</mat-label>
+    <input matInput formControlName="phone" />
+    @if (form.controls['phone']?.hasError('required')) {
+      <mat-error>El teléfono es obligatorio</mat-error>
+    }
+    @if (form.controls['phone']?.hasError('pattern')) {
+      <mat-error>Solo se permiten números</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>URL de imagen (opcional)</mat-label>
+    <input matInput formControlName="img" />
+  </mat-form-field>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-stroked-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+      Guardar
+    </button>
   </div>
 </form>
-
