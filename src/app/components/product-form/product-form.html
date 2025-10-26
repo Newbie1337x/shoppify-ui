@@ -145,5 +145,5 @@
         }
     </fieldset>
 
-    <input type="submit" id="submit-button" value="Enviar">
+    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid && !repeatedProduct">
 </form>
