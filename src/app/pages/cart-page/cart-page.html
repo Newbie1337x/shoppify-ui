@@ -1,0 +1,77 @@
+<div class="cart-container">
+  <h2>🛒 Tu carrito</h2>
+
+  @if (cartItems().length > 0) {
+    <div class="cart-list">
+      @for (item of cartItems(); track item.id) {
+        <div class="cart-item">
+          <app-product-card class="product-card" [product]="item"></app-product-card>
+
+          <div class="cart-controls">
+            <div class="quantity-control">
+              <label>Cantidad:</label>
+              <input type="number"
+                     min="1"
+                     [value]="item.stock"
+                     (input)="updateQuantity(item, $any($event.target).value)">
+            </div>
+
+            <p class="item-subtotal">
+              Subtotal: <strong>${{ item.price * item.stock }}</strong>
+            </p>
+
+            <button class="remove-btn" (click)="removeFromCart(item.id)">Eliminar del carrito ❌</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="cart-summary">
+      <p><strong>Total:</strong> ${{ total() }}</p>
+    </div>
+
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+      <div class="form-grid">
+        <label>
+          Método de pago:
+          <select formControlName="paymentMethod" required>
+            <option value="CASH">Efectivo</option>
+            <option value="CARD">Tarjeta</option>
+            <option value="TRANSFER">Transferencia</option>
+          </select>
+        </label>
+
+        @if (isAdmin !== false) {
+          <label>
+            Tipo de transacción:
+            <select formControlName="type" required>
+              <option value="SALE">Venta</option>
+              <option value="PURCHASE">Compra</option>
+            </select>
+          </label>
+
+          <label>
+            Tienda:
+            <input type="text" formControlName="storeName" required placeholder="Nombre de la tienda">
+          </label>
+
+          <label class="description">
+            Descripción:
+            <textarea formControlName="description" rows="2" placeholder="Notas de la venta..."></textarea>
+          </label>
+        }
+      </div>
+
+      <button type="submit"
+              [disabled]="checkoutForm.invalid || cartItems().length === 0"
+              class="checkout-btn">
+        Finalizar transacción
+      </button>
+    </form>
+  } @else {
+    <div class="empty-cart">
+      <h3>Tu carrito está vacío 😕</h3>
+      <p>Agrega algunos productos para comenzar 💪.</p>
+    </div>
+  }
+</div>

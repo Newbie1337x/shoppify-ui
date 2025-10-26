@@ -5,6 +5,30 @@
     box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main, router-outlet {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background-color: #f8f8f8;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: aliceblue; }
 
