@@ -8,12 +8,18 @@ import { CategoryService } from '../../services/category-service';
 import { Category } from '../../models/category';
 import { StoreService } from '../../services/store-service';
 import { HomeCarousel } from '../../models/homeCarousel';
+import {
+  CarouselComponent,
+  CarouselControlComponent,
+  CarouselInnerComponent,
+  CarouselItemComponent
+} from '@coreui/angular';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, ProductCard, CategoryCard],
+  imports: [CarouselComponent, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent,CarouselModule, ProductCard, CategoryCard],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })

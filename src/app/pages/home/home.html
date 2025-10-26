@@ -1,9 +1,21 @@
-<h2>Promociones</h2>
-<p-carousel class="product-carousel" [value]="carouselItems" [numVisible]="1" [numScroll]="1" [circular]="true">
-  <ng-template pTemplate="item" let-b>
-    <img src="https://http2.mlstatic.com/D_NQ_836756-MLA95488404625_102025-OO.web" [alt]="b.title" />
-  </ng-template>
-</p-carousel>
+@if (carouselItems.length) {
+  <c-carousel [interval]="0">
+    <c-carousel-inner>
+      @for (item of carouselItems; track item.url) {
+        <c-carousel-item>
+          <img
+            [src]="item.url"
+            alt="{{ item.title }}"
+            class="d-block w-100"
+            loading="lazy"
+          />
+        </c-carousel-item>
+      }
+    </c-carousel-inner>
+    <c-carousel-control caption="Anterior" direction="prev"></c-carousel-control>
+    <c-carousel-control caption="Siguiente" direction="next"></c-carousel-control>
+  </c-carousel>
+}
 
 <h2>Productos mas vendidos</h2>
 <p-carousel class="product-carousel" [value]="products" [numVisible]="6" [numScroll]="6" [circular]="false">
