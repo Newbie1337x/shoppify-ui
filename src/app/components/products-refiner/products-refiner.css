@@ -131,7 +131,7 @@
 }
 
 #filter-section fieldset.category-fieldset {
-  grid-column: 1 / -1;
+  grid-column: 2;
   margin-top: 0.5rem;
 }
 
