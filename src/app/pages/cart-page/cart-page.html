@@ -8,6 +8,16 @@
           <app-product-card class="product-card" [product]="item"></app-product-card>
 
           <div class="cart-controls">
+
+            <label class="select-label">
+              <input
+                type="checkbox"
+                [checked]="selectedItems().has(item.id)"
+                (change)="toggleSelection(item.id, $any($event.target).checked)"
+              />
+              Seleccionar
+            </label>
+
             <div class="quantity-control">
               <label>Cantidad:</label>
               <input type="number"
@@ -17,7 +27,8 @@
             </div>
 
             <p class="item-subtotal">
-              Subtotal: <strong>${{ item.price * item.stock }}</strong>
+              Subtotal:
+              <strong>${{ selectedItems().has(item.id) ? item.price * item.stock : 0 }}</strong>
             </p>
 
             <button class="remove-btn" (click)="removeFromCart(item.id)">Eliminar del carrito ❌</button>
@@ -25,6 +36,14 @@
         </div>
       }
     </div>
+
+    @if (selectedItems().size > 0) {
+      <div class="remove-selected-container">
+        <button class="remove-selected-btn" (click)="removeSelected()">
+          🗑️ Eliminar seleccionados
+        </button>
+      </div>
+    }
 
     <div class="cart-summary">
       <p><strong>Total:</strong> ${{ total() }}</p>

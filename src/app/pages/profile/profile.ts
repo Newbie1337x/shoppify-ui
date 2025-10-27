@@ -2,10 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductCard } from "../../components/product-card/product-card";
 import { UserService } from '../../services/user-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../../models/auth/user';
 import { EditProfileForm } from '../../components/edit-profile-form/edit-profile-form';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class Profile implements OnInit{
 
-  id!: number
+  id?: number
   user!: User;
   userMail!: string  //TODO
   wishList: Product[] = [];
@@ -23,14 +24,14 @@ export class Profile implements OnInit{
 
   constructor(
     private uService: UserService,
-    private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private aService: AuthService
   ) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params["id"]
-    this.uService.get(this.id).subscribe({
+    this.id = this.aService.user()?.id
+    this.uService.get(this.id!).subscribe({
       next: u => {
         this.user = u
         console.log(u)
