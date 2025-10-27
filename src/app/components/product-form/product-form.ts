@@ -213,6 +213,7 @@ export class ProductForm implements OnInit {
               confirmButtonColor: "#ff7543"
             }).then((res) => {
               if (res.isConfirmed) {
+                this.form.reset()
                 this.change.emit()
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }

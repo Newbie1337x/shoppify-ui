@@ -20,13 +20,12 @@
 <p id="no-categories">No hay categorias cargadas.</p>
 }
 
-<!--
-<app-products-refiner [products]="this.products" [categories]="this.categories"
+<!--<app-products-refiner [products]="this.products" [categories]="this.categories"
     (outputProducts)="refinedProducts = $event"></app-products-refiner>
+-->
 
-<section id="add-products">
+<section id="add-categories">
     <h3>Cargar Productos</h3>
 
-    <app-product-form (change)="renderProducts()"></app-product-form>
+    <app-category-form [categories]="categories" (change)="renderCategories()"></app-category-form>
 </section>
--->

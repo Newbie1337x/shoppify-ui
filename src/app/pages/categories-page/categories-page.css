@@ -10,10 +10,10 @@
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
+  margin: 0;
 }
 
 .category-card app-category-card {
-  width: 100%;
   margin: 0;
   display: block;
 }

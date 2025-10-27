@@ -4,10 +4,11 @@ import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CategoryCard } from '../../components/category-card/category-card';
+import { CategoryForm } from '../../components/category-form/category-form';
 
 @Component({
   selector: 'app-categories-page',
-  imports: [CategoryCard],
+  imports: [CategoryCard, CategoryForm],
   templateUrl: './categories-page.html',
   styleUrl: './categories-page.css'
 })

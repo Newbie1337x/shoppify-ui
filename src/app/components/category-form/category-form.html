@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" id="category-form" autocomplete="off">
+    <!-- ID -->
+    @if (this.id) {
+        <fieldset>
+            <label>ID</label>
+            <input type="text" id="id-input" formControlName="id" readonly>
+        </fieldset>
+    }
+
+    <!-- Name -->
+    <fieldset>
+        <label for="name-input">Nombre*</label>
+        <input type="text" id="name-input" formControlName="name">
+
+        @if(this.name.dirty) {
+            @if (this.name.hasError("required") || this.name.hasError("pattern")) {
+                <h5>El nombre es obligatorio</h5>
+            }@else if (this.name.hasError("minlength") || this.name.hasError("maxlength")) {
+                <h5>El nombre debe tener entre 2 y 50 caracteres</h5>
+            }@else if (this.repeatedFields?.includes("img")) {
+                <h5>El nombre ya esta en uso</h5>
+            }
+        }
+    </fieldset>
+
+    <!-- Image -->
+    <fieldset>
+        <label for="image-input">Image URL</label>
+        <input type="text" id="image-input" formControlName="imgUrl"
+            placeholder="Ingrese la url de la imagen del producto">
+
+        @if (this.imgUrl.dirty) {
+            @if (this.imgUrl.hasError("maxlength")) {
+                <h5>La URL no puede superar los 200 caracteres</h5>
+            }@else if (this.repeatedFields?.includes("img")) {
+                <h5>La imagen ya esta en uso</h5>
+            }
+        }
+    </fieldset>
+
+    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid && !repeatedCategory">
+</form>
