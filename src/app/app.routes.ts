@@ -25,7 +25,7 @@ export const routes: Routes = [
     path: '',
     component: Main,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: '/products', pathMatch: 'full' },
       { path: 'search/:q', component: SearchResults },
       { path: 'categories/:id', component: SearchResults },
       { path: 'products/edit/:id', component: EditProductPage},
