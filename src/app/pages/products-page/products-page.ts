@@ -33,7 +33,6 @@ export class ProductsPage {
   ngOnInit(): void {
     this.renderProducts();
     this.renderCategories();
-
   }
 
   renderProducts(): void {
@@ -46,10 +45,6 @@ export class ProductsPage {
         console.error('Error al obtener todos los productos:', err);
       }
     });
-  }
-
-  refineProducts() {
-    return 
   }
 
   renderCategories(): void {
@@ -85,7 +80,6 @@ export class ProductsPage {
       icon: "error",
       title: "Oops...",
       text: err,
-
     });
   }
 

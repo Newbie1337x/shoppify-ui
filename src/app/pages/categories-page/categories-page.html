@@ -1,0 +1,32 @@
+@if (this.categories.length > 0) {
+    <section id="category-list">
+        @for (c of refinedCategories; track c.id) {
+            <div class="category-card">
+                <app-category-card [category]="c"></app-category-card>
+                <div class="actions">
+                    <button class="btn-delete" (click)="deleteCategory(c.id)">
+                        <span class="btn-icon">🗑️</span>
+                        <span class="btn-text">Borrar</span>
+                    </button>
+                    <button class="btn-edit" (click)="editCategory(c.id)">
+                        <span class="btn-icon">✏️</span>
+                        <span class="btn-text">Editar</span>
+                    </button>
+                </div>
+            </div>
+        }
+    </section>
+} @else {
+<p id="no-categories">No hay categorias cargadas.</p>
+}
+
+<!--
+<app-products-refiner [products]="this.products" [categories]="this.categories"
+    (outputProducts)="refinedProducts = $event"></app-products-refiner>
+
+<section id="add-products">
+    <h3>Cargar Productos</h3>
+
+    <app-product-form (change)="renderProducts()"></app-product-form>
+</section>
+-->
