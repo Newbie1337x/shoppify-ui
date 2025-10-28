@@ -1,14 +1,24 @@
 import { User } from '../../models/auth/user';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormField, MatError, MatLabel } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-edit-profile-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatFormField, MatError, MatLabel],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormField,
+    MatInputModule,
+    MatButtonModule,
+    MatError, MatLabel],
   templateUrl: './edit-profile-form.html',
   styleUrl: './edit-profile-form.css'
 })

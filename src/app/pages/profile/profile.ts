@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-profile',
-  imports: [ProductCard],
+  imports: [ProductCard, EditProfileForm],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
@@ -18,7 +18,6 @@ export class Profile implements OnInit{
 
   id?: number
   user!: User;
-  userMail!: string  //TODO
   wishList: Product[] = [];
   displayCount = 4;
 
@@ -39,7 +38,7 @@ export class Profile implements OnInit{
       error: (e) =>{
         console.log(e)
         alert("Error al obtener tu perfil :c")
-        this.router.navigate(["/"])
+        this.router.navigate(["/auth/login"])
       }
     })
     
@@ -47,9 +46,10 @@ export class Profile implements OnInit{
 
   editarPerfil() {
     const dialogRef = this.dialog.open(EditProfileForm, {
-      width: '450px',
+      width: '80vw',
       data: this.user,
-      disableClose: true
+      disableClose: true,
+      panelClass: 'profile-dialog-panel'
     })
 
     dialogRef.afterClosed().subscribe(result => {
