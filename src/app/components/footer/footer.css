@@ -1,73 +1,90 @@
 .footer {
   background-color: #212121;
+  color: #f1f1f1;
   text-align: center;
-  padding: 10px;
-  width: 100%;
+  padding: 2rem 1rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
   font-family: 'Segoe UI', sans-serif;
-  margin-top: auto;
-}
+  width: 100%;
 
-.footer-fixed {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  padding: 10px 20px;
-  background-color: #212121;
-  color: white;
+  align-items: center;
+  justify-content: center;
+
+  
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-.footer a {
-  color: white;
-  transition: filter 0.3s ease;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.footer a:hover {
-  filter: drop-shadow(0 0 8px #ffffff);
+.footer-content {
+  max-width: 900px;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
-.toggle-btn {
-  background: none;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  color: white;
-  transition: filter 0.3s ease;
+.footer-info {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #ccc;
+  margin-bottom: 1rem;
 }
 
-.toggle-btn:hover {
-  filter: drop-shadow(0 0 8px #ffffff);
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+
+  a {
+    color: #f1f1f1;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease, filter 0.3s ease;
+
+    &:hover {
+      color: #4f46e5;
+      filter: drop-shadow(0 0 8px #4f46e5);
+    }
+  }
 }
 
-.footer-desplegable {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 1s ease, opacity 1s ease;
-  opacity: 0;
-  background-color: #272727;
-  color: white;
-}
-
-.footer-desplegable.show {
-  max-height: 300px;
-  opacity: 1;
-}
-
-.redes {
+.footer-social {
   display: flex;
   justify-content: center;
   gap: 20px;
-  padding: 15px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.3s ease, filter 0.3s ease;
+
+    &:hover {
+      transform: scale(1.2);
+      filter: brightness(0.8) invert(0.8) sepia(1) hue-rotate(190deg) saturate(3);
+    }
+  }
 }
 
-.redes img {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
-  transition: transform 0.3s ease, filter 0.8s ease;
-}
+/* Responsivo */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem 1rem;
+  }
 
-.redes img:hover {
-  transform: scale(1.3);
-  filter: brightness(0) invert(0.7) hue-rotate(40deg);
+  .footer-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-info {
+    font-size: 0.8rem;
+  }
 }

@@ -1,34 +1,29 @@
 <footer class="footer">
+  <div class="footer-content">
+    <p class="footer-info">
+      Copyright © 2025-{{thisYear}} <strong>Shoppify S.R.L.</strong><br>
+      {{storeAddress}}
+    </p>
 
-  <div class="footer-desplegable" [class.show]="mostrarRedes">
-    <div class="redes">
-      <a href="https://facebook.com" target="_blank">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" />
-      </a>
-      <a href="https://instagram.com" target="_blank">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" />
-      </a>
-      <a href="https://x.com" target="_blank">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X" />
-      </a>
-      <a href="https://youtube.com" target="_blank">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" />
-      </a>
+    <div class="footer-links">
+      <a href="#" aria-label="Contacto">Contacto</a>
+      <a href="#" aria-label="Términos y condiciones">Términos</a>
+      <a href="#" aria-label="Política de privacidad">Privacidad</a>
     </div>
   </div>
 
-  <div class="footer-fixed">
-    <button class="toggle-btn" (click)="toggleRedes()">
-      {{ mostrarRedes ? 'Menos informacion ↓' : 'Mas informacion ↑' }}
-    </button>
-    <p>
-      Copyright © 2025 Shoppify S.R.L.<br>
-      Av. SiempreViva 123, Piso 2, C.P. 1264, Springfield, EEUU
-    </p>
-    <p>
-      <a href="#">Contacto</a>
-    </p>
+  <div class="footer-social">
+    <a href={{linkFb}} target="_blank" aria-label="Facebook">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" />
+    </a>
+    <a href={{linkIg}} target="_blank" aria-label="Instagram">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" />
+    </a>
+    <a href={{linkX}} target="_blank" aria-label="X">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X" />
+    </a>
+    <a href={{linkYT}} target="_blank" aria-label="YouTube">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" />
+    </a>
   </div>
-
 </footer>
-

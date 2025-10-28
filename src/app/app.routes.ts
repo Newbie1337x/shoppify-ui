@@ -6,6 +6,9 @@ import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
 import { Register } from './pages/register/register';
 import { Home } from './pages/home/home';
+import { Profile } from './pages/profile/profile';
+import { CartPage } from './pages/cart-page/cart-page';
+import { ProductsPage } from './pages/products-page/products-page';
 
 
 export const routes: Routes = [
@@ -28,7 +31,10 @@ export const routes: Routes = [
       { path: 'home', component:Home},
       { path: 'search/:q', component: SearchResults },
       { path: 'categories/:id', component: SearchResults },
+      { path: 'products', component: ProductsPage},
       { path: 'products/:id', component: SearchResults },
+      { path: 'profile', component: Profile },
+      { path: 'cart', component: CartPage},
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
   
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CarouselModule } from 'primeng/carousel';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
 import { ProductCard } from "../../components/product-card/product-card";
@@ -19,7 +18,7 @@ import {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselComponent, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent,CarouselModule, ProductCard, CategoryCard],
+  imports: [CarouselComponent, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent, ProductCard, CategoryCard],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })

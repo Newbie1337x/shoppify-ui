@@ -34,8 +34,8 @@
 
   @if (showMenu && auth.user()) {
     <ul class="ua-menu" role="menu">
-      <li><a role="menuitem" routerLink="/cuenta" (click)="hideMenu()">Mi cuenta</a></li>
-      <li><a role="menuitem" routerLink="/compras" (click)="hideMenu()">Compras</a></li>
+      <li><a role="menuitem" routerLink="/profile" (click)="hideMenu()">Mi cuenta</a></li>
+      <li><a role="menuitem" routerLink="/Compras" (click)="hideMenu()" >Compras</a></li>
       <li><a role="menuitem" routerLink="/favo" (click)="hideMenu()">Favoritos</a></li>
       <li><a role="menuitem" routerLink="/logout" (click)="logout()">Cerrar sesion</a></li>
   
