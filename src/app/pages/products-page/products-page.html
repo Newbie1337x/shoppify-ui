@@ -1,5 +1,6 @@
 @if (this.products.length > 0) {
-  <section id="products-list">
+  @if (this.refinedProducts.length > 0) {
+    <section id="products-list">
       @for (p of refinedProducts; track p.id) {
         <div class="product-card">
           <app-product-card [product]="p" [isMostrarCuotas]="true" [isMostrarStock]="true"></app-product-card>
@@ -16,8 +17,11 @@
         </div>
       }
   </section>
+  }@else {
+    <p class="no-products">Ningun producto cumple con los filtros</p>
+  }
 } @else {
-  <p id="no-products">No hay productos cargados.</p>
+  <p class="no-products">No hay productos cargados.</p>
 }
 
 <app-products-refiner [products]="this.products" [categories]="this.categories" (outputProducts)="refinedProducts = $event"></app-products-refiner>

@@ -1,5 +1,8 @@
 @if (this.categories.length > 0) {
-    <section id="category-list">
+    @if (this.refinedCategories.length === 0) {
+        <p class="no-categories">Ninguna categoria cumple con los filtros</p>
+    }@else {
+        <section id="category-list">
         @for (c of refinedCategories; track c.id) {
             <div class="category-card">
                 <app-category-card [category]="c"></app-category-card>
@@ -16,8 +19,9 @@
             </div>
         }
     </section>
+    }
 } @else {
-    <p id="no-categories">No hay categorias cargadas.</p>
+    <p class="no-categories">No hay categorias cargadas.</p>
 }
 
 <app-category-refiner [categories]="this.categories" (outputCategories)="refinedCategories = $event"></app-category-refiner>
