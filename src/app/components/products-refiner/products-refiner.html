@@ -3,17 +3,17 @@
         <h5 class="refined-form-title">Filtrado</h5>
         <fieldset class="filter-fieldset">
             <label for="name-filter">Nombre</label>
-            <input type="text" id="name-filter" [(ngModel)]="nameFilter" (ngModelChange)="refineProducts()">
+            <input type="text" id="name-filter" [(ngModel)]="nameFilter" (ngModelChange)="onFilterChange()">
         </fieldset>
 
         <fieldset class="filter-fieldset">
             <label for="brand-filter">Marca</label>
-            <input type="text" id="brand-filter" [(ngModel)]="brandFilter" (ngModelChange)="refineProducts()">
+            <input type="text" id="brand-filter" [(ngModel)]="brandFilter" (ngModelChange)="onFilterChange()">
         </fieldset>
 
         <fieldset class="filter-fieldset">
             <label for="price-filter">Tope Precio</label>
-            <select id="price-filter" [(ngModel)]="priceFilter" (ngModelChange)="refineProducts()">
+            <select id="price-filter" [(ngModel)]="priceFilter" (ngModelChange)="onFilterChange()">
                 <option value=0>Gratuito</option>
                 <option value=100000>100.000</option>
                 <option value=1000000>1.000.000</option>
@@ -27,7 +27,7 @@
             <mat-form-field class="mat-field" appearance="fill">
                 <mat-label>Categorías</mat-label>
                 <mat-select multiple id="category-filter" panelClass="custom-select-panel" [(ngModel)]="categoryFilter"
-                    (ngModelChange)="refineProducts()">
+                    (ngModelChange)="onFilterChange()">
                     @for (category of this.categories(); track $index) {
                     <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
                     }
@@ -40,8 +40,7 @@
         <h5 class="refined-form-title">Ordenamiento</h5>
         <fieldset class="">
             <label for="name-order">Orden Alfabetico</label>
-            <select id="name-order" [(ngModel)]="nameSort" (ngModelChange)="refineProducts()">
-                <option value="">Orden Alfabetico</option>
+            <select id="name-order" [(ngModel)]="nameSort" (ngModelChange)="onFilterChange()">
                 <option value="asc">A-Z</option>
                 <option value="desc">Z-A</option>
             </select>
@@ -49,8 +48,7 @@
 
         <fieldset class="">
             <label for="price-order">Por Precio</label>
-            <select id="price-order" [(ngModel)]="priceSort" (ngModelChange)="refineProducts()">
-                <option value="">Precio</option>
+            <select id="price-order" [(ngModel)]="priceSort" (ngModelChange)="onFilterChange()">
                 <option value="asc">Desde mas barato</option>
                 <option value="desc">Desde mas caro</option>
             </select>

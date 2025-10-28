@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { Category } from '../../models/category';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-products-refiner',
@@ -25,6 +26,7 @@ export class ProductsRefiner implements OnInit{
   products = input.required<Product[]>()
   categories = input.required<Category[]>()
   outputProducts = output<Product[]>()
+  filterChange = new Subject<void>()
   refinedProducts!: Product[]
 
 
@@ -39,6 +41,11 @@ export class ProductsRefiner implements OnInit{
 
   ngOnInit(): void {
     this.refinedProducts = [...this.products()]
+    this.filterChange.pipe(debounceTime(500)).subscribe(() => {this.refineProducts()})
+  }
+
+  onFilterChange() {
+    this.filterChange.next()
   }
 
   filterProducts() {

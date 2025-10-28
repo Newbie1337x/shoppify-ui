@@ -70,6 +70,6 @@
       <h2>Cargar productos</h2>
       <p>Completa el formulario para sumar un nuevo producto al catalogo.</p>
     </div>
-    <app-product-form (change)="renderProducts()"></app-product-form>
+    <app-product-form [products]="refinedProducts" (change)="renderProducts()"></app-product-form>
   </section>
 </div>

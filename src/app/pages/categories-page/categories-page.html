@@ -1,0 +1,33 @@
+@if (this.categories.length > 0) {
+    @if (this.refinedCategories.length === 0) {
+        <p class="no-categories">Ninguna categoria cumple con los filtros</p>
+    }@else {
+        <section id="category-list">
+        @for (c of refinedCategories; track c.id) {
+            <div class="category-card">
+                <app-category-card [category]="c"></app-category-card>
+                <div class="actions">
+                    <button class="btn-delete" (click)="deleteCategory(c.id)">
+                        <span class="btn-icon">🗑️</span>
+                        <span class="btn-text">Borrar</span>
+                    </button>
+                    <button class="btn-edit" (click)="editCategory(c.id)">
+                        <span class="btn-icon">✏️</span>
+                        <span class="btn-text">Editar</span>
+                    </button>
+                </div>
+            </div>
+        }
+    </section>
+    }
+} @else {
+    <p class="no-categories">No hay categorias cargadas.</p>
+}
+
+<app-category-refiner [categories]="this.categories" (outputCategories)="refinedCategories = $event"></app-category-refiner>
+
+<section id="add-categories">
+    <h3>Cargar Productos</h3>
+
+    <app-category-form [categories]="categories" (change)="renderCategories()"></app-category-form>
+</section>

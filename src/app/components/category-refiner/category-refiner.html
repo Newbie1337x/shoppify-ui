@@ -1,0 +1,20 @@
+<section id="refined-form">
+    <section id="filter-section">
+        <h5 class="refined-form-title">Filtrado</h5>
+        <fieldset class="filter-fieldset">
+            <label for="name-filter">Nombre</label>
+            <input type="text" id="name-filter" [(ngModel)]="nameFilter" (ngModelChange)="onFilterChange()">
+        </fieldset>
+    </section>
+
+    <section id="order-section">
+        <h5 class="refined-form-title">Ordenamiento</h5>
+        <fieldset class="">
+            <label for="name-order">Orden Alfabetico</label>
+            <select id="name-order" [(ngModel)]="nameSort" (ngModelChange)="onFilterChange()">
+                <option value="asc">A-Z</option>
+                <option value="desc">Z-A</option>
+            </select>
+        </fieldset>
+    </section>
+</section>

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, output } from '@angular/core';
+import { Component, HostListener, input, OnInit, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,6 +37,7 @@ export class ProductForm implements OnInit {
   repeatedProduct!: Product | undefined
   repeatedFields!: string[] | undefined
 
+  products = input.required<Product[]>()
   categories!: Category[]
 
   change = output<void>()
@@ -90,13 +91,11 @@ export class ProductForm implements OnInit {
     }
 
     combineLatest([
-      this.productService.getList(),
       this.sku.valueChanges.pipe(startWith(this.sku.value), debounceTime(300), distinctUntilChanged()),
       this.barcode.valueChanges.pipe(startWith(this.barcode.value), debounceTime(300), distinctUntilChanged())
     ]).pipe(
-      filter(([products]) => !!products),
-      map(([products, sku, barcode]) => {
-        const product = products.find(p =>
+      map(([sku, barcode]) => {
+        const product = this.products().find(p =>
           p.id !== Number(this.id) &&
           (p.sku?.trim().toLowerCase() === sku?.trim().toLowerCase() ||
             p.barcode?.trim().toLowerCase() === barcode?.trim().toLowerCase())
@@ -214,6 +213,7 @@ export class ProductForm implements OnInit {
               confirmButtonColor: "#ff7543"
             }).then((res) => {
               if (res.isConfirmed) {
+                this.form.reset()
                 this.change.emit()
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }

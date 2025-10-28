@@ -12,7 +12,7 @@
         <label for="name-input">Nombre*</label>
         <input type="text" id="name-input" formControlName="name">
 
-        @if(this.name.touched) {
+        @if(this.name.dirty) {
             @if (this.name.hasError("required") || this.name.hasError("pattern")) {
                 <h5>El nombre es obligatorio</h5>
             }@else if (this.name.hasError("minlength") || this.name.hasError("maxlength")) {
@@ -26,7 +26,7 @@
         <label for="price-input">Precio*</label>
         <input type="number" id="price-input" formControlName="price">
 
-        @if(this.price.touched) {
+        @if(this.price.dirty) {
             @if (this.price.hasError("required")) {
                 <h5>El precio es obligatorio</h5>
             }@else if (this.price.hasError("max") || this.price.hasError("min")) {
@@ -40,7 +40,7 @@
         <label for="unit-price-input">Precio Unitario*</label>
         <input type="number" id="unit-price-input" formControlName="unitPrice">
 
-        @if(this.unitPrice.touched) {
+        @if(this.unitPrice.dirty) {
             @if (this.unitPrice.hasError("required")) {
                 <h5>El precio unitario es obligatorio</h5>
             }@else if (this.unitPrice.hasError("max") || this.unitPrice.hasError("min")) {
@@ -54,7 +54,7 @@
         <label for="stock-input">Stock*</label>
         <input type="number" id="stock-input" formControlName="stock">
 
-        @if(this.stock.touched) {
+        @if(this.stock.dirty) {
             @if (this.stock.hasError("required")) {
                 <h5>El stock es obligatorio</h5>
             }@else if (this.stock.hasError("max") || this.stock.hasError("min")) {
@@ -68,7 +68,7 @@
         <label for="sku-input">SKU*</label>
         <input type="text" id="sku-input" formControlName="sku">
 
-        @if(this.sku.touched) {
+        @if(this.sku.dirty) {
             @if (this.sku.hasError("required") || this.sku.hasError("pattern")) {
                 <h5>El SKU es obligatorio</h5>
             }@else if (this.sku.hasError("minlength") || this.sku.hasError("maxlength")) {
@@ -84,7 +84,7 @@
         <label for="barcode-input">Codigo de Barras*</label>
         <input type="text" id="barcode-input" formControlName="barcode">
 
-        @if(this.barcode.touched) {
+        @if(this.barcode.dirty) {
             @if (this.barcode.hasError("required") || this.barcode.hasError("pattern")) {
                 <h5>El barcode es obligatorio</h5>
             }@else if (this.barcode.hasError("minlength") || this.barcode.hasError("maxlength")) {
@@ -103,7 +103,7 @@
             {{this.description.value.length}}/500
         </h6>
 
-        @if(this.description.touched && this.description.hasError("maxlength")) {
+        @if(this.description.dirty && this.description.hasError("maxlength")) {
             <h5>La descripcion debe tener un maximo de 500 caracteres</h5>
         }
     </fieldset>
@@ -113,7 +113,7 @@
         <label for="brand-input">Marca*</label>
         <input type="text" id="brand-input" formControlName="brand">
 
-        @if(this.brand.touched) {
+        @if(this.brand.dirty) {
             @if (this.brand.hasError("required") || this.brand.hasError("pattern")) {
                 <h5>La marca es obligatoria</h5>
             }@else if (this.brand.hasError("minlength") || this.brand.hasError("maxlength")) {
@@ -140,7 +140,7 @@
             </mat-select>
         </mat-form-field>
 
-        @if (this.categoryControl.touched && this.categoryControl.hasError('required')){
+        @if (this.categoryControl.dirty && this.categoryControl.hasError('required')){
             <h5>Se debe elegir al menos una categoria</h5>
         }
     </fieldset>
