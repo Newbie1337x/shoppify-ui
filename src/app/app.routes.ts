@@ -7,6 +7,7 @@ import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
 import { ProductsPage } from './pages/products-page/products-page';
 import { CategoriesPage } from './pages/categories-page/categories-page';
+import { EditCategoryPage } from './pages/edit-category-page/edit-category-page';
 
 export const routes: Routes = [
 
@@ -29,7 +30,8 @@ export const routes: Routes = [
       { path: 'categories/:id', component: SearchResults },
       { path: 'products', component: ProductsPage},
       { path: 'products/edit/:id', component: EditProductPage},
-      { path: 'categories', component: CategoriesPage}
+      { path: 'categories', component: CategoriesPage},
+      { path: 'categories/edit/:id', component: EditCategoryPage}
     ]
   },
 ];

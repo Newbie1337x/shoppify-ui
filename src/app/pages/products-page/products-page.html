@@ -25,5 +25,5 @@
 <section id="add-products">
   <h3>Cargar Productos</h3>
 
-  <app-product-form (change)="renderProducts()"></app-product-form>
+  <app-product-form [products]="refinedProducts" (change)="renderProducts()"></app-product-form>
 </section>
