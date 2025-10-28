@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { SearchResults } from './pages/search-results/search-results';
-import { EditProductPage } from './pages/edit-product-page/edit-product-page';
 import { Login } from './pages/login/login';
 import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
@@ -29,10 +27,7 @@ export const routes: Routes = [
     component: Main,
     children: [
       { path: 'home', component:Home},
-      { path: 'search/:q', component: SearchResults },
-      { path: 'categories/:id', component: SearchResults },
       { path: 'products', component: ProductsPage},
-      { path: 'products/:id', component: SearchResults },
       { path: 'profile', component: Profile },
       { path: 'cart', component: CartPage},
       { path: '**', redirectTo: 'home', pathMatch: 'full' }

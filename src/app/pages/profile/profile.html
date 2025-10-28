@@ -9,21 +9,21 @@
       <div class="profile-avatar">
         <img
           class="profile-pic"
-          [src]="user?.img || 'https://placehold.co/160x160?text=Perfil'"
-          [alt]="(user?.firstName || 'Usuario') + ' avatar'"
+          [src]="user.img || 'https://placehold.co/160x160?text=Perfil'"
+          [alt]="(user.firstName || 'Usuario') + ' avatar'"
         />
       </div>
 
       <div class="profile-info">
-        <h2>{{ user?.firstName }} {{ user?.lastName }}</h2>
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
         <dl class="profile-meta">
           <div class="profile-meta-item">
             <dt>Email</dt>
-            <dd>{{ user?.email || 'Sin email disponible' }}</dd>
+            <dd>{{ user.email || 'Sin email disponible' }}</dd>
           </div>
           <div class="profile-meta-item">
             <dt>Fecha de registro</dt>
-            <dd>{{ user.dateOfRegistration ? (user?.dateOfRegistration) : 'Fecha no disponible' }}</dd>
+            <dd>{{ user.dateOfRegistration ? (user.dateOfRegistration) : 'Fecha no disponible' }}</dd>
           </div>
         </dl>
       </div>

@@ -28,11 +28,10 @@ export class ProductsRefiner implements OnInit{
   refinedProducts!: Product[]
 
 
-  nameFilter!: string
+  nameFilter: string = ''
   brandFilter!: string
   priceFilter!: number
   categoryFilter!: string[]
-
   nameSort!: 'asc' | 'desc' | null
   priceSort!: 'asc' | 'desc'| null
 
@@ -94,5 +93,13 @@ export class ProductsRefiner implements OnInit{
     this.filterProducts()
     this.sortProducts()
     this.outputProducts.emit(this.refinedProducts)
+  }
+
+  applySearchTerm(term: string | null | undefined) {
+    this.nameFilter = term?.trim() ?? '';
+    if (!this.refinedProducts) {
+      this.refinedProducts = [...this.products()];
+    }
+    this.refineProducts();
   }
 }
