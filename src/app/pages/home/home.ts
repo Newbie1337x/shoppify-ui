@@ -9,6 +9,7 @@ import { HomeCarousel } from '../../models/homeCarousel';
 import { CarouselComponent, CarouselControlComponent, CarouselIndicatorsComponent, CarouselInnerComponent, CarouselItemComponent } from '@coreui/angular';
 import { CategoryCard } from "../../components/category-card/category-card";
 import { RouterLink } from '@angular/router';
+import { globalParams } from '../../models/filters/globalParams';
 
 
 
@@ -32,6 +33,10 @@ export class Home implements OnInit {
   products: Product[] = [];
   categories:Category[] = [];
   carouselItems:HomeCarousel[] = [];
+  params : globalParams = {
+      page:0,
+      size:5,
+    }
   
 
   constructor(private productService:ProductService, private categoryService:CategoryService, private storeService:StoreService) {
@@ -47,7 +52,8 @@ export class Home implements OnInit {
   renderProducts(): void {
 
     
-    this.productService.getList("?size=5&page=0").subscribe({
+    
+    this.productService.getList(this.params).subscribe({
       next: (products) => {
         this.products = products;
         
@@ -60,7 +66,7 @@ export class Home implements OnInit {
 
 
     renderCategories(): void {
-    this.categoryService.getList("?size=5&page=0").subscribe({
+    this.categoryService.getList(this.params).subscribe({
       next: (categories) => {
         this.categories = categories;
       },

@@ -178,6 +178,11 @@ header button:focus-visible img {
   --cui-avatar-size: 32px;
 }
 
+.header-icons app-user-avatar {
+  display: inline-flex;
+  margin-inline: clamp(1rem, 3vw, 1.75rem);
+}
+
 .header-desplegable {
   max-height: 0;
   overflow: hidden;
@@ -319,6 +324,10 @@ header button:focus-visible img {
 @media (max-width: 600px) {
   .header-top {
     padding: 12px clamp(0.875rem, 5vw, 1.5rem);
+  }
+
+  .header-icons app-user-avatar {
+    margin-inline: 0.75rem;
   }
 
   #logo {

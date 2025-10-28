@@ -1,44 +1,33 @@
 <div class="ua">
-
-@if (!auth.user() || !auth.user()?.img) {
-    <button
-    class="ua-toggle"
-    type="button"
-    aria-label="Cuenta"
-    (click)="toggleMenu()"
-    [attr.aria-expanded]="showMenu">
-    <img class="ua-avatar ua-avatar--placeholder" [src]="'image/user.png'" alt="Usuario" />
-
-  </button>
-}
-
-
-
-@else {
-  
-  <button
-    
-    class="ua-toggle"
-    type="button"
-    aria-label="Cuenta"
-    (click)="toggleMenu()"
-    [attr.aria-expanded]="showMenu">
-    <p class="ua-name">{{auth.user()?.firstName}}</p>
-    <img class="ua-avatar" [src]="auth.user()?.img" alt="Usuario" />
-    
-  </button>
-}
-
-
-
-
-  @if (showMenu && auth.user()) {
-    <ul class="ua-menu" role="menu">
-      <li><a role="menuitem" routerLink="/profile" (click)="hideMenu()">Mi cuenta</a></li>
-      <li><a role="menuitem" routerLink="/Compras" (click)="hideMenu()" >Compras</a></li>
-      <li><a role="menuitem" routerLink="/favo" (click)="hideMenu()">Favoritos</a></li>
-      <li><a role="menuitem" routerLink="/logout" (click)="logout()">Cerrar sesion</a></li>
-  
-    </ul>
+  @if (auth.user()) {
+    <c-dropdown>
+      <button 
+        class="ua-toggle"
+        type="button" 
+        aria-label="Cuenta" 
+        cButton 
+        cDropdownToggle 
+        color="secondary">
+        
+        <p class="ua-name">{{ auth.user()?.firstName }}</p>
+        
+        <img 
+          class="ua-avatar" 
+          [ngClass]="{ 'ua-avatar--placeholder': !auth.user()?.img }"
+          [src]="auth.user()?.img ?? 'image/user.png'" 
+          alt="Usuario"
+        />
+        </button>
+      <ul cDropdownMenu class="ua-menu" role="menu">
+        <li><a routerLink="/profile" cDropdownItem>Mi cuenta</a></li>
+        <li><a routerLink="/Compras" cDropdownItem>Compras</a></li>
+        <li><a routerLink="/favo" cDropdownItem>Favoritos</a></li>
+        <li><a (click)="logout()" cDropdownItem>Cerrar Sesión</a></li>
+      </ul>
+    </c-dropdown>
+  } @else {
+    <button class="ua-toggle" routerLink="auth/login">
+      <img class="ua-avatar ua-avatar--placeholder" [src]="'image/user.png'" alt="Usuario" />
+    </button>
   }
 </div>

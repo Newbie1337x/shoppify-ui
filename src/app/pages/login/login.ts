@@ -40,8 +40,8 @@ export class Login implements OnInit {
         title: "Bienvenido, "+ this.authService.user()?.firstName,
         text: "Has iniciado sesión correctamente.",
         icon: "success",
-        background:"#212121",
-        color:"white"});
+        background:"#f7f7f8",
+        color:"black"});
        },
        error(err) {
          alert("Hubo un error al logearse.")

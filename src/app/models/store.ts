@@ -5,5 +5,6 @@ export interface Store {
   storeName: string;
   adress: string;
   city: string;
+  phone:string
   homeCarousel?:HomeCarousel
 }

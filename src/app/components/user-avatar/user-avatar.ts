@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import Swal from 'sweetalert2';
+  import { DropdownComponent, DropdownMenuDirective, DropdownToggleDirective, DropdownItemDirective, ImgDirective } from '@coreui/angular';                                                                                                                                                                             
+  import { ButtonDirective } from '@coreui/angular'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-avatar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DropdownComponent, DropdownMenuDirective, DropdownToggleDirective, DropdownItemDirective, ButtonDirective, ImgDirective, CommonModule],
+  
   templateUrl: './user-avatar.html',
   styleUrl: './user-avatar.css'
 })
@@ -34,12 +38,11 @@ Swal.fire({
   title: '¿Cerrar sesión?',
   text: 'Tu sesión actual se cerrará',
   icon: 'warning',
-  iconColor: 'white',
+  iconColor: '#6141e8',
   showCancelButton: true,
-  background:"#212121",
-  color:"white",
-  confirmButtonColor: '#575757ff',
-  cancelButtonColor: '#575757ff',
+  background:"#f7f7f8",
+  color:"black",
+
   confirmButtonText: 'Sí, cerrar sesión',
   cancelButtonText: 'Cancelar'
 }).then((result) => {
@@ -48,9 +51,8 @@ Swal.fire({
       title: 'Sesión cerrada',
       text: 'Has salido correctamente de tu cuenta.',
       icon: 'success',
-      background:"#212121",
-  color:"white",
-      confirmButtonColor: '#575757ff',
+      background:"#f7f7f8",
+  color:"black",
       confirmButtonText: 'Aceptar'
     }).then(() => {
       this.auth.logout();

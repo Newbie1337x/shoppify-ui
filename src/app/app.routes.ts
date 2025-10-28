@@ -28,6 +28,7 @@ export const routes: Routes = [
     children: [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
+      { path: 'products/search/:q', component: ProductsPage},
       { path: 'profile', component: Profile },
       { path: 'cart', component: CartPage},
       { path: '**', redirectTo: 'home', pathMatch: 'full' }

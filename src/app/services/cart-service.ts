@@ -33,6 +33,7 @@ export class CartService {
         brand: product.brand,
         imgURL: product.imgURL,
         categories: product.categories,
+        soldQuantity: product.soldQuantity
       })
     }
 
