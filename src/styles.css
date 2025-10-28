@@ -1,9 +1,0 @@
-
-/* CoreUI global CSS removido para evitar conflictos con el footer */
-
-*{
-    padding: 0;
-    margin: 0;
-
-    box-sizing: border-box;
-}

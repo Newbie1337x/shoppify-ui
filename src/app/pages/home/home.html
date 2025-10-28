@@ -1,34 +1,86 @@
-@if (carouselItems.length) {
-  <c-carousel [interval]="0">
-    <c-carousel-inner>
-      @for (item of carouselItems; track item.url) {
-        <c-carousel-item>
-          <img
-            [src]="item.url"
-            alt="{{ item.title }}"
-            class="d-block w-100"
-            loading="lazy"
-          />
-        </c-carousel-item>
+
+     <div class="hero-media">
+      @if (carouselItems.length) {
+        <c-carousel [interval]="6000">
+          <c-carousel-indicators />
+          <c-carousel-inner>
+            @for (item of carouselItems; track item.title) {
+              <c-carousel-item>
+                <img
+                  [src]="item.url"
+                  alt="{{ item.title }}"
+                  class="hero-image"
+                  loading="lazy"
+                />
+              </c-carousel-item>
+            }
+          </c-carousel-inner>
+          <c-carousel-control caption="Anterior" direction="prev"></c-carousel-control>
+          <c-carousel-control caption="Siguiente" direction="next"></c-carousel-control>
+        </c-carousel>
+      } @else {
+        <div class="carousel-placeholder">
+          <span>Estamos preparando nuevas ofertas para ti...</span>
+        </div>
       }
-    </c-carousel-inner>
-    <c-carousel-control caption="Anterior" direction="prev"></c-carousel-control>
-    <c-carousel-control caption="Siguiente" direction="next"></c-carousel-control>
-  </c-carousel>
-}
+    </div>
 
-<h2>Productos mas vendidos</h2>
-<p-carousel class="product-carousel" [value]="products" [numVisible]="6" [numScroll]="6" [circular]="false">
-  <ng-template pTemplate="item" let-p>
-    <app-product-card [product]="p" [isMostrarStock]="true" [isMostrarCuotas]="true"></app-product-card>
-  </ng-template>
-</p-carousel>
+<div class="home-wrapper">
 
-<div id="categories-container">
-  <h2>Categorias mas vistas</h2>
-  <p-carousel class="categories-carousel" [value]="categories" [numVisible]="6" [numScroll]="6" [circular]="false">
-    <ng-template pTemplate="item" let-c>
-      <app-category-card [category]="c"></app-category-card>
-    </ng-template>
-  </p-carousel>
+
+
+  <section class="home-section home-hero">
+    <div class="hero-copy">
+      <span class="hero-chip">Bienvenido a Shoppify</span>
+      <h1>Eleva tu experiencia de compras en linea</h1>
+      <p>
+        Descubre lanzamientos exclusivos, marcas top y recomendaciones pensadas para ti. 
+        Actualizamos nuestro catalogo cada semana para que siempre encuentres algo nuevo.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/search/novedades" class="btn btn-primary">Explorar productos</a>
+        <a routerLink="/search/ofertas" class="btn btn-ghost">Ver promociones</a>
+      </div>
+    </div>
+
+ 
+  </section>
+
+  @if (products.length) {
+    <section class="home-section product-showcase">
+      <div class="section-header">
+        <h2>Productos que pueden interesarte</h2>
+        <a routerLink="/search/tendencias" class="section-link">Ver todo</a>
+      </div>
+      <div class="product-grid">
+        @for (item of products; track $index) {
+          <app-product-card [product]="item"></app-product-card>
+        }
+      </div>
+    </section>
+  } @else {
+    <section class="home-section empty-state">
+      <h2>Estamos cargando los productos</h2>
+      <p>En instantes veras las mejores recomendaciones para ti.</p>
+    </section>
+  }
+
+  @if (categories.length) {
+    <section class="home-section category-showcase" id="categorias">
+      <div class="section-header">
+        <h2>Categorias destacadas</h2>
+        <a routerLink="/search/categorias" class="section-link">Explorar categorias</a>
+      </div>
+      <div class="category-grid">
+        @for (item of categories; track $index) {
+          <app-category-card [category]="item"></app-category-card>
+        }
+      </div>
+    </section>
+  } @else {
+    <section class="home-section empty-state">
+      <h2>Construimos nuevas colecciones</h2>
+      <p>Muy pronto encontraras categorias disponibles para navegar.</p>
+    </section>
+  }
 </div>
