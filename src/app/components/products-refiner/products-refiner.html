@@ -41,7 +41,6 @@
         <fieldset class="">
             <label for="name-order">Orden Alfabetico</label>
             <select id="name-order" [(ngModel)]="nameSort" (ngModelChange)="refineProducts()">
-                <option value="">Orden Alfabetico</option>
                 <option value="asc">A-Z</option>
                 <option value="desc">Z-A</option>
             </select>
@@ -50,7 +49,6 @@
         <fieldset class="">
             <label for="price-order">Por Precio</label>
             <select id="price-order" [(ngModel)]="priceSort" (ngModelChange)="refineProducts()">
-                <option value="">Precio</option>
                 <option value="asc">Desde mas barato</option>
                 <option value="desc">Desde mas caro</option>
             </select>

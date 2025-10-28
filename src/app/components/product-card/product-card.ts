@@ -14,7 +14,6 @@ export class ProductCard {
 @Input() product!: Product
 @Input() isMostrarStock: boolean = false
 @Input() isMostrarCuotas: boolean = false
-
 constructor(private router:Router){}
 
 getDetails(id: number){
