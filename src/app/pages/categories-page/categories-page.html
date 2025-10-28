@@ -17,12 +17,10 @@
         }
     </section>
 } @else {
-<p id="no-categories">No hay categorias cargadas.</p>
+    <p id="no-categories">No hay categorias cargadas.</p>
 }
 
-<!--<app-products-refiner [products]="this.products" [categories]="this.categories"
-    (outputProducts)="refinedProducts = $event"></app-products-refiner>
--->
+<app-category-refiner [categories]="this.categories" (outputCategories)="refinedCategories = $event"></app-category-refiner>
 
 <section id="add-categories">
     <h3>Cargar Productos</h3>

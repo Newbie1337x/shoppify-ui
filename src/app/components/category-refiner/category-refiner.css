@@ -1,0 +1,207 @@
+:host {
+  display: block;
+  min-height: auto;
+  color: #f5f5f7;
+  padding: 1rem 1.5rem;
+}
+
+#refined-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  background: #1a1a1a;
+  margin: 1vw 5vw;
+  padding: 1.5vw;
+  border-radius: 50px;
+}
+
+.refined-form-title {
+  max-width: 900px;
+  margin: 0 auto 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+#filter-section .refined-form-title {
+  grid-column: 1 / -1;
+  margin-bottom: 0.75rem;
+}
+
+.refined-form-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #ff7543 0%, #ff5a6d 100%);
+  border-radius: 999px;
+}
+
+#filter-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: 32px;
+  background: rgba(33, 33, 33, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+}
+
+#filter-section .filters-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.filter-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.filter-fieldset label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #e5e4ea;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.filter-fieldset input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.9);
+  font-size: 0.8rem;
+  color: #f7f7f9;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.filter-fieldset input:focus {
+  outline: none;
+  border-color: #ff7543;
+  background: rgba(28, 28, 28, 0.95);
+  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+}
+
+.filter-fieldset input::placeholder {
+  color: #8f8f93;
+}
+
+/* Input específico para filtrado (el del medio) */
+.filter-fieldset:nth-child(2) input {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#order-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: 32px;
+  background: rgba(33, 33, 33, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+}
+
+#order-section .order-container {
+  display: grid;
+  grid-template-columns: repeat(2, 180px);
+  gap: 0.6rem;
+  width: auto;
+}
+
+#order-section .refined-form-title {
+  margin-bottom: 0.75rem;
+}
+
+#order-section fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+#order-section fieldset label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #e5e4ea;
+  line-height: 1.2;
+}
+
+#order-section fieldset select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  background: rgba(18, 18, 18, 0.9);
+  font-size: 0.8rem;
+  color: #f7f7f9;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff7543' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  padding-right: 2.5rem;
+}
+
+#order-section fieldset select:hover {
+  background-color: rgba(12, 12, 12, 0.95);
+}
+
+#order-section fieldset select:focus {
+  outline: none;
+  border-color: #ff7543;
+  background: rgba(28, 28, 28, 0.95);
+  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+}
+
+#order-section fieldset select option {
+  background: rgba(18, 18, 18, 0.95);
+  color: #f7f7f9;
+  padding: 0.5rem;
+  transition: background 0.2s ease, font-size 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  #refined-form {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25vw;
+  }
+
+  #filter-section .filters-container {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  #order-section .order-container {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 280px;
+  }
+}

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CategoryCard } from '../../components/category-card/category-card';
 import { CategoryForm } from '../../components/category-form/category-form';
+import { CategoryRefiner } from '../../components/category-refiner/category-refiner';
 
 @Component({
   selector: 'app-categories-page',
-  imports: [CategoryCard, CategoryForm],
+  imports: [CategoryCard, CategoryForm, CategoryRefiner],
   templateUrl: './categories-page.html',
-  styleUrl: './categories-page.css'
+  styleUrl: './categories-page.css',
 })
 export class CategoriesPage implements OnInit {
   categories: Category[] = []
