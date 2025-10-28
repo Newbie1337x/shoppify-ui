@@ -47,7 +47,7 @@ export class Register implements OnInit{
     const { firstName, lastName, dni, phone, email, password } = this.fg.value;
 
     const register: RegisterPayload = {
-      user: { firstName, lastName, dni, phone },
+      user: { firstName, lastName, dni, phone,email},
       credentials: { email, password }
     };
 

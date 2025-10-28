@@ -1,53 +1,76 @@
 <div class="profile-page">
+  <section class="profile-hero">
+    <h1>Tu perfil</h1>
+    <p class="profile-subtitle">Gestiona tus datos personales y accesos desde un solo lugar.</p>
+  </section>
 
-  <div class="profile-header">
-    <h1>Perfil de Usuario</h1>
-  </div>
+  <section class="profile-main">
+    <article class="profile-card" aria-label="Resumen del usuario">
+      <div class="profile-avatar">
+        <img
+          class="profile-pic"
+          [src]="user?.img || 'https://placehold.co/160x160?text=Perfil'"
+          [alt]="(user?.firstName || 'Usuario') + ' avatar'"
+        />
+      </div>
 
-  <section class="user-profile">
-  <div class="profile-card">
-    <img src={{user.img}} alt="Foto de perfil" class="profile-pic">
-    <h3>{{user.firstName}} {{user.lastName}}</h3>
-    <p class="email"> Email: </p>        <!-- Completar -->
-    <p class="register-date"> Fecha Registro</p>   <!-- Completar -->
+      <div class="profile-info">
+        <h2>{{ user?.firstName }} {{ user?.lastName }}</h2>
+        <dl class="profile-meta">
+          <div class="profile-meta-item">
+            <dt>Email</dt>
+            <dd>{{ user?.email || 'Sin email disponible' }}</dd>
+          </div>
+          <div class="profile-meta-item">
+            <dt>Fecha de registro</dt>
+            <dd>{{ user.dateOfRegistration ? (user?.dateOfRegistration) : 'Fecha no disponible' }}</dd>
+          </div>
+        </dl>
+      </div>
 
-    <button class="btn-edit" (click)="editarPerfil()">
-      Editar perfil
-    </button>
-  </div>
+      <div class="profile-actions">
+        <button class="btn-edit" type="button" (click)="editarPerfil()">Editar perfil</button>
+      </div>
+    </article>
 
-  <div class="account-settings">
-    <h2>Configuración de la cuenta</h2>
-    <div class="setting-item">
-      <button class="btn-setting">Editar configuración</button>
-      <p class="setting-desc">Gestiona tu correo, contraseña y preferencias de cuenta.</p>
+    <nav class="account-settings" aria-label="Accesos rapidos de la cuenta">
+      <h2>Configuracion de la cuenta</h2>
+      <p class="account-description">Accede rapidamente a las secciones mas utilizadas.</p>
+      <div class="setting-grid">
+        <button class="setting-card" type="button">
+          <span class="setting-title">Editar configuracion</span>
+          <span class="setting-desc">Gestiona correo, contrasena y preferencias.</span>
+        </button>
+        <button class="setting-card" type="button">
+          <span class="setting-title">Ver mis compras</span>
+          <span class="setting-desc">Consulta tu historial de pedidos.</span>
+        </button>
+        <button class="setting-card" type="button">
+          <span class="setting-title">Centro de ayuda</span>
+          <span class="setting-desc">Obten soporte o revisa preguntas frecuentes.</span>
+        </button>
+      </div>
+    </nav>
+  </section>
+
+  <section class="wish-list">
+    <div class="wish-header">
+      <h2>Tus deseados</h2>
+      <p class="wish-subtitle">Un vistazo rapido a los productos que guardaste.</p>
     </div>
-    <div class="setting-item">
-      <button class="btn-setting">Ver mis compras</button>
-      <p class="setting-desc">Consulta tu historial de pedidos.</p>
-    </div>
-    <div class="setting-item">
-      <button class="btn-setting">Ayuda</button>
-      <p class="setting-desc">Obtén soporte o revisa las preguntas frecuentes.</p>
-    </div>
-  </div>
-</section>
 
-    <section class="wish-list">
-      <h2>Tus Deseados</h2>
-      @if (wishList.length > 0) {
-        <div class="wish-items">
-          @for (item of wishList; track item.id) {
-            <app-product-card [product]="item"></app-product-card>
-          }
-        </div>
-        } @else {
-        <p>No tienes productos en tus deseados aún.</p>
-      }
-      @if(wishList.length > displayCount){
-        <button (click)="verMas()">Ver más</button>
-      }
-    </section>
-  </div>
+    @if (wishList.length > 0) {
+      <div class="wish-items">
+        @for (item of wishList; track item.id) {
+          <app-product-card [product]="item"></app-product-card>
+        }
+      </div>
+    } @else {
+      <p class="wish-empty">Todavia no tienes productos guardados.</p>
+    }
 
-
+    @if (wishList.length > displayCount) {
+      <button class="wish-more" type="button" (click)="verMas()">Ver mas</button>
+    }
+  </section>
+</div>
