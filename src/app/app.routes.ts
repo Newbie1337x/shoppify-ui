@@ -4,10 +4,9 @@ import { EditProductPage } from './pages/edit-product-page/edit-product-page';
 import { Login } from './pages/login/login';
 import { Main } from './layouts/main/main';
 import { Auth } from './layouts/auth/auth';
-import { Profile } from './pages/profile/profile';
-import { CartPage } from './pages/cart-page/cart-page';
+import { Register } from './pages/register/register';
+import { Home } from './pages/home/home';
 
-import { ProductsPage } from './pages/products-page/products-page';
 
 export const routes: Routes = [
   
@@ -16,6 +15,7 @@ export const routes: Routes = [
     component: Auth,
     children: [
       { path: 'login', component: Login },
+      { path: 'register', component: Register },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
     ]
@@ -25,14 +25,13 @@ export const routes: Routes = [
     path: '',
     component: Main,
     children: [
-      { path: '', redirectTo: '/products', pathMatch: 'full' },
+      { path: 'home', component:Home},
       { path: 'search/:q', component: SearchResults },
       { path: 'categories/:id', component: SearchResults },
-      { path: 'products/edit/:id', component: EditProductPage},
-      { path: 'profile', component: Profile},
-      { path: 'cart', component: CartPage},
-      { path: 'products', component: ProductsPage},
-      { path: 'products/edit/:id', component: EditProductPage}
+      { path: 'products/:id', component: SearchResults },
+      { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  
+
     ]
   },
 ];

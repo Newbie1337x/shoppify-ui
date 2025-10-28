@@ -1,0 +1,34 @@
+@if (carouselItems.length) {
+  <c-carousel [interval]="0">
+    <c-carousel-inner>
+      @for (item of carouselItems; track item.url) {
+        <c-carousel-item>
+          <img
+            [src]="item.url"
+            alt="{{ item.title }}"
+            class="d-block w-100"
+            loading="lazy"
+          />
+        </c-carousel-item>
+      }
+    </c-carousel-inner>
+    <c-carousel-control caption="Anterior" direction="prev"></c-carousel-control>
+    <c-carousel-control caption="Siguiente" direction="next"></c-carousel-control>
+  </c-carousel>
+}
+
+<h2>Productos mas vendidos</h2>
+<p-carousel class="product-carousel" [value]="products" [numVisible]="6" [numScroll]="6" [circular]="false">
+  <ng-template pTemplate="item" let-p>
+    <app-product-card [product]="p" [isMostrarStock]="true" [isMostrarCuotas]="true"></app-product-card>
+  </ng-template>
+</p-carousel>
+
+<div id="categories-container">
+  <h2>Categorias mas vistas</h2>
+  <p-carousel class="categories-carousel" [value]="categories" [numVisible]="6" [numScroll]="6" [circular]="false">
+    <ng-template pTemplate="item" let-c>
+      <app-category-card [category]="c"></app-category-card>
+    </ng-template>
+  </p-carousel>
+</div>

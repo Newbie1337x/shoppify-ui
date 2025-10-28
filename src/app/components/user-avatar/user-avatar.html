@@ -1,19 +1,44 @@
 <div class="ua">
-  <button
+
+@if (!auth.user() || !auth.user()?.img) {
+    <button
     class="ua-toggle"
     type="button"
     aria-label="Cuenta"
     (click)="toggleMenu()"
     [attr.aria-expanded]="showMenu">
-    <img class="ua-avatar" [src]="avatarSrc" alt="Usuario" />
-  </button>
+    <img class="ua-avatar" [src]="'image/user.png'" alt="Usuario" />
 
-  @if (showMenu && user) {
+  </button>
+}
+
+
+
+@else {
+  
+  <button
+    
+    class="ua-toggle"
+    type="button"
+    aria-label="Cuenta"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="showMenu">
+    <p class="ua-name">{{auth.user()?.firstName}}</p>
+    <img class="ua-avatar" [src]="auth.user()?.img" alt="Usuario" />
+    
+  </button>
+}
+
+
+
+
+  @if (showMenu && auth.user()) {
     <ul class="ua-menu" role="menu">
       <li><a role="menuitem" routerLink="/cuenta" (click)="hideMenu()">Mi cuenta</a></li>
       <li><a role="menuitem" routerLink="/compras" (click)="hideMenu()">Compras</a></li>
       <li><a role="menuitem" routerLink="/favo" (click)="hideMenu()">Favoritos</a></li>
-      <li><a role="menuitem" routerLink="/logout" (click)="hideMenu()">Cerrar sesion</a></li>
+      <li><a role="menuitem" routerLink="/logout" (click)="logout()">Cerrar sesion</a></li>
+  
     </ul>
   }
 </div>
