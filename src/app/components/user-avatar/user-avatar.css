@@ -1,46 +1,87 @@
-﻿:host { display: inline-flex; }
+:host {
+  display: inline-flex;
+}
 
-.ua { position: relative; display: inline-flex; align-items: center; }
+.ua {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
 
 .ua-toggle {
   background: transparent;
   border: 0;
   line-height: 1;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
+  color: #4f46e5;
   justify-content: center;
   cursor: pointer;
   padding: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+  position: relative;
 }
 
 .ua-avatar {
-  width: 30px;
-  height: 30px;
-  object-fit: contain; /* igual que el carrito */
-  filter: brightness(0) invert(1);
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
   display: block;
-  border-radius: 50%; /* si quieres circular */
-  transition: transform 0.25s ease, filter 0.25s ease;
+  transition: transform 0.22s ease, filter 0.22s ease;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.15);
 }
 
-.ua-toggle:hover .ua-avatar {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 6px #ffffff);
+.ua-avatar--placeholder {
+  filter: brightness(0) saturate(100%) invert(16%) sepia(77%) saturate(1384%) hue-rotate(229deg) brightness(96%) contrast(97%);
+  background: rgba(79, 70, 229, 0.12);
+}
+
+.ua-name {
+  margin: 0;
+  color: #1f2937;
+  max-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ua-toggle::after {
+  display: none;
+}
+
+.ua-toggle:focus,
+.ua-toggle:focus-visible,
+.ua-toggle:focus-within {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.ua-toggle:hover .ua-avatar,
+.ua-toggle:focus-visible .ua-avatar {
+  transform: scale(1.08);
+  filter: drop-shadow(0 12px 26px rgba(79, 70, 229, 0.22));
+}
+
+.ua-toggle:hover .ua-avatar--placeholder,
+.ua-toggle:focus-visible .ua-avatar--placeholder {
+  filter: brightness(0) saturate(100%) invert(16%) sepia(77%) saturate(1384%) hue-rotate(229deg) brightness(96%) contrast(97%) drop-shadow(0 12px 26px rgba(79, 70, 229, 0.22));
 }
 
 .ua-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   right: 0;
-  min-width: 180px;
-  background: #fff;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 6px 0;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  min-width: 190px;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 1rem;
+  padding: 0.35rem 0;
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.14);
   list-style: none;
   margin: 0;
   z-index: 1080;
@@ -48,9 +89,14 @@
 
 .ua-menu a {
   display: block;
-  padding: 8px 12px;
+  padding: 0.75rem 1rem;
   text-decoration: none;
   color: inherit;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-.ua-menu a:hover { background: #f5f5f5; }
+.ua-menu a:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: #4338ca;
+}

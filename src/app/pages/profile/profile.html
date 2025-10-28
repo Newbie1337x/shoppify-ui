@@ -1,0 +1,76 @@
+<div class="profile-page">
+  <section class="profile-hero">
+    <h1>Tu perfil</h1>
+    <p class="profile-subtitle">Gestiona tus datos personales y accesos desde un solo lugar.</p>
+  </section>
+
+  <section class="profile-main">
+    <article class="profile-card" aria-label="Resumen del usuario">
+      <div class="profile-avatar">
+        <img
+          class="profile-pic"
+          [src]="user.img || 'https://placehold.co/160x160?text=Perfil'"
+          [alt]="(user.firstName || 'Usuario') + ' avatar'"
+        />
+      </div>
+
+      <div class="profile-info">
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+        <dl class="profile-meta">
+          <div class="profile-meta-item">
+            <dt>Email</dt>
+            <dd>{{ user.email || 'Sin email disponible' }}</dd>
+          </div>
+          <div class="profile-meta-item">
+            <dt>Fecha de registro</dt>
+            <dd>{{ user.dateOfRegistration ? (user.dateOfRegistration) : 'Fecha no disponible' }}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn-edit" type="button" (click)="editarPerfil()">Editar perfil</button>
+      </div>
+    </article>
+
+    <nav class="account-settings" aria-label="Accesos rapidos de la cuenta">
+      <h2>Configuracion de la cuenta</h2>
+      <p class="account-description">Accede rapidamente a las secciones mas utilizadas.</p>
+      <div class="setting-grid">
+        <button class="setting-card" type="button">
+          <span class="setting-title">Editar configuracion</span>
+          <span class="setting-desc">Gestiona correo, contrasena y preferencias.</span>
+        </button>
+        <button class="setting-card" type="button">
+          <span class="setting-title">Ver mis compras</span>
+          <span class="setting-desc">Consulta tu historial de pedidos.</span>
+        </button>
+        <button class="setting-card" type="button">
+          <span class="setting-title">Centro de ayuda</span>
+          <span class="setting-desc">Obten soporte o revisa preguntas frecuentes.</span>
+        </button>
+      </div>
+    </nav>
+  </section>
+
+  <section class="wish-list">
+    <div class="wish-header">
+      <h2>Tus deseados</h2>
+      <p class="wish-subtitle">Un vistazo rapido a los productos que guardaste.</p>
+    </div>
+
+    @if (wishList.length > 0) {
+      <div class="wish-items">
+        @for (item of wishList; track item.id) {
+          <app-product-card [product]="item"></app-product-card>
+        }
+      </div>
+    } @else {
+      <p class="wish-empty">Todavia no tienes productos guardados.</p>
+    }
+
+    @if (wishList.length > displayCount) {
+      <button class="wish-more" type="button" (click)="verMas()">Ver mas</button>
+    }
+  </section>
+</div>
