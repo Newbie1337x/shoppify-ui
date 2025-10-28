@@ -1,4 +1,4 @@
-@if (products.length > 0) {
+@if (this.products.length > 0) {
   <section id="productosTest">
     <h2>Productos (Debug)</h2>
 
@@ -14,8 +14,8 @@
           </div>
 
           <div class="actions">
-            <button class="btn-delete" (click)="deleteProducto(p.id)">Borrar</button>
-            <button class="btn-edit" (click)="editProducto(p.id)">Editar</button>
+            <button class="btn-delete" (click)="deleteProduct(p.id)">Borrar</button>
+            <button class="btn-edit" (click)="editProduct(p.id)">Editar</button>
           </div>
         </li>
       }
@@ -34,14 +34,8 @@
   <p class="no-products">No hay productos cargados.</p>
 }
 
+<section id="add-products">
+  <h3>Cargar Productos</h3>
 
-@if (categories.length > 0) {
-  <section class="test-block" id="testCategoryCards">
-    <h3>Categorias (Debug)</h3>
-    <div class="category-grid">
-      @for (cat of categories; track cat.id) {
-        <app-category-card [category]="cat"></app-category-card>
-      }
-    </div>
-  </section>
-}
+  <app-product-form (change)="renderProducts()"></app-product-form>
+</section>

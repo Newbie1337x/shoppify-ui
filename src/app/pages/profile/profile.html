@@ -1,0 +1,53 @@
+<div class="profile-page">
+
+  <div class="profile-header">
+    <h1>Perfil de Usuario</h1>
+  </div>
+
+  <section class="user-profile">
+  <div class="profile-card">
+    <img src={{user.img}} alt="Foto de perfil" class="profile-pic">
+    <h3>{{user.firstName}} {{user.lastName}}</h3>
+    <p class="email"> Email: </p>        <!-- Completar -->
+    <p class="register-date"> Fecha Registro</p>   <!-- Completar -->
+
+    <button class="btn-edit" (click)="editarPerfil()">
+      Editar perfil
+    </button>
+  </div>
+
+  <div class="account-settings">
+    <h2>Configuración de la cuenta</h2>
+    <div class="setting-item">
+      <button class="btn-setting">Editar configuración</button>
+      <p class="setting-desc">Gestiona tu correo, contraseña y preferencias de cuenta.</p>
+    </div>
+    <div class="setting-item">
+      <button class="btn-setting">Ver mis compras</button>
+      <p class="setting-desc">Consulta tu historial de pedidos.</p>
+    </div>
+    <div class="setting-item">
+      <button class="btn-setting">Ayuda</button>
+      <p class="setting-desc">Obtén soporte o revisa las preguntas frecuentes.</p>
+    </div>
+  </div>
+</section>
+
+    <section class="wish-list">
+      <h2>Tus Deseados</h2>
+      @if (wishList.length > 0) {
+        <div class="wish-items">
+          @for (item of wishList; track item.id) {
+            <app-product-card [product]="item"></app-product-card>
+          }
+        </div>
+        } @else {
+        <p>No tienes productos en tus deseados aún.</p>
+      }
+      @if(wishList.length > displayCount){
+        <button (click)="verMas()">Ver más</button>
+      }
+    </section>
+  </div>
+
+

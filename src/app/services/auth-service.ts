@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed} from '@angular/core';
 import { RegisterPayload } from '../models/auth/registerPayload';
 import { AuthResponse } from '../models/auth/authResponse';
 import { environment } from '../../environments/environment';
@@ -8,7 +8,6 @@ import { tap } from 'rxjs';
 import { StorageService } from './storage-service';
 import { Router } from '@angular/router';
 import { User } from '../models/auth/user';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +20,6 @@ export class AuthService {
   isLogged = computed(() => !!this.token())
 
   readonly API_URL = `${environment.apiUrl}/auth`;
-  
 constructor(private http:HttpClient, private storageService:StorageService, private router:Router){
   this.user.set(this.getUser())
   this.permits.set(this.getPermits())
@@ -31,6 +29,13 @@ constructor(private http:HttpClient, private storageService:StorageService, priv
 
 register(payload: RegisterPayload){
 return this.http.post<AuthResponse>(`${this.API_URL}/register`,payload)
+.pipe(tap(rta => 
+  {this.storageService.setSession(rta.token,rta.permits,rta.user)
+  this.user.set(rta.user)
+  this.permits.set(rta.permits)
+  this.token.set(rta.token)
+  this.router.navigate([""]);
+  }))
 .pipe(tap(rta => 
   {this.storageService.setSession(rta.token,rta.permits,rta.user)
   this.user.set(rta.user)
@@ -71,5 +76,3 @@ private getPermits(){
   return this.storageService.getPermits()
 }
 }
-
-
