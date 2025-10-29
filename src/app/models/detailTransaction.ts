@@ -1,8 +1,8 @@
 import { Product } from "./product";
 
 export interface DetailTransaction {
-  id: number;
+  id?: number,
   quantity: number;
   subtotal: number;
-  product: Product;
+  productId: number;
 }

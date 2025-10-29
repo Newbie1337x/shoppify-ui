@@ -1,4 +1,5 @@
 <header>
+
   <div class="header-top">
     <div class="brand-block">
       <button
@@ -32,8 +33,12 @@
         (click)="toggleBusquedaMovil()">
         <img src="image/lupa.png" alt="">
       </button>
+
+
       <app-user-avatar></app-user-avatar>
-      <button type="button" class="icon-button" aria-label="Carrito">
+
+
+      <button type="button" class="icon-button" aria-label="Carrito" routerLink="/cart">
         <img src="image/carrito.png" alt="">
       </button>
     </div>
@@ -42,7 +47,7 @@
   <div class="header-desplegable" [class.show]="mostrarNav">
     <nav id="main-nav" class="header-bottom" aria-label="Navegacion principal">
       <ul>
-        <li id="productos-button"><a routerLink="/Productos">Productos</a></li>
+        <li id="productos-button"><a routerLink="/products">Productos</a></li>
         <li id="categorias-button"><a routerLink="/Categorias">Categorias</a></li>
         <li id="hot-button"><a routerLink="/Hot">Hot</a></li>
         <li id="ayuda-button"><a routerLink="/ayuda">Ayuda</a></li>

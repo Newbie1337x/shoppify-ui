@@ -5,18 +5,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category-service';
-import { ProviderService } from '../../services/provider-service';
+
 import { Category } from '../../models/category';
 import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, startWith } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-product-form',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatButtonModule, MatOptionModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatOptionModule],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css'
 })

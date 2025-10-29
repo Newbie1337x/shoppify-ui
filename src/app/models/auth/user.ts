@@ -5,4 +5,6 @@ export interface User {
   dni: string;
   phone: string;
   img?: string
+  dateOfRegistration?: string
+  email:string
 }

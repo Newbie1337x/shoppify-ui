@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -20,11 +20,28 @@ export abstract class BaseService<T extends { id?: number }> {
     return this.http.get<ResponseJSON<T>>(`${this.getURL()}${query}`);
   }
 
-  getList(query: string = ''){
-    return this.getAll(query).pipe(
-      map((response: ResponseJSON<T>) => this.unwrapEmbeddedList(response?._embedded))
-    );
-  }
+getList(filterParams?: any){ // Es mejor usar un tipo que 'any', como ProductApiParams
+
+
+  const defaultParams = {
+    page: 0,
+    size: 10
+  };
+
+  const finalParams = {
+    ...defaultParams,
+    ...filterParams
+  };
+
+  const params = new HttpParams({ fromObject: finalParams });
+  
+  return this.http.get<ResponseJSON<T>>(this.getURL(), { params }).pipe(
+    map((response: ResponseJSON<T>) =>
+      this.unwrapEmbeddedList(response?._embedded)
+    )
+  );
+}
+
 
   get(id: number): Observable<T> {
     return this.http.get<T>(`${this.getURL()}/${id}`);
