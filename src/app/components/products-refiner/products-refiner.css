@@ -2,17 +2,20 @@
   display: block;
   min-height: auto;
   color: #f5f5f7;
-  padding: 1rem 1.5rem;
+  padding: 2rem 1.5rem;
 }
 
 #refined-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  background: #1a1a1a;
-  margin: 1vw 5vw;
-  padding: 2vw;
-  border-radius: 50px;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, #4338ca);
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 3rem;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .refined-form-title {
@@ -38,7 +41,7 @@
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background: linear-gradient(90deg, #ff7543 0%, #ff5a6d 100%);
+  background: linear-gradient(90deg, #4338ca 0%, #dfb7bb 100%);
   border-radius: 999px;
 }
 
@@ -69,15 +72,12 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff7543' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234338ca' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   padding-right: 2.5rem;
 }
 
-#filter-section select:hover {
-  background-color: rgba(12, 12, 12, 0.95);
-}
 
 .filter-fieldset {
   border: none;
@@ -110,7 +110,7 @@
 .filter-fieldset input:focus,
 .filter-fieldset select:focus {
   outline: none;
-  border-color: #ff7543;
+  border-color: #4338ca !important;
   background: rgba(28, 28, 28, 0.95);
   box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
 }
@@ -131,7 +131,7 @@
 }
 
 #filter-section fieldset.category-fieldset {
-  grid-column: 2;
+  grid-column: 1 / -1;
   margin-top: 0.5rem;
 }
 
@@ -171,7 +171,7 @@
 
 ::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
   background: rgba(28, 28, 28, 0.95);
-  border-color: #ff7543;
+  border-color: #4338ca;
   box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
 }
 
@@ -205,7 +205,7 @@
 }
 
 ::ng-deep .mat-select-arrow {
-  color: #ff7543;
+  color: #4338ca;
 }
 
 ::ng-deep .mat-select-panel {
@@ -238,7 +238,7 @@
 }
 
 ::ng-deep .mat-pseudo-checkbox::after {
-  color: #ff7543 !important;
+  color: #4338ca !important;
   font-size: 1rem;
 }
 
@@ -296,7 +296,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff7543' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234338ca' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   padding-right: 2.5rem;
@@ -308,7 +308,7 @@
 
 #order-section fieldset select:focus {
   outline: none;
-  border-color: #ff7543;
+  border-color: #4338ca;
   background: rgba(28, 28, 28, 0.95);
   box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
 }
