@@ -52,7 +52,8 @@ export class SearchBar implements OnInit {
           const params : ProductParams = {
             productOrCategory:q,
             page:0,
-            size:6
+            size:6,
+            
           }
 
           this.productService.getList(params).subscribe({
@@ -69,7 +70,7 @@ export class SearchBar implements OnInit {
     if (!q) return;
     this.results = [];
 
-    const filters: ProductParams = { productOrCategory: q };
+    const filters: ProductParams = { productOrCategory: q,page:0 };
     this.router.navigate(['/products'], { queryParams: filters });
   }
 
@@ -77,7 +78,7 @@ export class SearchBar implements OnInit {
     this.fg.patchValue({ search: product.name });
     this.results = [];
 
-    const filters: ProductParams = { productOrCategory: product.name };
+    const filters: ProductParams = {productOrCategory: product.name };
     this.router.navigate(['/products'], { queryParams: filters });
   }
 }

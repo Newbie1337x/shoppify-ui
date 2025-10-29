@@ -29,7 +29,8 @@
   width: 32px;
   height: 32px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1;
   display: block;
   transition: transform 0.22s ease, filter 0.22s ease;
   box-shadow: 0 10px 24px rgba(79, 70, 229, 0.15);
