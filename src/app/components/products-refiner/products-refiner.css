@@ -1,28 +1,29 @@
 :host {
   display: block;
   min-height: auto;
-  color: #f5f5f7;
+  color: #1a1a1a;
   padding: 2rem 1.5rem;
+  background: #ffffff;
 }
 
 #refined-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, #4338ca);
+  background: #4338ca;
   margin: 0 auto;
   max-width: 1400px;
   padding: 3rem;
   border-radius: 40px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.05) inset;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .refined-form-title {
   max-width: 900px;
   margin: 0 auto 2.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: black; 
   text-align: center;
   position: relative;
   padding-bottom: 1rem;
@@ -51,21 +52,21 @@
   gap: 0.75rem;
   padding: 1.25rem;
   border-radius: 32px;
-  background: rgba(33, 33, 33, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f3f0ff; 
+  border: 1px solid rgba(67, 56, 202, 0.3);
   backdrop-filter: blur(12px);
-  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.05);
   align-items: start;
 }
 
 #filter-section select {
   width: 100%;
   padding: 0.6rem 0.75rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #c7c7c7;
   border-radius: 12px;
-  background: rgba(18, 18, 18, 0.9);
+  background: #ede8ff; /* Inputs violetas suaves */
   font-size: 0.8rem;
-  color: #f7f7f9;
+  color: #1a1a1a;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   cursor: pointer;
@@ -77,7 +78,6 @@
   background-position: right 0.75rem center;
   padding-right: 2.5rem;
 }
-
 
 .filter-fieldset {
   border: none;
@@ -91,41 +91,39 @@
 .filter-fieldset label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #e5e4ea;
+  color: #1a1a1a;
 }
 
 .filter-fieldset input,
 .filter-fieldset select {
   width: 100%;
   padding: 0.6rem 0.75rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #c7c7c7;
   border-radius: 12px;
-  background: rgba(18, 18, 18, 0.9);
+  background: #ede8ff; /* Inputs violetas */
   font-size: 0.8rem;
-  color: #f7f7f9;
+  color: #1a1a1a;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .filter-fieldset input:focus,
-.filter-fieldset select:focus {
+.filter-fieldset select:focus,
+.filter-fieldset select:hover
+ {
   outline: none;
   border-color: #4338ca !important;
-  background: rgba(28, 28, 28, 0.95);
-  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+  background: #ede8ff !important;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.18);
 }
 
 .filter-fieldset input::placeholder {
-  color: #8f8f93;
-}
-
-.filter-fieldset select:hover {
-  background-color: rgba(12, 12, 12, 0.95);
+  color: #7d7d7d;
 }
 
 .filter-fieldset select option {
-  background: rgba(18, 18, 18, 0.95);
-  color: #f7f7f9;
+  background: #ede8ff;
+  color: #1a1a1a;
   padding: 0.5rem;
   transition: background 0.2s ease, font-size 0.2s ease;
 }
@@ -156,8 +154,8 @@
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-  background: rgba(18, 18, 18, 0.9);
-  border: 1px solid #3a3a3a;
+  background: #ede8ff;
+  border: 1px solid #c7c7c7;
   border-radius: 12px;
   padding: 0.6rem 0.75rem;
   align-items: center;
@@ -166,17 +164,18 @@
 }
 
 ::ng-deep .mat-form-field-appearance-fill:hover .mat-form-field-flex {
-  background: rgba(18, 18, 18, 0.95);
+  background: #4338ca;
+  color: #ffffff;
 }
 
 ::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
-  background: rgba(28, 28, 28, 0.95);
+  background: #ede8ff;
   border-color: #4338ca;
-  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.18);
 }
 
 ::ng-deep .mat-form-field-label {
-  color: #8f8f93 !important;
+  color: #7d7d7d !important;
   font-size: 0.8rem;
   font-weight: 400;
   top: 1.4em;
@@ -192,12 +191,12 @@
 
 ::ng-deep .mat-select-value,
 ::ng-deep .mat-select-value-text {
-  color: #ffffff !important;
+  color: #1a1a1a !important;
   font-size: 0.8rem;
 }
 
 ::ng-deep .mat-select-placeholder {
-  color: #8f8f93 !important;
+  color: #7d7d7d !important;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -209,32 +208,77 @@
 }
 
 ::ng-deep .mat-select-panel {
-  background: rgba(18, 18, 18, 0.98);
-  border: 1px solid #3a3a3a;
+  background: #ede8ff;
+  border: 1px solid #c7c7c7;
   border-radius: 12px;
   margin-top: 0.5rem;
 }
 
 ::ng-deep .mat-option {
-  color: #ffffff !important;
+  color: #1a1a1a;
   font-size: 0.8rem;
   height: 2.5rem;
   transition: background 0.2s ease, font-size 0.15s ease;
 }
 
 ::ng-deep .mat-option:hover {
-  background: rgba(28, 28, 28, 0.95) !important;
+  background: #4338ca !important;
+  color: #ffffff !important;
   font-size: 0.83rem;
 }
 
 ::ng-deep .mat-option.mat-selected {
-  background: rgba(255, 117, 67, 0.08) !important;
+  background: rgba(67, 56, 202, 0.08) !important;
+  color: #1a1a1a !important;
+}
+
+::ng-deep .custom-select-panel {
+  background: #f3f0ff !important;
+  border: 1px solid #3a3a3a !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
+  margin-top: 8px !important;
+  overflow: hidden !important;
+}
+
+::ng-deep .custom-select-panel .mat-option {
   color: #ffffff !important;
+  background: rgba(33, 33, 33, 0.98) !important;
+  padding: 12px 16px !important;
+  height: auto !important;
+  transition: background 0.15s ease !important;
+  font-size: 0.8rem !important;
+}
+
+::ng-deep .custom-select-panel .mat-option:hover {
+  background: rgba(255, 117, 67, 0.15) !important;
+  color: #ffffff !important;
+  font-size: 0.83rem !important;
+}
+
+::ng-deep .custom-select-panel .mat-option.mat-selected {
+  background: rgba(255, 117, 67, 0.25) !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .custom-select-panel .mat-option.mat-selected:hover {
+  background: rgba(255, 117, 67, 0.35) !important;
+}
+
+::ng-deep .custom-select-panel .mat-pseudo-checkbox {
+  border: none !important;
+  background: transparent !important;
+  color: #4338ca !important;
+}
+
+::ng-deep .custom-select-panel .mat-pseudo-checkbox::after {
+  color: #4338ca !important;
 }
 
 ::ng-deep .mat-pseudo-checkbox {
   border: none !important;
   background: transparent !important;
+  color: #4338ca
 }
 
 ::ng-deep .mat-pseudo-checkbox::after {
@@ -246,7 +290,6 @@
   visibility: hidden;
 }
 
-
 #order-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -254,10 +297,10 @@
   gap: 0.75rem;
   padding: 1.25rem;
   border-radius: 32px;
-  background: rgba(33, 33, 33, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f3f0ff; 
+  border: 1px solid rgba(67, 56, 202, 0.3);
   backdrop-filter: blur(12px);
-  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
+  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.05);
   align-items: start;
   padding-bottom: 3rem;
 }
@@ -279,17 +322,17 @@
 #order-section fieldset label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #e5e4ea;
+  color: #1a1a1a;
 }
 
 #order-section fieldset select {
   width: 100%;
   padding: 0.6rem 0.75rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #c7c7c7;
   border-radius: 12px;
-  background: rgba(18, 18, 18, 0.9);
+  background: #ede8ff;
   font-size: 0.8rem;
-  color: #f7f7f9;
+  color: #1a1a1a;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   cursor: pointer;
@@ -303,19 +346,23 @@
 }
 
 #order-section fieldset select:hover {
-  background-color: rgba(12, 12, 12, 0.95);
+  outline: none;
+  border-color: #4338ca !important;
+  background: #ede8ff;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.18);;
+  color: #ffffff;
 }
 
 #order-section fieldset select:focus {
   outline: none;
   border-color: #4338ca;
-  background: rgba(28, 28, 28, 0.95);
-  box-shadow: 0 0 0 3px rgba(255, 117, 67, 0.18);
+  background: #ede8ff;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.18);
 }
 
 #order-section fieldset select option {
-  background: rgba(18, 18, 18, 0.95);
-  color: #f7f7f9;
+  background: #ede8ff;
+  color: #1a1a1a;
   padding: 0.5rem;
   transition: background 0.2s ease, font-size 0.2s ease;
 }

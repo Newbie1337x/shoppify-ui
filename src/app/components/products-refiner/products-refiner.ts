@@ -20,7 +20,7 @@ import { debounceTime, Subject } from 'rxjs';
     FormsModule
   ],
   templateUrl: './products-refiner.html',
-  styleUrl: './products-refiner.css'
+  styleUrl: './products-refiner.css',
 })
 export class ProductsRefiner implements OnInit{
   products = input.required<Product[]>()
