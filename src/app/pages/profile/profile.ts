@@ -2,11 +2,12 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductCard } from "../../components/product-card/product-card";
 import { UserService } from '../../services/user-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/auth/user';
 import { EditProfileForm } from '../../components/edit-profile-form/edit-profile-form';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth-service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,7 @@ export class Profile implements OnInit{
     private uService: UserService,
     private router: Router,
     private dialog: MatDialog,
-    private aService: AuthService
+    private aService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -37,11 +38,9 @@ export class Profile implements OnInit{
       },
       error: (e) =>{
         console.log(e)
-        alert("Error al obtener tu perfil :c")
         this.router.navigate(["/auth/login"])
       }
     })
-    
   }
 
   editarPerfil() {
@@ -57,7 +56,8 @@ export class Profile implements OnInit{
         this.uService.patch(result).subscribe({
           next: () => {
             this.user = result
-            alert('Perfil actualizado con éxito ✅')
+            Swal.fire("Perfil actualizado con éxito.")
+        
           },
           error: (e) => console.error('Error al actualizar el perfil', e)
         })

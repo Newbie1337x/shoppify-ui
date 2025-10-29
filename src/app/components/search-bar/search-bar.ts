@@ -53,7 +53,6 @@ export class SearchBar implements OnInit {
             productOrCategory:q,
             page:0,
             size:6,
-            
           }
 
           this.productService.getList(params).subscribe({
