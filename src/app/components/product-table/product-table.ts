@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output } from '@angular/core';
 import { Product } from '../../models/product';
 import { Category } from '../../models/category';
 import { ProductService } from '../../services/product-service';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductParams } from '../../models/filters/productParams';
+import { SwalService } from '../../services/swal-service';
 
 @Component({
   selector: 'app-product-table',
@@ -15,24 +16,25 @@ import { ProductParams } from '../../models/filters/productParams';
 export class ProductTable implements OnInit{
   products: Product[] = []
   refinedProducts: Product[] = []
-  categories: Category[] = []
+  output = output<Product[]>()
+  params!: ProductParams
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private 
+    private swal: SwalService,
     private route: ActivatedRoute,
     private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (Object.keys(params)) {
+        this.params = params
         this.renderProducts()
         this.renderRefinedProducts(params);
       } else {
         this.renderProducts();
       }
-      this.renderCategories();
     });
   }
 
@@ -40,9 +42,10 @@ export class ProductTable implements OnInit{
     this.productService.getList().subscribe({
       next: (products) => {
         this.products = products;
+        this.output.emit(this.products)
       },
       error: () => {
-        
+        this.swal.error("Ocurrio un error al buscar los productos")
       }
     });
   }
@@ -51,20 +54,10 @@ export class ProductTable implements OnInit{
     this.productService.getList(filters).subscribe({
       next: (data) => {
         this.refinedProducts = data;
+        this.output.emit(this.refinedProducts)
       },
       error: (err) => {
-        
-      }
-    });
-  }
-
-  renderCategories(): void {
-    this.categoryService.getList().subscribe({
-      next: (data) => {
-        this.categories = data;
-      },
-      error: (err) => {
-        console.error('Error al obtener todos los productos:', err);
+        this.swal.error("Ocurrio un error al filtrar los productos")
       }
     });
   }
@@ -72,16 +65,11 @@ export class ProductTable implements OnInit{
   deleteProduct(id: number): void {
     this.productService.delete(id).subscribe({
       next: () => {
-        Swal.fire({
-          title: "Producto eliminado con exito!",
-          icon: "success",
-          confirmButtonText: "Volver",
-          confirmButtonColor: "#ff7543"
-        })
-        this.renderProducts();
+        this.swal.success("Producto eliminado con exito!")
+        this.renderRefinedProducts(this.params);
       },
       error: (err) => {
-        console.error('Error al eliminar el producto:', err);
+        this.swal.error("Ocurrio un error al eliminar el producto")
       }
     });
   }

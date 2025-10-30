@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class SwalService {
-  confirmButtonColor: string = "#ff7543"
+  private confirmButtonColor: string = "#ff7543"
 
   constructor() { }
 

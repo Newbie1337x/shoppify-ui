@@ -4,66 +4,14 @@
     <p class="products-subtitle">Administra el catalogo y mantiene la informacion siempre actualizada.</p>
   </section>
 
-  @if (products.length > 0) {
-    @if (refinedProducts.length) {
-      <section class="products-grid" aria-label="Listado de productos">
-        @for (p of refinedProducts; track p.id) {
-          <article class="product-card">
-            <app-product-card
-              [product]="p"
-              [isMostrarCuotas]="true"
-              [isMostrarStock]="true"
-            ></app-product-card>
-
-            <div class="product-actions">
-              <button
-                class="action-button action-button--delete"
-                type="button"
-                (click)="deleteProduct(p.id)">
-                <svg class="action-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path
-                    d="M9 3h6l1 2h4v2h-1v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7H4V5h4l1-2Zm-1 4v11h2V7H8Zm4 0v11h2V7h-2Zm4 0v11h2V7h-2Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span class="action-button__label">Borrar</span>
-              </button>
-
-              <button
-                class="action-button action-button--edit"
-                type="button"
-                (click)="editProduct(p.id)"
-              >
-                <svg class="action-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path
-                    d="M4 17.25V20h2.75L17.81 8.94l-2.75-2.75L4 17.25ZM19.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span class="action-button__label">Editar</span>
-              </button>
-            </div>
-          </article>
-        }
-      </section>
-    }@else {
-      <div class="products-empty">
-      <h2>Ningun producto cumple con el filtro</h2>
-    </div>
-    }
-  } @else {
-    <div class="products-empty">
-      <h2>No hay productos cargados</h2>
-      <p>Comienza agregando un nuevo item y lo veras listado aqui.</p>
-    </div>
-  }
+  <app-product-table (output)="this.products = $event"></app-product-table>
 
   <section class="products-refiner">
     <div class="refiner-header">
       <h2>Filtrar y ordenar catalogo</h2>
       <p class="refiner-subtitle">Explora por categoria o ajusta el rango de precios para encontrar resultados especificos y ordena alfabeticamente o por precio.</p>
     </div>
-    <app-products-refiner [categories]="categories" (refinedProducts)="renderRefinedProducts($event)"></app-products-refiner>
+    <app-products-refiner [categories]="categories"></app-products-refiner>
   </section>
 
   <section class="products-form-panel">
@@ -71,6 +19,6 @@
       <h2>Cargar productos</h2>
       <p>Completa el formulario para sumar un nuevo producto al catalogo.</p>
     </div>
-    <app-product-form [products]="refinedProducts" (change)="renderProducts()"></app-product-form>
+    <app-product-form [products]="products" (change)="renderPage()"></app-product-form>
   </section>
 </div>
