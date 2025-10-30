@@ -1,19 +1,20 @@
-<section id="refined-form">
+<form [formGroup]="form" id="refined-form" (ngSubmit)="onSubmit()">
     <section id="filter-section">
         <h5 class="refined-form-title">Filtrado</h5>
         <fieldset class="filter-fieldset">
             <label for="name-filter">Nombre</label>
-            <input type="text" id="name-filter" [(ngModel)]="nameFilter" (ngModelChange)="onFilterChange()">
+            <input type="text" id="name-filter" formControlName="name">
         </fieldset>
 
         <fieldset class="filter-fieldset">
             <label for="brand-filter">Marca</label>
-            <input type="text" id="brand-filter" [(ngModel)]="brandFilter" (ngModelChange)="onFilterChange()">
+            <input type="text" id="brand-filter" formControlName="brand">
         </fieldset>
 
         <fieldset class="filter-fieldset">
             <label for="price-filter">Tope Precio</label>
-            <select id="price-filter" [(ngModel)]="priceFilter" (ngModelChange)="onFilterChange()">
+            <select id="price-filter" formControlName="price">
+                   <option value="" selected>Sin límite</option>
                 <option value=0>Gratuito</option>
                 <option value=100000>100.000</option>
                 <option value=1000000>1.000.000</option>
@@ -26,10 +27,9 @@
         <fieldset class="filter-fieldset category-fieldset">
             <mat-form-field class="mat-field" appearance="fill">
                 <mat-label>Categorías</mat-label>
-                <mat-select multiple id="category-filter" panelClass="custom-select-panel" [(ngModel)]="categoryFilter"
-                    (ngModelChange)="onFilterChange()">
+                <mat-select multiple id="category-filter" panelClass="custom-select-panel" formControlName="category">
                     @for (category of this.categories(); track $index) {
-                    <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
+                        <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
                     }
                 </mat-select>
             </mat-form-field>
@@ -40,7 +40,7 @@
         <h5 class="refined-form-title">Ordenamiento</h5>
         <fieldset class="">
             <label for="name-order">Orden Alfabetico</label>
-            <select id="name-order" [(ngModel)]="nameSort" (ngModelChange)="onFilterChange()">
+            <select id="name-order" formControlName="nameSort">
                 <option value="asc">A-Z</option>
                 <option value="desc">Z-A</option>
             </select>
@@ -48,10 +48,12 @@
 
         <fieldset class="">
             <label for="price-order">Por Precio</label>
-            <select id="price-order" [(ngModel)]="priceSort" (ngModelChange)="onFilterChange()">
+            <select id="price-order" formControlName="priceSort">
                 <option value="asc">Desde mas barato</option>
                 <option value="desc">Desde mas caro</option>
             </select>
         </fieldset>
     </section>
-</section>
+
+    <input type="submit" id="submit-button" value="Filtrar">
+</form>

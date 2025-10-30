@@ -1,9 +1,6 @@
 import { globalParams } from "./globalParams";
 
 export interface ProductParams extends globalParams {
-
-
-
   // --- Filtros de Texto ---
   name?: string;
   description?: string;
@@ -24,7 +21,7 @@ export interface ProductParams extends globalParams {
   price?: number;
   stock?: number;
   priceGreater?: number;
-  priceLess?: number;
+  priceLess?: number | null;
   stockGreaterThan?: number;
   stockLessThan?: number;
   priceBetween?: string;

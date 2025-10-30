@@ -1,112 +1,144 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, HostListener, input, OnInit, output } from '@angular/core';
 import { Product } from '../../models/product';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../../models/category';
-import { debounceTime, Subject } from 'rxjs';
+import { catchError, combineLatest, debounceTime, distinctUntilChanged, map, of, startWith, switchMap, tap } from 'rxjs';
+import { ProductService } from '../../services/product-service';
+import { ProductParams } from '../../models/filters/productParams';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-refiner',
   imports: [
-    MatFormFieldModule, 
-    MatSelectModule, 
-    MatInputModule, 
-    MatButtonModule, 
-    MatOptionModule, 
-    FormsModule
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatOptionModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './products-refiner.html',
   styleUrl: './products-refiner.css',
 })
-export class ProductsRefiner implements OnInit{
-  products = input.required<Product[]>()
-  categories = input.required<Category[]>()
-  outputProducts = output<Product[]>()
-  filterChange = new Subject<void>()
-  refinedProducts!: Product[]
+export class ProductsRefiner implements OnInit {
+  form!: FormGroup;
+  name!: FormControl;
+  brand!: FormControl;
+  price!: FormControl;
+  category!: FormControl;
+  nameSort!: FormControl;
+  priceSort!: FormControl;
 
+  products: Product[] = [];
+  categories = input.required<Category[]>();
 
-  nameFilter: string = ''
-  brandFilter!: string
-  priceFilter!: number
-  categoryFilter!: string[]
-  nameSort!: 'asc' | 'desc' | null
-  priceSort!: 'asc' | 'desc'| null
+  refinedProducts = output<ProductParams>()
+  filters!: ProductParams;
 
-  constructor() {}
+  constructor(
+    private productService: ProductService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
+
+  @HostListener('window:scroll')
+  onScroll() {
+    const backdrop = document.querySelector('.cdk-overlay-backdrop');
+    if (backdrop) {
+      (backdrop as HTMLElement).click();
+    }
+  }
 
   ngOnInit(): void {
-    this.refinedProducts = [...this.products()]
-    this.filterChange.pipe(debounceTime(500)).subscribe(() => {this.refineProducts()})
-  }
+    this.form = this.fb.group({
+      name: [''],
+      brand: [''],
+      price: [''],
+      category: [[]],
+      nameSort: [''],
+      priceSort: ['']
+    });
 
-  onFilterChange() {
-    this.filterChange.next()
-  }
+    this.name = this.form.get('name') as FormControl;
+    this.brand = this.form.get('brand') as FormControl;
+    this.price = this.form.get('price') as FormControl;
+    this.category = this.form.get('category') as FormControl;
+    this.nameSort = this.form.get('nameSort') as FormControl;
+    this.priceSort = this.form.get('priceSort') as FormControl;
 
-  filterProducts() {
-    this.refinedProducts = [...this.products()]
-    if(this.nameFilter && this.nameFilter.trim() !== "") {
-      this.refinedProducts = this.refinedProducts.filter(product => 
-        product.name?.trim().toLowerCase().includes(this.nameFilter.trim().toLowerCase())
-      );
-    }
-
-    if(this.brandFilter && this.brandFilter.trim() !== "") {
-      this.refinedProducts = this.refinedProducts.filter(product => 
-        product.brand?.trim().toLowerCase().includes(this.brandFilter.trim().toLowerCase())
-      );
-    }
-
-    if(this.priceFilter) {
-      if(this.priceFilter === 0) {
-        this.refinedProducts = this.refinedProducts.filter(p => p.price === 0);
-      } else {
-        this.refinedProducts = this.refinedProducts.filter(p => p.price <= this.priceFilter);
-      }
-    }
-
-    if(this.categoryFilter && this.categoryFilter.length > 0) {
-      this.refinedProducts = this.refinedProducts.filter(product => 
-        product.categories.map(c => c.trim()).some(c => this.categoryFilter.includes(c))
-      );
-    }
-  }
-
-
-  sortProducts()  {
-    if(this.nameSort) {
-      if(this.nameSort === 'desc') {
-        this.refinedProducts = this.refinedProducts?.sort((a, b) => b.name.localeCompare(a.name))
-      } else {
-        this.refinedProducts = this.refinedProducts?.sort((a, b) => a.name.localeCompare(b.name))
-      }
-    }
-
-    if(this.priceSort) {
-      if(this.priceSort === 'desc') {
-        this.refinedProducts = this.refinedProducts?.sort((a, b) => b.price - a.price)
-      } else {
-        this.refinedProducts = this.refinedProducts?.sort((a, b) => a.price - b.price)
-      }
-    }
+    this.refineProducts();
   }
 
   refineProducts() {
-    this.filterProducts()
-    this.sortProducts()
-    this.outputProducts.emit(this.refinedProducts)
+    combineLatest([
+      this.name.valueChanges.pipe(startWith('')),
+      this.brand.valueChanges.pipe(startWith('')),
+      this.price.valueChanges.pipe(startWith('')),
+      this.category.valueChanges.pipe(startWith([])),
+      this.nameSort.valueChanges.pipe(startWith(null)),
+      this.priceSort.valueChanges.pipe(startWith(null)),
+    ])
+      .pipe(
+        debounceTime(300),
+        map(([name, brand, price, categories, nameSort, priceSort]) => {
+          const sort = nameSort
+            ? `name,${nameSort}`
+              : priceSort
+            ? `price,${priceSort}`
+              : null;
+          return {
+            name: name?.trim() || null,
+            brand: brand?.trim() || null,
+            priceLess: price?.trim() && !isNaN(Number(price)) ? Number(price) : null,
+            categories: categories?.length ? categories : null,
+            sort,
+            page: 0,
+            size: 6,
+          } as ProductParams;
+        }),
+        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+        tap(params => {
+          this.filters = params;
+        }),
+        switchMap(params => {
+          const cleanParams: any = {};
+          Object.entries(params).forEach(([key, val]) => {
+            if (val !== null && val !== undefined && val !== '') {
+              cleanParams[key] = val;
+            }
+          });
+          this.filters = cleanParams as ProductParams;
+
+          return this.productService.getList(cleanParams).pipe(
+            catchError(() => of([]))
+          );
+        })
+      )
+      .subscribe({
+        next: data => (this.products = data || []),
+        error: () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ocurrió un problema al obtener los productos',
+            confirmButtonText: 'Volver',
+            confirmButtonColor: '#4338ca'
+          });
+        }
+      });
   }
 
-  applySearchTerm(term: string | null | undefined) {
-    this.nameFilter = term?.trim() ?? '';
-    if (!this.refinedProducts) {
-      this.refinedProducts = [...this.products()];
+  onSubmit() {
+    if (this.filters) {
+      this.refinedProducts.emit(this.filters)
+      this.router.navigate(['/products'], { queryParams: this.filters})
     }
-    this.refineProducts();
   }
 }

@@ -4,7 +4,7 @@
     <p class="products-subtitle">Administra el catalogo y mantiene la informacion siempre actualizada.</p>
   </section>
 
-  @if (products.length > 0) {
+  @if (refinedProducts.length > 0) {
     <section class="products-grid" aria-label="Listado de productos">
       @for (p of refinedProducts; track p.id) {
         <article class="product-card">
@@ -58,11 +58,7 @@
       <h2>Filtrar y ordenar catalogo</h2>
       <p class="refiner-subtitle">Explora por categoria o ajusta el rango de precios para encontrar resultados especificos y ordena alfabeticamente o por precio.</p>
     </div>
-    <app-products-refiner
-      [products]="products"
-      [categories]="categories"
-      (outputProducts)="refinedProducts = $event"
-    ></app-products-refiner>
+    <app-products-refiner [categories]="categories" (refinedProducts)="renderRefinedProducts($event)"></app-products-refiner>
   </section>
 
   <section class="products-form-panel">

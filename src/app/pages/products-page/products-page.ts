@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCard } from '../../components/product-card/product-card';
 import { ProductForm } from '../../components/product-form/product-form';
 import { ProductsRefiner } from '../../components/products-refiner/products-refiner';
+import { ProductParams } from '../../models/filters/productParams';
 
 @Component({
   selector: 'app-products-page',
@@ -25,14 +26,22 @@ export class ProductsPage {
   categories: Category[] = [];
 
   constructor(
-    private productService: ProductService, 
+    private productService: ProductService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.renderProducts();
-    this.renderCategories();
+    this.route.queryParams.subscribe(params => {
+      if (Object.keys(params).length) {
+        this.refinedProducts = [];
+        this.products = [];
+        this.renderRefinedProducts(params);
+      } else {
+        this.renderProducts();
+      }
+      this.renderCategories();
+    });
   }
 
   renderProducts(): void {
@@ -43,6 +52,24 @@ export class ProductsPage {
       },
       error: (err) => {
         console.error('Error al obtener todos los productos:', err);
+      }
+    });
+  }
+
+  renderRefinedProducts(filters: ProductParams) {
+    this.productService.getList(filters).subscribe({
+      next: (data) => {
+        console.log(data)
+        this.refinedProducts = data;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocurrió un problema al obtener los productos',
+          confirmButtonText: 'Volver',
+          confirmButtonColor: '#4338ca'
+        });
       }
     });
   }
@@ -72,22 +99,6 @@ export class ProductsPage {
       error: (err) => {
         console.error('Error al eliminar el producto:', err);
       }
-    });
-  }
-
-  renderError(err: string) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: err,
-    });
-  }
-
-  renderOk(okMsg: string) {
-    Swal.fire({
-      title: "Operacion realizada!",
-      text: okMsg,
-      icon: "success"
     });
   }
 
