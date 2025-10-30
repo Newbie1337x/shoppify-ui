@@ -1,20 +1,20 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductCard } from "../../components/product-card/product-card";
 import { UserService } from '../../services/user-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../../models/auth/user';
 import { EditProfileForm } from '../../components/edit-profile-form/edit-profile-form';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth-service';
-import Swal from 'sweetalert2';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
   imports: [ProductCard, EditProfileForm],
   templateUrl: './profile.html',
-  styleUrl: './profile.css'
+  styleUrl: './profile.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class Profile implements OnInit {
 
@@ -48,7 +48,7 @@ export class Profile implements OnInit {
           icon: "error",
           title: "Oops...",
           text: "Ocurrio un error al cargar el perfil",
-        });
+        })
         this.router.navigate(["/"])
       }
     })
@@ -59,7 +59,7 @@ export class Profile implements OnInit {
       width: '80vw',
       data: this.user,
       disableClose: true,
-      panelClass: 'profile-dialog-panel'
+      panelClass: 'contenedor'
     })
 
     dialogRef.afterClosed().subscribe(result => {
@@ -67,10 +67,13 @@ export class Profile implements OnInit {
         this.uService.patch(result).subscribe({
           next: () => {
             this.user = result
-            Swal.fire("Perfil actualizado con éxito.")
-        
+            Swal.fire({
+              icon: "success",
+              title: "Éxito",
+              text: "Perfil actualizado con éxito."
+            })
           },
-          error: (e) => console.error('Error al actualizar el perfil', e)
+          error: e => console.error('Error al actualizar el perfil', e)
         })
       }
     })

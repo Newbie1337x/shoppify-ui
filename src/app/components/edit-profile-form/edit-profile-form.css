@@ -1,8 +1,22 @@
+/* Este es el mat-dialog (contenedor externo)*/
+.contenedor { 
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #4f46e5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Esta es la superficie blanca */
+.mat-mdc-dialog-surface{
+  border-radius: 20px;
+}
+
 form{
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 100%;
+  gap: 5px;
+  padding: 1.5rem;
 }
 
 .form-field {
@@ -18,21 +32,11 @@ form{
   margin-top: 1.5rem;
 }
 
-.contenedor {
-  max-width: 420px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(150, 90, 255, 0.15);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 .contenedor h2 {
   color: #6a0dad;
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
+  margin-top: 1rem;
+  font-weight: 650;
 }
 
 .form-field {

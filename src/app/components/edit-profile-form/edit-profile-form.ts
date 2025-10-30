@@ -1,5 +1,5 @@
 import { User } from '../../models/auth/user';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './edit-profile-form.html',
-  styleUrl: './edit-profile-form.css'
+  styleUrl: './edit-profile-form.css',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class EditProfileForm {
