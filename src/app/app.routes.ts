@@ -7,10 +7,11 @@ import { Home } from './pages/home/home';
 import { Profile } from './pages/profile/profile';
 import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
+import { ProductDetail } from './pages/product-detail/product-detail';
 
 
 export const routes: Routes = [
-  
+
   {
     path: 'auth',
     component: Auth,
@@ -26,13 +27,14 @@ export const routes: Routes = [
     path: '',
     component: Main,
     children: [
-      { path: 'home', component:Home},
-      { path: 'products', component: ProductsPage},
-      { path: 'products/search/:q', component: ProductsPage},
+      { path: 'home', component: Home },
+      { path: 'products', component: ProductsPage },
+      { path: 'products/search/:q', component: ProductsPage },
       { path: 'profile', component: Profile },
-      { path: 'cart', component: CartPage},
+      { path: 'cart', component: CartPage },
+      { path: 'products/detail/:id', component: ProductDetail },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
-  
+
 
     ]
   },
