@@ -1,29 +1,20 @@
-import { Component } from '@angular/core';
-import Swal from 'sweetalert2';
+import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product';
 import { Category } from '../../models/category';
 import { ProductService } from '../../services/product-service';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductCard } from '../../components/product-card/product-card';
-import { ProductForm } from '../../components/product-form/product-form';
-import { ProductsRefiner } from '../../components/products-refiner/products-refiner';
-import { ProductParams } from '../../models/filters/productParams';
 
 @Component({
-  selector: 'app-products-page',
-  imports: [
-    ProductCard,
-    ProductForm,
-    ProductsRefiner
-  ],
-  templateUrl: './products-page.html',
-  styleUrl: './products-page.css'
+  selector: 'app-product-table',
+  imports: [],
+  templateUrl: './product-table.html',
+  styleUrl: './product-table.css'
 })
-export class ProductsPage {
-  products: Product[] = [];
+export class ProductTable implements OnInit{
+  products: Product[] = []
   refinedProducts: Product[] = []
-  categories: Category[] = [];
+  categories: Category[] = []
 
   constructor(
     private productService: ProductService,
@@ -34,7 +25,6 @@ export class ProductsPage {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (Object.keys(params)) {
-        this.refinedProducts = [];
         this.renderProducts()
         this.renderRefinedProducts(params);
       } else {
@@ -49,8 +39,8 @@ export class ProductsPage {
       next: (products) => {
         this.products = products;
       },
-      error: (err) => {
-        console.error('Error al obtener todos los productos:', err);
+      error: () => {
+        
       }
     });
   }

@@ -11,7 +11,7 @@ import { catchError, combineLatest, debounceTime, distinctUntilChanged, map, of,
 import { ProductService } from '../../services/product-service';
 import { ProductParams } from '../../models/filters/productParams';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-refiner',
@@ -45,7 +45,8 @@ export class ProductsRefiner implements OnInit {
   constructor(
     private productService: ProductService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   @HostListener('window:scroll')
@@ -65,7 +66,6 @@ export class ProductsRefiner implements OnInit {
       nameSort: [''],
       priceSort: ['']
     });
-
     this.name = this.form.get('name') as FormControl;
     this.brand = this.form.get('brand') as FormControl;
     this.price = this.form.get('price') as FormControl;
