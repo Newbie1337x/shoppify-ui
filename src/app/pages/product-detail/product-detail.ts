@@ -3,10 +3,11 @@ import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { CartService } from '../../services/cart-service';
+import { PageItemDirective } from "@coreui/angular";
 
 @Component({
   selector: 'app-product-detail',
-  imports: [],
+  imports: [PageItemDirective],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
