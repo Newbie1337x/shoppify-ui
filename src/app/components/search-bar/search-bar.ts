@@ -7,11 +7,12 @@ import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { Product } from '../../models/product';
 import { ProductParams } from '../../models/filters/productParams';
 import { ProductService } from '../../services/product-service';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ImageFallbackDirective],
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css'
 })

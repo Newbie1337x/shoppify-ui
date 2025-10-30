@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { StoreService } from '../../services/store-service';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [ImageFallbackDirective],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })

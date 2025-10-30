@@ -4,10 +4,11 @@ import { SearchBar } from '../search-bar/search-bar';
 import { UserAvatar } from '../user-avatar/user-avatar';
 import { User } from '../../models/auth/user';
 import { AuthService } from '../../services/auth-service';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, SearchBar, UserAvatar],
+  imports: [RouterLink, SearchBar, UserAvatar, ImageFallbackDirective],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
