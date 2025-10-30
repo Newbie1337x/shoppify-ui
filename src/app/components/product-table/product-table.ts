@@ -4,6 +4,7 @@ import { Category } from '../../models/category';
 import { ProductService } from '../../services/product-service';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductParams } from '../../models/filters/productParams';
 
 @Component({
   selector: 'app-product-table',
@@ -19,8 +20,9 @@ export class ProductTable implements OnInit{
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
+    private 
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -51,13 +53,7 @@ export class ProductTable implements OnInit{
         this.refinedProducts = data;
       },
       error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Ocurrió un problema al obtener los productos',
-          confirmButtonText: 'Volver',
-          confirmButtonColor: '#4338ca'
-        });
+        
       }
     });
   }

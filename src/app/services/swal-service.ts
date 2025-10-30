@@ -9,20 +9,20 @@ export class SwalService {
 
   constructor() { }
 
-  success(title: string) {
+  success(message: string) {
     return Swal.fire({
-      title: title,
+      title: message,
       icon: "success",
       confirmButtonText: "Aceptar",
       confirmButtonColor: this.confirmButtonColor 
     })
   }
 
-  error(title: string) {
+  error(message: string) {
     return Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: title,
+      text: message,
       confirmButtonText: "Aceptar",
       confirmButtonColor: this.confirmButtonColor
     })
