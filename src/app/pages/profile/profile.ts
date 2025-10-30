@@ -7,6 +7,7 @@ import { User } from '../../models/auth/user';
 import { EditProfileForm } from '../../components/edit-profile-form/edit-profile-form';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth-service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,7 @@ import { AuthService } from '../../services/auth-service';
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile implements OnInit{
+export class Profile implements OnInit {
 
   id?: number
   user!: User;
@@ -27,27 +28,35 @@ export class Profile implements OnInit{
     private router: Router,
     private dialog: MatDialog,
     private aService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
+    
+    this.renderProfile()
+  }
+
+  renderProfile(){
     this.id = this.aService.user()?.id
     this.uService.get(this.id!).subscribe({
       next: u => {
         this.user = u
         console.log(u)
       },
-      error: (e) =>{
+      error: (e) => {
         console.log(e)
-        alert("Error al obtener tu perfil :c")
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ocurrio un error al cargar el perfil",
+        });
         this.router.navigate(["/"])
       }
     })
-    
   }
 
   editarPerfil() {
     const dialogRef = this.dialog.open(EditProfileForm, {
-      width: '450px',
+      width: '80vw',
       data: this.user,
       disableClose: true
     })
