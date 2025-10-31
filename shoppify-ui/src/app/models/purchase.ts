@@ -8,5 +8,5 @@ export interface Purchase {
   provider: Provider;
   unitPrice: number;
   description: string;
-  pene:string
+  penne:string
 }
