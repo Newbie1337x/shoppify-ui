@@ -1,103 +1,110 @@
 .collection-table {
-    width: 100%;
-    min-height: 50vh;
-    margin-bottom: 1em;
-    background-color: #ECFBF7;;
-    box-shadow: 0 0 10px 4px #aeaeae;
-    border-radius: 15px;
-    overflow: hidden;
-    border-collapse: collapse;
+  width: 100%;
+  min-height: 50vh;
+  margin-bottom: 1em;
+  background-color: #ECFBF7;
+  box-shadow: 0 0 10px 4px #aeaeae;
+  border-radius: 15px;
+  overflow: hidden;
+  border-collapse: collapse;
 }
 
 .collection-table-head {
-    color: #bffff6;
-    background-color: #4f46e5;
-    box-shadow: 0 0 6px 1px #004346;
+  color: #bffff6;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  box-shadow: 0 0 6px 1px #004346;
+  text-align: center;
 }
 
 .collection-table-head td {
-    padding: 12px 15px;
-    font-weight: bold;
+  padding: 0.5vw 2vw;
+  font-weight: bold;
 }
 
 .collection-table-body {
-    min-height: calc(4.6 * 5);
+  min-height: calc(4.6rem * 5);
+  text-align: center;
 }
 
 .product-row td {
-    padding: .3em .5em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  padding: 0.3em 0.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.product-row:hover {
+  background-color: rgba(79, 70, 229, 0.05);
 }
 
 .product-actions {
-    display: flex;
-    gap: 0.85rem;
-    justify-content: center;
+  display: flex;
+  gap: 0.85rem;
+  justify-content: center;
 }
 
 .action-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.85);
-    color: #0f172a;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.85);
+  color: #0f172a;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .action-button__icon {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
 }
 
 .action-button:hover,
 .action-button:focus-visible {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 34px rgba(79, 70, 229, 0.2);
-    outline: none;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(79, 70, 229, 0.2);
+  outline: none;
 }
 
 .action-button--edit {
-    color: #4f46e5;
-    border-color: rgba(79, 70, 229, 0.2);
-    background: rgba(99, 102, 241, 0.12);
+  color: #4f46e5;
+  border-color: rgba(79, 70, 229, 0.2);
+  background: rgba(99, 102, 241, 0.12);
 }
 
 .action-button--delete {
-    color: #dc2626;
-    border-color: rgba(220, 38, 38, 0.15);
-    background: rgba(254, 226, 226, 0.7);
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.15);
+  background: rgba(254, 226, 226, 0.7);
 }
 
 .action-button--delete:hover,
 .action-button--delete:focus-visible {
-    box-shadow: 0 16px 34px rgba(220, 38, 38, 0.2);
-    border-color: rgba(220, 38, 38, 0.35);
+  box-shadow: 0 16px 34px rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.35);
 }
 
 .products-empty {
-    padding: clamp(2.4rem, 5vw, 3rem);
-    border-radius: 2rem;
-    border: 1px dashed rgba(148, 163, 184, 0.35);
-    background: rgba(248, 250, 252, 0.85);
-    text-align: center;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: clamp(2.4rem, 5vw, 3rem);
+  border-radius: 2rem;
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  background: rgba(248, 250, 252, 0.85);
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .products-empty h2 {
-    margin: 0 0 0.75rem;
-    font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
 }
 
 .products-empty p {
-    margin: 0;
-    color: #475569;
-    font-weight: 500;
+  margin: 0;
+  color: #475569;
+  font-weight: 500;
 }
