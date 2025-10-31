@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" autocomplete="off">
+<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
     <!-- ID -->
     @if (this.id) {
     <fieldset>
@@ -145,5 +145,5 @@
         }
     </fieldset>
 
-    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid && !repeatedProduct">
+    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid || repeatedProduct">
 </form>

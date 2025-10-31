@@ -72,6 +72,7 @@ export class ProductForm implements OnInit {
       brand: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
       imgURL: [''],
       categories: [[], Validators.required],
+      soldQuantity: ['']
     })
     this.name = this.form.controls['name'] as FormControl
     this.price = this.form.controls['price'] as FormControl
@@ -175,7 +176,7 @@ export class ProductForm implements OnInit {
   submitForm() {
     if (this.form.valid && !this.repeatedProduct) {
       if (Number(this.id)) {
-        this.productService.patch(this.form.value).subscribe({
+        this.productService.put(this.form.value).subscribe({
           next: () => {
             Swal.fire({
               title: "Producto editado con exito!",
