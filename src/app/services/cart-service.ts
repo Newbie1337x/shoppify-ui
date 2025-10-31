@@ -1,57 +1,107 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Product } from '../models/product';
 import { Transaction } from '../models/transaction';
+import { ProductService } from './product-service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  cartItems = signal<Product[]>([])
-
+  cartItems = signal<Product[]>([]);
   total = computed(() =>
-    this.cartItems().reduce((sum, item) => sum + item.price, 0)
+    this.cartItems().reduce((sum, item) => sum + item.unitPrice * item.stock, 0)
   )
 
+  constructor(private productService: ProductService) { }
+
+
   addToCart(product: Product) {
-    const items = [...this.cartItems()]
-    const existing = items.find(i => i.id === product.id)
+    this.productService.get(product.id).subscribe({
+      next: updatedProduct => {
+        if (updatedProduct.stock > 0) {
+          const items = [...this.cartItems()];
+          const existing = items.find(i => i.id === product.id)
 
-    if (existing) {
-      existing.stock++
-      existing.price = existing.stock * existing.price
-    } else {
-      items.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        stock: 1,
-        unitPrice: product.price,
-        sku: product.sku,
-        barcode: product.barcode,
-        description: product.description,
-        brand: product.brand,
-        imgURL: product.imgURL,
-        categories: product.categories,
-        soldQuantity: product.soldQuantity
-      })
-    }
+          if (existing) {
+            if (updatedProduct.stock > existing.stock) {
+              existing.stock++
+              updatedProduct.stock = updatedProduct.stock - 1
+              this.productService.patch(updatedProduct).subscribe()
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "El producto no tiene stock disponible"
+              });
+            }
+          } else {
+            items.push({ ...product, stock: 1 })
+            updatedProduct.stock = updatedProduct.stock - 1
+            this.productService.patch(updatedProduct).subscribe()
+          }
 
-    this.cartItems.set(items)
-  }
-
-  removeFromCart(productId: number) {
-    this.cartItems.set(this.cartItems().filter(i => i.id !== productId))
+          this.cartItems.set(items)
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "El producto no tiene stock disponible"
+          });
+        }
+      },
+      error: err => console.error('Error verificando stock:', err)
+    })
   }
 
   updateQuantity(item: Product, newQty: number) {
-    const items = [...this.cartItems()]
-    const idx = items.findIndex(i => i.id === item.id)
-    if (idx >= 0) {
-      items[idx].stock = newQty
-      items[idx].price = newQty * items[idx].price
-      this.cartItems.set(items)
+    this.productService.get(item.id).subscribe({
+      next: updatedProduct => {
+        const available = updatedProduct.stock + item.stock; // stock total posible
+        if (newQty > available) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "El producto no tiene stock disponible para la nueva cantidad"
+          });
+          return
+        }
+
+        const diff = newQty - item.stock
+        updatedProduct.stock = updatedProduct.stock - diff
+
+        this.productService.patch(updatedProduct).subscribe(() => {
+          const items = this.cartItems().map(i =>
+            i.id === item.id ? { ...i, stock: newQty } : i
+          )
+          this.cartItems.set(items);
+        })
+      }
+    })
+  }
+
+  removeFromCart(productId: number) {
+    const product = this.cartItems().find(p => p.id === productId);
+    if (product) {
+      this.productService.get(productId).subscribe(p => {
+        p.stock = p.stock + product.stock
+        this.productService.patch(p).subscribe()
+      }
+      )
     }
+    this.cartItems.set(this.cartItems().filter(i => i.id !== productId))
+  }
+
+  clearCart() {
+    this.cartItems().forEach(product =>
+      this.productService.get(product.id).subscribe(p => {
+        p.stock = p.stock + product.stock
+        this.productService.patch(p).subscribe()
+      }
+      )
+    );
+    this.cartItems.set([])
   }
 
   prepareTransaction(formValue: any): Transaction {
@@ -67,6 +117,6 @@ export class CartService {
         quantity: item.stock,
         subtotal: item.price
       }))
-    };
+    }
   }
 }

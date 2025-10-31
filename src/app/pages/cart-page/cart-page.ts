@@ -1,10 +1,9 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { TransactionService } from '../../services/transaction-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from "../../components/product-card/product-card";
 import { Product } from '../../models/product';
-import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-cart-page',
@@ -19,12 +18,9 @@ export class CartPage implements OnInit{
 
   selectedItems = signal<Set<number>>(new Set())
 
-  constructor(
-    private tService: TransactionService,
-    private fb: FormBuilder,
-    private cService: CartService,
-    private aServuce: AuthService
-  ) {}
+  private tService = inject(TransactionService)
+  private fb = inject(FormBuilder)
+  private cService = inject(CartService)
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
