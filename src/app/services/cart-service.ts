@@ -11,7 +11,7 @@ export class CartService {
 
   cartItems = signal<Product[]>([]);
   total = computed(() =>
-    this.cartItems().reduce((sum, item) => sum + item.unitPrice * item.stock, 0)
+    this.cartItems().reduce((sum, item) => sum + item.price * item.stock, 0)
   )
 
   constructor(private productService: ProductService) { }
@@ -28,7 +28,7 @@ export class CartService {
             if (updatedProduct.stock > existing.stock) {
               existing.stock++
               updatedProduct.stock = updatedProduct.stock - 1
-              this.productService.patch(updatedProduct).subscribe()
+              this.productService.put(updatedProduct).subscribe()
             } else {
               Swal.fire({
                 icon: "error",
@@ -39,7 +39,7 @@ export class CartService {
           } else {
             items.push({ ...product, stock: 1 })
             updatedProduct.stock = updatedProduct.stock - 1
-            this.productService.patch(updatedProduct).subscribe()
+            this.productService.put(updatedProduct).subscribe()
           }
 
           this.cartItems.set(items)
@@ -71,22 +71,22 @@ export class CartService {
         const diff = newQty - item.stock
         updatedProduct.stock = updatedProduct.stock - diff
 
-        this.productService.patch(updatedProduct).subscribe(() => {
+        this.productService.put(updatedProduct).subscribe(() => {
           const items = this.cartItems().map(i =>
             i.id === item.id ? { ...i, stock: newQty } : i
           )
-          this.cartItems.set(items);
+          this.cartItems.set(items)
         })
       }
     })
   }
 
   removeFromCart(productId: number) {
-    const product = this.cartItems().find(p => p.id === productId);
+    const product = this.cartItems().find(p => p.id === productId)
     if (product) {
       this.productService.get(productId).subscribe(p => {
         p.stock = p.stock + product.stock
-        this.productService.patch(p).subscribe()
+        this.productService.put(p).subscribe()
       }
       )
     }
@@ -97,7 +97,7 @@ export class CartService {
     this.cartItems().forEach(product =>
       this.productService.get(product.id).subscribe(p => {
         p.stock = p.stock + product.stock
-        this.productService.patch(p).subscribe()
+        this.productService.put(p).subscribe()
       }
       )
     );

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from "../../components/product-card/product-card";
 import { Product } from '../../models/product';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cart-page',
@@ -76,8 +77,24 @@ export class CartPage implements OnInit{
       const payload = this.cService.prepareTransaction(this.checkoutForm.value)
       console.log("Payload a enviar :", payload)
       this.tService.post(payload).subscribe({
-        next: (transaction) => console.log("Transacción lista: ", transaction),
-        error: (e) => console.error("Error preparando transacción", e)
+        next: (transaction) => {
+          console.log("Transacción lista: ", transaction)
+          Swal.fire({
+            icon: "success",
+            title: "Okey!",
+            text: "Transaccion realizada correctamente"
+          })
+          //añadir redireccion a pagina de retiro por sucursal manejo de envio
+        },
+        error: (e) => {
+          console.error("Error preparando transacción", e)
+          Swal.fire({
+            icon: "error",
+            title: "Oops..",
+            text: "Hubo un error al realizar la transaccion",
+            footer: e
+          })
+        }
       })
     }
   }
