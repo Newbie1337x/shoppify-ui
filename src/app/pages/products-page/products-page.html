@@ -4,7 +4,27 @@
     <p class="products-subtitle">Administra el catalogo y mantiene la informacion siempre actualizada.</p>
   </section>
 
-  <app-product-table (output)="this.products = $event"></app-product-table>
+  @if (products.length > 0) {
+            @if (refinedProducts.length) {
+                <app-product-table [products]="refinedProducts" (deleteOutput)="onDelete()"></app-product-table>
+            }@else {
+            <div class="products-empty">
+                <tr>
+                    <td colspan="10">
+                        <h2>Ningun producto cumple con el filtro</h2>
+                    </td>
+                </tr>
+            </div>
+            }
+        } @else {
+        <div class="products-empty">
+            <tr>
+                <td colspan="10">
+                    <h2>No hay productos cargados</h2>
+                </td>
+            </tr>
+        </div>
+        }
 
   <section class="products-refiner">
     <div class="refiner-header">
@@ -19,6 +39,6 @@
       <h2>Cargar productos</h2>
       <p>Completa el formulario para sumar un nuevo producto al catalogo.</p>
     </div>
-    <app-product-form [products]="products" (change)="renderPage()"></app-product-form>
+    <app-product-form [products]="products" (change)="renderProducts()"></app-product-form>
   </section>
 </div>
