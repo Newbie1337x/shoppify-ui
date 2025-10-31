@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductsRefiner } from './products-refiner';
+import { ProductsRefiner } from './product-refiner';
 
 describe('ProductsRefiner', () => {
   let component: ProductsRefiner;
