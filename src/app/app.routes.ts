@@ -8,6 +8,7 @@ import { Profile } from './pages/profile/profile';
 import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
 import { AdminPage } from './pages/admin-page/admin-page';
+import { ProductForm } from './components/product-form/product-form';
 
 
 export const routes: Routes = [
@@ -31,6 +32,8 @@ export const routes: Routes = [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
       { path: 'products/search/:q', component: ProductsPage},
+      {path:'products/create',component:ProductForm},
+      {path:'products/admin',component:ProductForm},
       { path: 'profile', component: Profile },
       { path: 'cart', component: CartPage},
       { path: '**', redirectTo: 'home', pathMatch: 'full' }

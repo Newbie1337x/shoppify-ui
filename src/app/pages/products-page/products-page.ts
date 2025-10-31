@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Product } from '../../models/product';
 import { Category } from '../../models/category';
@@ -6,7 +6,6 @@ import { ProductService } from '../../services/product-service';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ProductCard } from '../../components/product-card/product-card';
-import { ProductForm } from '../../components/product-form/product-form';
 import { ProductsRefiner } from '../../components/product-refiner/product-refiner';
 import { ProductParams } from '../../models/filters/productParams';
 import { AuthService } from '../../services/auth-service';
@@ -15,8 +14,8 @@ import { AuthService } from '../../services/auth-service';
   selector: 'app-products-page',
   imports: [
     ProductCard,
-    ProductForm,
-    ProductsRefiner
+    ProductsRefiner,
+    
   ],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css'
@@ -127,11 +126,17 @@ export class ProductsPage {
     this.router.navigate([`/products/edit/${id}`]);
   }
 
+
   private navigateWithFilters(filters: ProductParams): void {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: this.cleanParams(filters)
     });
+  }
+
+
+  createProduct(){
+    this.router.navigate(['/products/create']);
   }
 
   private parseFilters(params: Params): ProductParams {
