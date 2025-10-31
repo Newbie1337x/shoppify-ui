@@ -56,7 +56,7 @@ export class Home implements OnInit {
     this.productService.getList(this.params).subscribe({
       next: (products) => {
         this.products = products;
-        
+    
       },
       error: (err) => {
         console.error('Error al obtener todos los productos:', err);

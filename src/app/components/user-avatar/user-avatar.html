@@ -8,9 +8,12 @@
         cButton 
         cDropdownToggle 
         color="secondary">
+       
+        @if (auth.user()) {}
+        <p class="ua-name">{{ truncatedFirstName }}</p>
         
-        <p class="ua-name">{{ auth.user()?.firstName }}</p>
-        
+
+       
         <img 
           class="ua-avatar" 
           [ngClass]="{ 'ua-avatar--placeholder': !auth.user()?.img }"

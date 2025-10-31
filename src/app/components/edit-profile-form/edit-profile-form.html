@@ -42,6 +42,7 @@
   <mat-form-field appearance="outline" class="form-field">
     <mat-label>URL de imagen (opcional)</mat-label>
     <input matInput formControlName="img" />
+    <img [src]="form.controls['img'].value" alt="url invalido">
   </mat-form-field>
 
   <div mat-dialog-actions class="dialog-actions">

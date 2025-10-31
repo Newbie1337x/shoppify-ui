@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Category } from '../../models/category';
 import { Router } from '@angular/router';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 
 @Component({
   selector: 'app-category-card',
-  imports: [],
+  imports: [ImageFallbackDirective],
   templateUrl: './category-card.html',
   styleUrl: './category-card.css'
 })

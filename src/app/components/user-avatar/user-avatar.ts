@@ -2,14 +2,15 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import Swal from 'sweetalert2';
-  import { DropdownComponent, DropdownMenuDirective, DropdownToggleDirective, DropdownItemDirective, ImgDirective } from '@coreui/angular';                                                                                                                                                                             
-  import { ButtonDirective } from '@coreui/angular'; 
+import { DropdownComponent, DropdownMenuDirective, DropdownToggleDirective, DropdownItemDirective, ImgDirective} from '@coreui/angular';
+import { ButtonDirective } from '@coreui/angular';
 import { CommonModule } from '@angular/common';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 
 @Component({
   selector: 'app-user-avatar',
   standalone: true,
-  imports: [RouterLink, DropdownComponent, DropdownMenuDirective, DropdownToggleDirective, DropdownItemDirective, ButtonDirective, ImgDirective, CommonModule],
+  imports: [RouterLink, DropdownComponent, DropdownMenuDirective, DropdownToggleDirective, DropdownItemDirective, ButtonDirective, CommonModule, ImageFallbackDirective],
   
   templateUrl: './user-avatar.html',
   styleUrl: './user-avatar.css'
@@ -18,6 +19,11 @@ export class UserAvatar {
   showMenu = false;
 
   constructor(private router: Router , public auth:AuthService) {}
+
+  get truncatedFirstName(): string {
+    const firstName = this.auth.user()?.firstName ?? '';
+    return firstName.length > 6 ? `${firstName.slice(0, 6)}..` : firstName;
+  }
 
   toggleMenu() {
     if (!this.auth.user()) {
