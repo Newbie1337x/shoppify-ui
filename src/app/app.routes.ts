@@ -7,6 +7,7 @@ import { Home } from './pages/home/home';
 import { Profile } from './pages/profile/profile';
 import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
+import { AdminPage } from './pages/admin-page/admin-page';
 
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
     component: Auth,
     children: [
       { path: 'login', component: Login },
+      { path: 'admin', component: AdminPage },
       { path: 'register', component: Register },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
