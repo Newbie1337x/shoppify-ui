@@ -12,16 +12,24 @@
             (change)="toggleSelection(item.id, $any($event.target).checked)" />
           Seleccionar
         </label>
+
         <app-product-card class="product-card" [product]="item"></app-product-card>
+
         <div class="cart-controls">
           <div class="quantity-control">
             <label>Cantidad:</label>
-            <input type="number" min="1" [value]="item.stock" (input)="updateQuantity(item, $any($event.target).value)">
+            <div class="quantity-buttons">
+              <button type="button" (click)="changeQuantity(item, -1)">-</button>
+              <input type="number" [value]="item.stock" readonly />
+              <button type="button" (click)="changeQuantity(item, 1)">+</button>
+            </div>
           </div>
+
           <p class="item-subtotal">
             Subtotal:
             <strong>${{ item.price * item.stock }}</strong>
           </p>
+          
           <button class="remove-btn" (click)="removeFromCart(item.id)">Eliminar del carrito ❌</button>
         </div>
       </div>
@@ -77,7 +85,7 @@
     </div>
 
   </div>
-  
+
   <button type="submit" form="checkout-form" [disabled]="checkoutForm.invalid || cartItems().length === 0"
     class="checkout-btn">
     Finalizar transacción

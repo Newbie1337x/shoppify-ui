@@ -72,6 +72,30 @@ export class CartPage implements OnInit{
     this.cService.updateQuantity(item, newQty)
   }
 
+  async changeQuantity(item: Product, unidad: number) {
+    const newQty = item.stock + unidad
+    if (newQty < 1) {
+      Swal.fire({
+        icon: "warning",
+        title: "Cantidad mínima alcanzada",
+        text: "No puedes tener menos de 1 unidad."
+      });
+      return
+    }
+
+    try{
+      await this.cService.updateQuantity(item, newQty)
+      
+    }catch(e: any){
+      Swal.fire({
+        icon: "warning",
+        title: "Oops..",
+        text: e.message ?? "Hubo un error al actualizar la cantidad"
+      })
+    }
+  }
+
+
   onSubmit() {
     if (this.checkoutForm.valid && this.cartItems().length) {
       const payload = this.cService.prepareTransaction(this.checkoutForm.value)
