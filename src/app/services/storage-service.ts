@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';import { User } from '../models/auth/user';
+import { Injectable } from '@angular/core';
+import { User } from '../models/auth/user';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,14 @@ export class StorageService{
   getUser(){
     return JSON.parse(localStorage.getItem('user') || 'null')
 }
+
+  setUser(user: User | null) {
+    if (!user) {
+      localStorage.removeItem('user')
+      return
+    }
+    localStorage.setItem('user', JSON.stringify(user))
+  }
 
 
 }

@@ -1,56 +1,77 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Product } from '../../models/product';
 import { Category } from '../../models/category';
 import { ProductService } from '../../services/product-service';
 import { CategoryService } from '../../services/category-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProductForm } from '../../components/product-form/product-form';
-import { ProductsRefiner } from '../../components/products-refiner/products-refiner';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ProductCard } from '../../components/product-card/product-card';
+import { ProductsRefiner } from '../../components/product-refiner/product-refiner';
 import { ProductParams } from '../../models/filters/productParams';
-import { ProductTable } from '../../components/product-table/product-table';
+import { AuthService } from '../../services/auth-service';
 import { SwalService } from '../../services/swal-service';
 
 @Component({
   selector: 'app-products-page',
   imports: [
-    ProductForm,
+    ProductCard,
     ProductsRefiner,
-    ProductTable
+    
   ],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css'
 })
-export class ProductsPage implements OnInit {
-  products: Product[] = []
-  refinedProducts: Product[] = []
-  categories: Category[] = []
-  params!: ProductParams
+export class ProductsPage {
+  products: Product[] = [];
+  refinedProducts: Product[] = [];
+  categories: Category[] = [];
+  currentFilters: ProductParams = { page: 0, size: 6 };
+  editMode = false;
+  adminView = false;
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
     private swal: SwalService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router,
+    public auth: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (Object.keys(params)) {
-        this.params = params
-        this.renderProducts()
-        this.renderRefinedProducts(params);
+      const filters = this.parseFilters(params);
+      this.currentFilters = filters;
+
+      if (this.hasFilterCriteria(filters)) {
+        this.renderRefinedProducts(filters);
       } else {
         this.renderProducts();
       }
-      this.renderCategories()
+
+      this.renderCategories();
     });
   }
-  
+
+  editToggle(): void {
+    this.editMode = !this.editMode;
+  }
+
+  viewToggle(): void {
+    this.adminView = !this.adminView;
+  }
+
+  onFilterChange(filters: ProductParams): void {
+    const merged: ProductParams = { page: 0, size: 6, ...filters };
+    this.currentFilters = merged;
+    this.navigateWithFilters(merged);
+  }
+
   renderProducts(): void {
     this.productService.getList().subscribe({
       next: (products) => {
         this.products = products;
+        this.refinedProducts = [...products];
       },
       error: () => {
         this.swal.error("Ocurrio un error al buscar los productos")
@@ -58,7 +79,7 @@ export class ProductsPage implements OnInit {
     });
   }
 
-  renderRefinedProducts(filters: ProductParams) {
+  renderRefinedProducts(filters: ProductParams): void {
     this.productService.getList(filters).subscribe({
       next: (data) => {
         this.refinedProducts = data;
@@ -80,11 +101,71 @@ export class ProductsPage implements OnInit {
     });
   }
 
-  onDelete() {
-    if(this.params) {
-      this.renderRefinedProducts(this.params)
-    } else {
-      this.renderProducts()
-    }
+  deleteProduct(id: number): void {
+    this.productService.delete(id).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Producto eliminado con éxito!',
+          icon: 'success',
+          confirmButtonText: 'Volver',
+          confirmButtonColor: '#ff7543'
+        });
+        this.renderProducts();
+      },
+      error: (err) => {
+        console.error('Error al eliminar el producto:', err);
+      }
+    });
+  }
+
+  editProduct(id: number): void {
+    this.router.navigate([`/products/edit/${id}`]);
+  }
+
+
+  private navigateWithFilters(filters: ProductParams): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: this.cleanParams(filters)
+    });
+  }
+
+
+  createProduct(){
+    this.router.navigate(['/products/create']);
+  }
+
+  private parseFilters(params: Params): ProductParams {
+    const filters: ProductParams = {
+      page: params['page'] ? Number(params['page']) : 0,
+      size: params['size'] ? Number(params['size']) : 6
+    };
+
+    if (params['name']) filters.name = params['name'];
+    if (params['brand']) filters.brand = params['brand'];
+    if (params['categories']) filters.categories = params['categories'];
+    if (params['priceBetween']) filters.priceBetween = params['priceBetween'];
+    if (params['priceGreater']) filters.priceGreater = Number(params['priceGreater']);
+    if (params['priceLess']) filters.priceLess = Number(params['priceLess']);
+    if (params['sort']) filters.sort = params['sort'];
+
+    return filters;
+  }
+
+  private cleanParams(filters: ProductParams): Params {
+    const query: Params = {};
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        query[key] = value;
+      }
+    });
+
+    return query;
+  }
+
+  private hasFilterCriteria(filters: ProductParams): boolean {
+    const { page, size, ...rest } = filters;
+    return Object.keys(rest).length > 0;
   }
 }

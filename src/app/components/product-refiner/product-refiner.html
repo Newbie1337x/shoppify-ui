@@ -1,0 +1,112 @@
+<form [formGroup]="filtersForm" class="refiner-panel" (ngSubmit)="onFiltersSubmit()">
+  <header class="panel-header">
+    <div class="panel-header-content">
+      <p class="panel-helper">Ajustá los resultados</p>
+    </div>
+    @if (hasActiveFilters) {
+      <button type="button" class="clear-button" (click)="resetFilters()">Limpiar</button>
+    }
+  </header>
+
+  <div class="panel-body">
+    <section class="filter-group" aria-labelledby="group-busqueda">
+
+      <label class="field" for="name-filter">
+        <span class="field-label">Nombre o palabra clave</span>
+        <input
+          id="name-filter"
+          class="field-input"
+          type="text"
+          placeholder="Ej: auriculares gamer"
+          formControlName="name"
+          autocomplete="off"
+        />
+      </label>
+
+      <label class="field" for="brand-filter">
+        <span class="field-label">Marca</span>
+        <input
+          id="brand-filter"
+          class="field-input"
+          type="text"
+          placeholder="Ej: Sony"
+          formControlName="brand"
+          autocomplete="off"
+        />
+      </label>
+    </section>
+
+    <section class="filter-group" aria-labelledby="group-precio">
+      <h3 id="group-precio" class="group-title">Precio</h3>
+
+      <div class="price-range">
+        <label class="field" for="price-min">
+          <span class="field-label">Desde</span>
+          <input
+            id="price-min"
+            class="field-input"
+            type="number"
+            placeholder="Mínimo"
+            formControlName="priceMin"
+            min="0"
+          />
+        </label>
+        <label class="field" for="price-max">
+          <span class="field-label">Hasta</span>
+          <input
+            id="price-max"
+            class="field-input"
+            type="number"
+            placeholder="Máximo"
+            formControlName="priceMax"
+            min="0"
+          />
+        </label>
+      </div>
+    </section>
+
+    <section class="filter-group" aria-labelledby="group-categorias">
+      <h3 id="group-categorias" class="group-title">Categorías</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Seleccioná una o más</mat-label>
+        <mat-select
+          formControlName="category"
+          multiple
+          panelClass="custom-select-panel">
+          @for (category of categories; track category.id) {
+            <mat-option [value]="category.name">
+              {{ category.name }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </section>
+
+    <section class="filter-group" aria-labelledby="group-orden">
+      <h3 id="group-orden" class="group-title">Ordenar por</h3>
+      <div class="sort-grid">
+        <label class="field" for="name-order">
+          <span class="field-label">Alfabético</span>
+          <select id="name-order" class="field-select" formControlName="nameSort">
+            <option value="">Sin orden</option>
+            <option value="asc">A → Z</option>
+            <option value="desc">Z → A</option>
+          </select>
+        </label>
+
+        <label class="field" for="price-order">
+          <span class="field-label">Precio</span>
+          <select id="price-order" class="field-select" formControlName="priceSort">
+            <option value="">Sin orden</option>
+            <option value="asc">Menor a mayor</option>
+            <option value="desc">Mayor a menor</option>
+          </select>
+        </label>
+      </div>
+    </section>
+  </div>
+
+  <footer class="panel-footer">
+    <button type="submit" class="apply-button">Aplicar filtros</button>
+  </footer>
+</form>

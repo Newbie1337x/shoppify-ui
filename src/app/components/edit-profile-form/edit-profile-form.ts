@@ -6,11 +6,14 @@ import { CommonModule } from '@angular/common';
 import { MatFormField, MatError, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-edit-profile-form',
   standalone: true,
   imports: [
+    ImageFallbackDirective,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -27,6 +30,7 @@ export class EditProfileForm {
   form!: FormGroup;
 
   constructor(
+    private auth:AuthService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EditProfileForm>,
     @Inject(MAT_DIALOG_DATA) public data: User
@@ -49,6 +53,7 @@ export class EditProfileForm {
         ...this.form.value
       };
       this.dialogRef.close(updatedUser);
+      this.auth.updateUser(updatedUser)
     } else {
       this.form.markAllAsTouched();
     }

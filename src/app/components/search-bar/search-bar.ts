@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
@@ -22,12 +22,13 @@ export class SearchBar implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.fg = this.fb.group({
-      search: ['', [Validators.required, Validators.minLength(1)]],
+      search: [''],
     });
 
     this.liveSearch();
@@ -66,18 +67,32 @@ export class SearchBar implements OnInit {
 
   onSubmit(): void {
     const q = (this.fg.value.search || '').trim();
-    if (!q) return;
     this.results = [];
 
-    const filters: ProductParams = { productOrCategory: q };
+    const currentFilters = this.route.snapshot.queryParams;
+
+    const filters: ProductParams = { ...currentFilters, page: 0 };
+
+    delete (filters as any).name;
+    delete (filters as any).productOrCategory;
+
+    if (q) {
+      filters.name = q;
+    }
+
     this.router.navigate(['/products'], { queryParams: filters });
+    this.fg.clearValidators();
   }
 
   selectSuggestion(product: Product): void {
     this.fg.patchValue({ search: product.name });
     this.results = [];
 
-    const filters: ProductParams = { productOrCategory: product.name };
+    const currentFilters = this.route.snapshot.queryParams;
+    const filters: ProductParams = { ...currentFilters, page: 0, name: product.name };
+
+    delete (filters as any).productOrCategory;
+
     this.router.navigate(['/products'], { queryParams: filters });
   }
 }
