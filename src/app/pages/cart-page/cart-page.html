@@ -56,7 +56,7 @@
             </select>
           </label>
 
-          @if (isAdmin !== false) {
+          @if (permits.includes("ADMIN")) {
           <label>
             Tipo de transacción:
             <select formControlName="type" required>
@@ -79,7 +79,11 @@
       </form>
 
       <div class="cart-summary">
-        <p><strong>Total:</strong> ${{ total() }}</p>
+        @if (selectedTotal() == 0) {
+          <p><strong>Total:</strong> ${{ total() }}</p>
+        } @else {
+          <p><strong>Total:</strong> ${{ selectedTotal() }}</p>
+        }
       </div>
     </div>
 

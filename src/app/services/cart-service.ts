@@ -105,9 +105,10 @@ export class CartService {
     this.cartItems.set([])
   }
 
-  prepareTransaction(formValue: any): Transaction {
+  prepareTransaction(formValue: any, selectedProducts?: Product[]): Transaction {
+    const products = selectedProducts ?? this.cartItems();
     return {
-      total: this.total(),
+      total: products.reduce((sum, item) => sum + item.price * item.stock, 0),
       dateTime: new Date().toString(),
       paymentMethod: formValue.paymentMethod === "" ? "CASH" : formValue.paymentMethod,
       description: formValue.description === "" ? "No description" : formValue.description,

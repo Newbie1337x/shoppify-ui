@@ -5,6 +5,8 @@ import { CartService } from '../../services/cart-service';
 import { ProductCard } from "../../components/product-card/product-card";
 import { Product } from '../../models/product';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
@@ -12,16 +14,17 @@ import Swal from 'sweetalert2';
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css'
 })
-export class CartPage implements OnInit{
+export class CartPage implements OnInit {
 
-  checkoutForm!: FormGroup
-  isAdmin = false
-
-  selectedItems = signal<Set<number>>(new Set())
-
+  private aService = inject(AuthService)
   private tService = inject(TransactionService)
   private fb = inject(FormBuilder)
   private cService = inject(CartService)
+  private router = inject(Router)
+
+  checkoutForm!: FormGroup
+  permits = this.aService.permits()
+  selectedItems = signal<Set<number>>(new Set())
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
@@ -83,10 +86,10 @@ export class CartPage implements OnInit{
       return
     }
 
-    try{
+    try {
       await this.cService.updateQuantity(item, newQty)
-      
-    }catch(e: any){
+
+    } catch (e: any) {
       Swal.fire({
         icon: "warning",
         title: "Oops..",
@@ -98,28 +101,46 @@ export class CartPage implements OnInit{
 
   onSubmit() {
     if (this.checkoutForm.valid && this.cartItems().length) {
-      const payload = this.cService.prepareTransaction(this.checkoutForm.value)
-      console.log("Payload a enviar :", payload)
+      const payload = this.cService.prepareTransaction(this.checkoutForm.value);
+      console.log("Payload a enviar :", payload);
+
       this.tService.post(payload).subscribe({
         next: (transaction) => {
-          console.log("Transacción lista: ", transaction)
+          console.log("Transacción lista: ", transaction);
+          this.selectedItems.set(new Set());
+          this.cService.clearCart();
+          this.checkoutForm.reset();
+
           Swal.fire({
             icon: "success",
             title: "Okey!",
-            text: "Transaccion realizada correctamente"
-          })
-          //añadir redireccion a pagina de retiro por sucursal manejo de envio
+            text: "Transacción realizada correctamente"
+          }).then(() => {
+            Swal.fire({
+              title: "¿Ver compras?",
+              text: "También puedes quedarte por aquí",
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonText: "Ir a compras",
+              cancelButtonText: "Permanecer en tu carrito",
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/compras']);
+              }
+            });
+          });
         },
         error: (e) => {
-          console.error("Error preparando transacción", e)
+          console.error("Error preparando transacción", e);
           Swal.fire({
             icon: "error",
             title: "Oops..",
-            text: "Hubo un error al realizar la transaccion",
+            text: "Hubo un error al realizar la transacción",
             footer: e
-          })
+          });
         }
-      })
+      });
     }
   }
 }
