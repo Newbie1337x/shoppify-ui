@@ -3,32 +3,33 @@ import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { CartService } from '../../services/cart-service';
-import { PageItemDirective } from "@coreui/angular";
+import { ProductCard } from '../../components/product-card/product-card';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [PageItemDirective],
+  imports: [ProductCard, DecimalPipe],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
 export class ProductDetail implements OnInit {
   
-  
   product!: Product;
   id?: number;
+  relatedProducts: Product[] = [];
 
- constructor(
+  constructor(
     private pService: ProductService,
     private route: ActivatedRoute,
     private router: Router,
     private cartService: CartService
   ) {
- }
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
     this.renderProduct();
-
+    this.loadRelatedProducts();
   }
 
   renderProduct(){
@@ -40,10 +41,19 @@ export class ProductDetail implements OnInit {
         console.log(e)
         this.router.navigate(["/"])
       }
-      
     })
   }
 
+  loadRelatedProducts(): void {
+    this.pService.getList({ page: 0, size: 8 }).subscribe({
+      next: products => {
+        this.relatedProducts = products.filter(p => p.id !== this.id).slice(0, 6);
+      },
+      error: (e) => {
+        console.error('Error loading related products:', e);
+      }
+    });
+  }
 
   onAddToCart(): void {
     if (!this.product) return;
