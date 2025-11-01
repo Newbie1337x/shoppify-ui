@@ -1,6 +1,4 @@
 <div class="products-page">
-
-
   <section class="products-content">
     <aside class="products-sidebar" aria-label="Filtros">
       <app-products-refiner
@@ -46,8 +44,6 @@
 
       @if (refinedProducts.length > 0) {
         <section class="products-grid" aria-label="Listado de productos">
-
-
           @if (auth.permits().includes('ADMIN') && editMode && !adminView) {
             <article class="product-card product-card--create">
               <button
@@ -63,7 +59,10 @@
             </article>
           }
 
-          @for (p of refinedProducts; track p.id) {
+          @if (adminView) {
+            <app-product-table [products]="refinedProducts" (deleteOutput)="onDelete()"></app-product-table>
+          }@else {
+            @for (p of refinedProducts; track p.id) {
             <article
               class="product-card"
               [class.product-card--editing]="auth.permits().includes('ADMIN') && editMode"
@@ -104,6 +103,7 @@
                 </div>
               }
             </article>
+          }
           }
         </section>
       } @else {

@@ -10,13 +10,14 @@ import { ProductsRefiner } from '../../components/product-refiner/product-refine
 import { ProductParams } from '../../models/filters/productParams';
 import { AuthService } from '../../services/auth-service';
 import { SwalService } from '../../services/swal-service';
+import { ProductTable } from '../../components/product-table/product-table';
 
 @Component({
   selector: 'app-products-page',
   imports: [
     ProductCard,
     ProductsRefiner,
-    
+    ProductTable
   ],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css'
@@ -116,6 +117,14 @@ export class ProductsPage {
         console.error('Error al eliminar el producto:', err);
       }
     });
+  }
+
+  onDelete() {
+    if(this.currentFilters) {
+      this.renderRefinedProducts(this.currentFilters)
+    } else {
+      this.renderProducts()
+    }
   }
 
   editProduct(id: number): void {
