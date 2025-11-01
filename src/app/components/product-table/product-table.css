@@ -18,6 +18,7 @@
 
 .collection-table-head td {
   padding: 0.5vw 2vw;
+  font-size: 0.6rem;
   font-weight: bold;
 }
 
@@ -32,6 +33,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: background-color 0.2s ease;
+  font-size: 0.6rem;
 }
 
 .product-row:hover {
@@ -57,6 +59,7 @@
   background: rgba(255, 255, 255, 0.85);
   color: #0f172a;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  font-size: 0.6rem;
 }
 
 .action-button__icon {
