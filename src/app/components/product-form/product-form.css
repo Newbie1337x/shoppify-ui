@@ -6,16 +6,15 @@
 }
 
 #product-form {
-  max-width: 900px;
-  margin: 0 auto;
+  display: grid;
+  max-width: 1500px;
   padding: 3rem;
   border-radius: 32px;
   background: rgba(33, 33, 33, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px);
   box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
   gap: 1.5rem;
 }
 
@@ -26,6 +25,7 @@ fieldset {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 10px;
 }
 
 fieldset label {
@@ -56,6 +56,10 @@ fieldset input[type="number"]::-webkit-outer-spin-button {
 fieldset input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+fieldset input[type="text"] {
+  min-width: 180px;
 }
 
 fieldset input:focus,
@@ -117,10 +121,6 @@ fieldset h6.over-limit {
   font-weight: 500;
 }
 
-::ng-deep .mat-form-field {
-  width: 100%;
-}
-
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
   background: rgba(18, 18, 18, 0.9);
   border: 1px solid #3a3a3a;
@@ -136,19 +136,6 @@ fieldset h6.over-limit {
   background: rgba(28, 28, 28, 0.95);
   border-color: #ff7543;
   box-shadow: 0 0 0 4px rgba(255, 117, 67, 0.18);
-}
-
-::ng-deep .mat-form-field-label,
-::ng-deep .mat-select-value {
-  color: #f7f7f9 !important;
-}
-
-::ng-deep .mat-form-field-underline {
-  display: none;
-}
-
-::ng-deep .mat-select-arrow {
-  color: #ff7543;
 }
 
 ::ng-deep .mat-pseudo-checkbox {
@@ -168,10 +155,13 @@ fieldset h6.over-limit {
 
 fieldset:has(textarea),
 fieldset:has(#image-input),
-fieldset:has(#brand-input),
-fieldset:has(.mat-form-field),
-fieldset:has(#id-input) {
+.categories-fieldset {
   grid-column: 1 / -1;
+}
+
+.categories-fieldset {
+  display: flex;
+  justify-content: center;
 }
 
 #submit-button {

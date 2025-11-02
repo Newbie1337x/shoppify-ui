@@ -1,0 +1,4 @@
+.product-dialog {
+    max-height: 45vw;
+    overflow-y: scroll;
+}

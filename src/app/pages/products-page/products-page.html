@@ -60,7 +60,11 @@
           }
 
           @if (adminView) {
-            <app-product-table [products]="refinedProducts" (deleteOutput)="onDelete()"></app-product-table>
+            <app-product-table 
+              [products]="refinedProducts" 
+              (deleteEvent)="onDelete()"
+              (editEvent)="editProduct($event)">
+            </app-product-table>
           }@else {
             @for (p of refinedProducts; track p.id) {
             <article
@@ -91,7 +95,7 @@
                   <button
                     class="admin-action admin-action--edit"
                     type="button"
-                    (click)="editProduct(p.id)">
+                    (click)="editProduct(p)">
                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                       <path
                         d="M4 17.25V20h2.75L17.81 8.94l-2.75-2.75L4 17.25ZM19.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"

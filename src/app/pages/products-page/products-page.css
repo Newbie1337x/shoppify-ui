@@ -205,6 +205,8 @@
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
   flex: 0 1 300px;
   box-sizing: border-box;
   gap: 1.1rem;
@@ -217,6 +219,7 @@
 }
 
 .product-card--create {
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -449,9 +452,5 @@
 
   .product-admin-actions {
     flex-direction: column;
-  }
-
-  .products-grid {
-
-  }
+  } 
 }

@@ -11,6 +11,8 @@ import { ProductParams } from '../../models/filters/productParams';
 import { AuthService } from '../../services/auth-service';
 import { SwalService } from '../../services/swal-service';
 import { ProductTable } from '../../components/product-table/product-table';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductFormDialog } from '../../components/product-form-dialog/product-form-dialog';
 
 @Component({
   selector: 'app-products-page',
@@ -33,10 +35,11 @@ export class ProductsPage {
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
+    public auth: AuthService,
     private swal: SwalService,
     private route: ActivatedRoute,
     private router: Router,
-    public auth: AuthService
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -120,15 +123,29 @@ export class ProductsPage {
   }
 
   onDelete() {
-    if(this.currentFilters) {
+    if (this.currentFilters) {
       this.renderRefinedProducts(this.currentFilters)
     } else {
       this.renderProducts()
     }
   }
 
-  editProduct(id: number): void {
-    this.router.navigate([`/products/edit/${id}`]);
+  editProduct(product: Product): void {
+    this.dialog.open(ProductFormDialog, {
+      maxWidth: "none",
+      width: '80vw',
+      data: {
+        product: product,
+        products: this.products,
+        categories: this.categories
+      },
+      disableClose: true,
+      panelClass: 'product-dialog-panel'
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.swal.success("El producto se edito correctamente!")
+      }
+    })
   }
 
 
@@ -140,7 +157,7 @@ export class ProductsPage {
   }
 
 
-  createProduct(){
+  createProduct() {
     this.router.navigate(['/products/create']);
   }
 

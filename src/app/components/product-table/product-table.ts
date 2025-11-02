@@ -16,7 +16,8 @@ import { TableDirective } from "@coreui/angular";
 })
 export class ProductTable{
   products = input<Product[]>()
-  deleteOutput = output<void>()
+  deleteEvent = output<void>()
+  editEvent = output<Product>()
 
   constructor(
     private productService: ProductService,
@@ -29,7 +30,7 @@ export class ProductTable{
     this.productService.delete(id).subscribe({
       next: () => {
         this.swal.success("Producto eliminado con exito!")
-        this.deleteOutput.emit()
+        this.deleteEvent.emit()
       },
       error: (err) => {
         this.swal.error("Ocurrio un error al eliminar el producto")
@@ -37,7 +38,7 @@ export class ProductTable{
     });
   }
 
-  editProduct(id: number) {
-    this.router.navigate([`/products/edit/${id}`])
+  editProduct(product: Product) {
+    this.editEvent.emit(product)
   }
 }
