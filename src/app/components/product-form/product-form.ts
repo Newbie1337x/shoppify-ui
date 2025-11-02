@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, input, OnInit, output } from '@angular/core';
+import { Component, HostListener, Inject, input, OnInit, output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,7 +29,8 @@ import { SwalService } from '../../services/swal-service';
     ImageFallbackDirective
   ],
   templateUrl: './product-form.html',
-  styleUrl: './product-form.css'
+  styleUrl: './product-form.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductForm implements OnInit {
   form!: FormGroup
