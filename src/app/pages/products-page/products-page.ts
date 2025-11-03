@@ -31,12 +31,18 @@ import { PaginationModule } from '@coreui/angular';
   styleUrl: './products-page.css'
 })
 export class ProductsPage {
+  //Paginacion
   productsPage!: Page
+  defaultSize:number = 8
+  //Arreglos
   refinedProducts: Product[] = [];
   categories: Category[] = [];
-  currentFilters: ProductParams = { page: 0, size: 8 };
+  //Filtros
+  currentFilters: ProductParams = { page: 0, size: this.defaultSize};
+  //Toggles
   editMode = false;
   adminView = false;
+ 
 
   constructor(
     private productService: ProductService,
@@ -67,7 +73,7 @@ export class ProductsPage {
   }
 
   onFilterChange(filters: ProductParams): void {
-    const merged: ProductParams = { page: 0, size: 6, ...filters };
+    const merged: ProductParams = { page: 0, size: this.defaultSize, ...filters };
     this.currentFilters = merged;
     this.navigateWithFilters(merged);
   }
@@ -165,7 +171,7 @@ export class ProductsPage {
   private parseFilters(params: Params): ProductParams {
     const filters: ProductParams = {
       page: params['page'] ? Number(params['page']) : 0,
-      size: params['size'] ? Number(params['size']) : 6
+      size: params['size'] ? Number(params['size']) : this.defaultSize
     };
 
     if (params['name']) filters.name = params['name'];

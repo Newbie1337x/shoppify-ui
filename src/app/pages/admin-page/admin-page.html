@@ -40,17 +40,7 @@
       </div>
     </div>
 
-    <div class="hero-metrics">
-      @for (card of overviewCards; track card.label) {
-        <article class="metric-card" [attr.data-variant]="card.variant">
-          <span class="metric-label">{{ card.label }}</span>
-          <span class="metric-value">{{ card.value }}</span>
-          <span class="metric-trend" [attr.data-trend]="card.trend">
-            {{ card.trendText }}
-          </span>
-        </article>
-      }
-    </div>
+
   </section>
 
 
@@ -60,16 +50,37 @@
       <span class="section-helper">Optimiza tus procesos en segundos</span>
     </div>
     <div class="action-grid">
-      @for (quickAction of quickActions; track quickAction.label) {
-        <div class="action-card" [attr.data-accent]="quickAction.accent">
-          <div class="action-icon" aria-hidden="true">{{ quickAction.icon }}</div>
-          <div class="action-copy">
-            <h3>{{ quickAction.label }}</h3>
-            <p>{{ quickAction.description }}</p>
-          </div>
-          <span class="action-hint">{{ quickAction.hint }}</span>
+      <div (click) = "createProduct()" class="action-card" data-accent="violet">
+        <div class="action-copy">
+          <h3>Nuevo producto</h3>
+          <p>Publica un lanzamiento y programalo en el catalogo.</p>
         </div>
-      }
+        <span class="action-hint">5 min</span>
+      </div>
+
+      <div class="action-card" data-accent="sky">
+        <div class="action-copy">
+          <h3>Campana flash</h3>
+          <p>Crea un banner destacado para impulsar ventas express.</p>
+        </div>
+        <span class="action-hint">Promueve ahora</span>
+      </div>
+
+      <div class="action-card" data-accent="amber">
+        <div class="action-copy">
+          <h3>Actualizar precios</h3>
+          <p>Ajusta margenes y descuentos de forma masiva.</p>
+        </div>
+        <span class="action-hint">Lista inteligente</span>
+      </div>
+
+      <div class="action-card" data-accent="emerald">
+        <div class="action-copy">
+          <h3>Invitar colaborador</h3>
+          <p>Agrega un nuevo miembro y asigna permisos personalizados.</p>
+        </div>
+        <span class="action-hint">Roles seguros</span>
+      </div>
     </div>
   </section> 
 </div>
