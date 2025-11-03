@@ -10,7 +10,7 @@
   max-width: 1100px;
   padding: 3rem;
   border-radius: 32px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(226, 232, 240, 0.8) 100%);
+  background: rgba(226, 232, 240, 0.8);
   border: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(12px);
   box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
@@ -92,12 +92,12 @@ fieldset textarea::-webkit-scrollbar-track {
 }
 
 fieldset textarea::-webkit-scrollbar-thumb {
-  background: #ff7543;
+  background: #4338ca;
   border-radius: 10px;
 }
 
 fieldset textarea::-webkit-scrollbar-thumb:hover {
-  background: #ff8358;
+  background: #4338ca;
 }
 
 fieldset h5 {
