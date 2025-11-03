@@ -1,54 +1,112 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, input, OnInit, output, SimpleChanges } from '@angular/core';
 import { Category } from '../../models/category';
-import { FormsModule } from '@angular/forms';
-import { debounce, debounceTime, Subject } from 'rxjs';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CategoryParams } from '../../models/filters/category-params';
+
+type RefinerFormValue = {
+  name: string;
+  nameSort: string;
+};
 
 @Component({
   selector: 'app-category-refiner',
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './category-refiner.html',
   styleUrl: './category-refiner.css'
 })
 export class CategoryRefiner implements OnInit{
-  categories = input.required<Category[]>()
-  outputCategories = output<Category[]>()
-  filterChange = new Subject<void>()
-  refinedCategories!: Category[]
+  categories = input<Category[]>([])
+  initialFilters = input<CategoryParams>({});
+  filterChange = output<CategoryParams>();
 
-  nameFilter!: string
-  nameSort!: 'asc' | 'desc' | null
+  filtersForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.refinedCategories = [...this.categories()]
-    this.filterChange.pipe(debounceTime(500)).subscribe(() => this.refineCategories())
+    this.initForm();
+    this.patchFormWithFilters(this.initialFilters());
   }
 
-  onFilterChange() {
-    this.filterChange.next()
-  }
-
-  filterCategories() {
-    this.refinedCategories = [...this.categories()]
-    if(this.nameFilter && this.nameFilter.trim() !== "") {
-      this.refinedCategories = this.refinedCategories.filter(category => 
-        category.name?.trim().toLowerCase().includes(this.nameFilter.trim().toLowerCase())
-      );
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['initialFilters'] && this.filtersForm) {
+      this.patchFormWithFilters(this.initialFilters());
     }
   }
 
-  sortCategories()  {
-    if(this.nameSort) {
-      if(this.nameSort === 'desc') {
-        this.refinedCategories = this.refinedCategories?.sort((a, b) => b.name.localeCompare(a.name))
-      } else {
-        this.refinedCategories = this.refinedCategories?.sort((a, b) => a.name.localeCompare(b.name))
-      }
-    }
+  onFiltersSubmit(): void {
+    this.filterChange.emit(this.buildFiltersFromForm())
   }
 
-  refineCategories() {
-    this.filterCategories()
-    this.sortCategories()
-    this.outputCategories.emit(this.refinedCategories)
+  resetFilters(): void {
+    this.filtersForm.reset({
+      name: '',
+      nameSort: '',
+    });
+    this.filterChange.emit({});
+  }
+
+  get hasActiveFilters(): boolean {
+    if (!this.filtersForm) return false;
+
+    const {
+      name,
+      nameSort,
+    } = this.filtersForm.getRawValue() as RefinerFormValue;
+
+    return Boolean(
+      this.cleanString(name) ||
+      this.cleanString(nameSort)
+    )
+  }
+
+  private initForm(): void {
+    this.filtersForm = this.fb.group({
+      name: [''],
+      nameSort: [''],
+    })
+  }
+
+  private buildFiltersFromForm(): CategoryParams {
+    const {
+      name,
+      nameSort,
+    } = this.filtersForm.getRawValue() as RefinerFormValue;
+
+    const params: CategoryParams = {};
+    const trimmedName = this.cleanString(name);
+    const trimmedNameSort = this.cleanString(nameSort);
+    if (trimmedName) params.name = trimmedName;
+    if (trimmedNameSort) {
+      params.sort = `name,${trimmedNameSort}`;
+    }
+    return params;
+  }
+
+  private patchFormWithFilters(filters: CategoryParams): void {
+    const patchValue: RefinerFormValue = {
+      name: filters.name ?? '',
+      nameSort: '',
+    }
+
+    if (filters.sort) {
+      const [field, direction] = filters.sort.split(',');
+      if (field === 'name') {
+        patchValue.nameSort = direction ?? '';
+    }
+    this.filtersForm.patchValue(patchValue, { emitEvent: false });
+  }
+  }
+
+  private cleanString(value: unknown): string | null {
+    if (typeof value !== 'string') return null;
+    const trimmed = value.trim();
+    return trimmed ? trimmed : null;
+  }
+
+  private toNumber(value: unknown): number | null {
+    if (value === undefined || value === null || value === '') return null;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
   }
 }

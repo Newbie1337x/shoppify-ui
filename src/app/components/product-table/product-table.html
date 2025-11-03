@@ -28,11 +28,11 @@
             <td> {{p.soldQuantity}} </td>
             <td>
                 @for (c of p.categories; track $index) {
-                @if ($index === p.categories.length - 1) {
-                {{c}}
-                }@else {
-                {{c + ", "}}
-                }
+                    @if ($index === p.categories.length - 1) {
+                        {{c}}
+                    }@else {
+                        {{c + ", "}}
+                    }
                 }
             </td>
             @if (isEditMode()) {

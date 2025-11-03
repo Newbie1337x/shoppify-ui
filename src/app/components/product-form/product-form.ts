@@ -1,10 +1,7 @@
 import { Component, HostListener, Inject, input, OnInit, output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { Product } from '../../models/product';
-import { CategoryService } from '../../services/category-service';
 
 import { Category } from '../../models/category';
 import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, startWith } from 'rxjs';
@@ -47,7 +44,6 @@ export class ProductForm implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private categoryService: CategoryService,
     private swal: SwalService,
   ) {}
 

@@ -22,8 +22,6 @@ export class ProductTable{
   constructor(
     private productService: ProductService,
     private swal: SwalService,
-    private route: ActivatedRoute,
-    private router: Router
   ) {}
 
   deleteProduct(id: number): void {
