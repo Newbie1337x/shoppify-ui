@@ -13,14 +13,16 @@ import { SwalService } from '../../services/swal-service';
 import { ProductTable } from '../../components/product-table/product-table';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductFormDialog } from '../../components/product-form-dialog/product-form-dialog';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products-page',
   imports: [
     ProductCard,
     ProductsRefiner,
-    ProductTable
-  ],
+    ProductTable,
+    CommonModule
+],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css'
 })
@@ -144,6 +146,7 @@ export class ProductsPage {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.swal.success("El producto se edito correctamente!")
+        this.renderRefinedProducts(this.currentFilters)
       }
     })
   }
@@ -158,7 +161,21 @@ export class ProductsPage {
 
 
   createProduct() {
-    this.router.navigate(['/products/create']);
+    this.dialog.open(ProductFormDialog, {
+      maxWidth: "none",
+      width: '80vw',
+      data: {
+        products: this.products,
+        categories: this.categories
+      },
+      disableClose: true,
+      panelClass: 'product-dialog-panel'
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.swal.success("El producto se agrego correctamente!")
+        this.renderRefinedProducts(this.currentFilters)
+      }
+    })
   }
 
   private parseFilters(params: Params): ProductParams {

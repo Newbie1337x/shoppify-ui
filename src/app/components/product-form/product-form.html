@@ -67,6 +67,20 @@
         }
     </fieldset>
 
+    <!-- Stock -->
+    <fieldset>
+        <label for="stock-input">Stock*</label>
+        <input type="number" id="stock-input" formControlName="stock">
+
+        @if(controls['stock'].dirty) {
+            @if (controls['stock'].hasError("required")) {
+                <h5>El stock es obligatorio</h5>
+            }@else if (controls['stock'].hasError("max") || controls['stock'].hasError("min")) {
+                <h5>El stock tiene que tener un valor entre 0 y 100.000</h5>
+            }
+        }
+    </fieldset>
+
     <!-- Price -->
     <fieldset>
         <label for="price-input">Precio*</label>
@@ -91,20 +105,6 @@
                 <h5>El precio unitario es obligatorio</h5>
             }@else if (controls['unitPrice'].hasError("max") || controls['unitPrice'].hasError("min")) {
                 <h5>El precio unitario debe tener un valor entre $0 y $100.000.000</h5>
-            }
-        }
-    </fieldset>
-
-    <!-- Stock -->
-    <fieldset>
-        <label for="stock-input">Stock*</label>
-        <input type="number" id="stock-input" formControlName="stock">
-
-        @if(controls['stock'].dirty) {
-            @if (controls['stock'].hasError("required")) {
-                <h5>El stock es obligatorio</h5>
-            }@else if (controls['stock'].hasError("max") || controls['stock'].hasError("min")) {
-                <h5>El stock tiene que tener un valor entre 0 y 100.000</h5>
             }
         }
     </fieldset>
@@ -135,7 +135,9 @@
             <mat-label>Categorías</mat-label>
             <mat-select multiple formControlName="categories" panelClass="custom-select-panel">
                 @for (category of categories(); track $index) {
-                <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
+                    <mat-option [value]="category.name"> 
+                        {{category.name.charAt(0).toUpperCase() + category.name.slice(1).toLowerCase()}} 
+                    </mat-option>
                 }
             </mat-select>
         </mat-form-field>

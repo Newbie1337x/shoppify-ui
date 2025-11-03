@@ -44,9 +44,9 @@
 
       @if (refinedProducts.length > 0) {
         <section class="products-grid" aria-label="Listado de productos">
-          @if (auth.permits().includes('ADMIN') && editMode && !adminView) {
+          @if (auth.permits().includes('ADMIN') && editMode) {
             <article class="product-card product-card--create">
-              <button
+              <button 
                 type="button"
                 class="create-product-button"
                 (click)="createProduct()">
@@ -61,6 +61,7 @@
 
           @if (adminView) {
             <app-product-table 
+              [isEditMode]="editMode"
               [products]="refinedProducts" 
               (deleteEvent)="onDelete()"
               (editEvent)="editProduct($event)">

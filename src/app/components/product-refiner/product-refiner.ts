@@ -6,7 +6,8 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,7 +42,8 @@ type RefinerFormValue = {
     MatButtonModule
   ],
   templateUrl: 'product-refiner.html',
-  styleUrls: ['product-refiner.css']
+  styleUrls: ['product-refiner.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductsRefiner implements OnInit, OnChanges {
   @Input() categories: Category[] = [];
