@@ -22,7 +22,7 @@ export class EditCategoryPage implements OnInit {
 
   getCategories() {
     this.categoryService.getList().subscribe({
-      next: data => this.categories = data,
+      next: data => this.categories = data.data,
       error: () => {
         Swal.fire({
           icon: "error",

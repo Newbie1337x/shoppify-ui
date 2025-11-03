@@ -55,7 +55,7 @@ export class Home implements OnInit {
     
     this.productService.getList(this.params).subscribe({
       next: (products) => {
-        this.products = products;
+        this.products = products.data;
     
       },
       error: (err) => {
@@ -68,7 +68,7 @@ export class Home implements OnInit {
     renderCategories(): void {
     this.categoryService.getList(this.params).subscribe({
       next: (categories) => {
-        this.categories = categories;
+        this.categories = categories.data;
       },
       error: (err) => {
         console.error('Error al obtener todas las categorias:', err);

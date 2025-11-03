@@ -57,7 +57,7 @@ export class SearchBar implements OnInit {
           }
 
           this.productService.getList(params).subscribe({
-            next: (res) => (this.results = (res || []).slice(0, 6)),
+            next: (res) => (this.results = (res.data || [])),
             error: () => (this.results = []),
           });
         },

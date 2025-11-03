@@ -12,7 +12,7 @@
       <header class="products-toolbar">
         <div class="toolbar-details">
           <h2>Resultados</h2>
-          <p>{{ refinedProducts.length }} productos encontrados</p>
+          <p>{{totalResults}} productos encontrados</p>
         </div>
 
         @if (auth.permits().includes('ADMIN')) {
@@ -117,7 +117,37 @@
           <p>Probá ajustando los filtros o restableciendo el catálogo completo.</p>
         </div>
       }
+      @if (productsPage && productsPage.totalPages > 1) {
+  <div class="products-pagination">
+    <c-pagination>
+      <li cPageItem [class.disabled]="!productsPage || productsPage.number === 0">
+        <a cPageLink (click)="prevPage()" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      @for (page of pagesArray; track page) {
+        <li cPageItem [class.active]="page === productsPage.number">
+          <a cPageLink (click)="goToPage(page)">
+            {{ page + 1 }}
+          </a>
+        </li>
+      }
+
+      <li cPageItem [class.disabled]="!productsPage || productsPage.number === (productsPage.totalPages - 1)">
+        <a cPageLink (click)="nextPage()" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </c-pagination>
+  </div>
+}
     </div>
+
+
+
+
+
   </section>
 
 </div>

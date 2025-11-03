@@ -30,8 +30,8 @@ export class CategoriesPage implements OnInit {
   renderCategories(): void {
     this.categoryService.getList().subscribe({
       next: (categories) => {
-        this.categories = categories,
-        this.refinedCategories = [...categories]
+        this.categories = categories.data,
+        this.refinedCategories = [...categories.data]
       },
       error: (err) => {
         Swal.fire({

@@ -26,7 +26,7 @@ export class EditProductPage implements OnInit {
   getProducts() {
     this.productService.getList().subscribe({
       next: (products) => {
-        this.products = products;
+        this.products = products.data;
       },
       error: (err) => {
         Swal.fire({

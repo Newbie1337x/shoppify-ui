@@ -14,23 +14,27 @@ import { ProductTable } from '../../components/product-table/product-table';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductFormDialog } from '../../components/product-form-dialog/product-form-dialog';
 import { CommonModule } from '@angular/common';
+import { Page } from '../../models/hal/page';
+import { PaginationModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-products-page',
+  standalone: true,
   imports: [
     ProductCard,
     ProductsRefiner,
     ProductTable,
-    CommonModule
-],
+    CommonModule,
+    PaginationModule
+  ],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css'
 })
 export class ProductsPage {
-  products: Product[] = [];
+  productsPage!: Page
   refinedProducts: Product[] = [];
   categories: Category[] = [];
-  currentFilters: ProductParams = { page: 0, size: 6 };
+  currentFilters: ProductParams = { page: 0, size: 8 };
   editMode = false;
   adminView = false;
 
@@ -49,12 +53,7 @@ export class ProductsPage {
       const filters = this.parseFilters(params);
       this.currentFilters = filters;
 
-      if (this.hasFilterCriteria(filters)) {
-        this.renderRefinedProducts(filters);
-      } else {
-        this.renderProducts();
-      }
-
+      this.renderRefinedProducts(filters);
       this.renderCategories();
     });
   }
@@ -73,22 +72,11 @@ export class ProductsPage {
     this.navigateWithFilters(merged);
   }
 
-  renderProducts(): void {
-    this.productService.getList().subscribe({
-      next: (products) => {
-        this.products = products;
-        this.refinedProducts = [...products];
-      },
-      error: () => {
-        this.swal.error("Ocurrio un error al buscar los productos")
-      }
-    });
-  }
-
   renderRefinedProducts(filters: ProductParams): void {
     this.productService.getList(filters).subscribe({
       next: (data) => {
-        this.refinedProducts = data;
+        this.refinedProducts = data.data;
+        this.productsPage = data.page; 
       },
       error: (err) => {
         this.swal.error("Ocurrio un error al filtrar los productos")
@@ -99,10 +87,10 @@ export class ProductsPage {
   renderCategories(): void {
     this.categoryService.getList().subscribe({
       next: (data) => {
-        this.categories = data;
+        this.categories = data.data;
       },
       error: (err) => {
-        console.error('Error al obtener todos los productos:', err);
+        console.error('Error al obtener las categorías:', err);
       }
     });
   }
@@ -116,7 +104,7 @@ export class ProductsPage {
           confirmButtonText: 'Volver',
           confirmButtonColor: '#ff7543'
         });
-        this.renderProducts();
+        this.renderRefinedProducts(this.currentFilters); 
       },
       error: (err) => {
         console.error('Error al eliminar el producto:', err);
@@ -125,11 +113,7 @@ export class ProductsPage {
   }
 
   onDelete() {
-    if (this.currentFilters) {
-      this.renderRefinedProducts(this.currentFilters)
-    } else {
-      this.renderProducts()
-    }
+    this.renderRefinedProducts(this.currentFilters);
   }
 
   editProduct(product: Product): void {
@@ -138,7 +122,7 @@ export class ProductsPage {
       width: '80vw',
       data: {
         product: product,
-        products: this.products,
+        products: this.refinedProducts, 
         categories: this.categories
       },
       disableClose: true,
@@ -146,7 +130,7 @@ export class ProductsPage {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.swal.success("El producto se edito correctamente!")
-        this.renderRefinedProducts(this.currentFilters)
+        this.renderRefinedProducts(this.currentFilters); 
       }
     })
   }
@@ -165,7 +149,7 @@ export class ProductsPage {
       maxWidth: "none",
       width: '80vw',
       data: {
-        products: this.products,
+        products: this.refinedProducts,
         categories: this.categories
       },
       disableClose: true,
@@ -173,7 +157,7 @@ export class ProductsPage {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.swal.success("El producto se agrego correctamente!")
-        this.renderRefinedProducts(this.currentFilters)
+        this.renderRefinedProducts(this.currentFilters);
       }
     })
   }
@@ -207,8 +191,40 @@ export class ProductsPage {
     return query;
   }
 
-  private hasFilterCriteria(filters: ProductParams): boolean {
-    const { page, size, ...rest } = filters;
-    return Object.keys(rest).length > 0;
+
+ nextPage(){
+    if (this.productsPage && this.productsPage.number < (this.productsPage.totalPages - 1)) {
+      
+      this.currentFilters.page = this.productsPage.number + 1;
+      this.navigateWithFilters(this.currentFilters);
+    }
+  }
+
+  prevPage(){
+    if (this.productsPage && this.productsPage.number > 0) {
+      
+      this.currentFilters.page = this.productsPage.number - 1;
+      this.navigateWithFilters(this.currentFilters);
+    }
+  }
+
+  goToPage(page: number){
+    this.currentFilters.page = page
+    this.navigateWithFilters(this.currentFilters)
+  }
+
+
+  get pagesArray(): number[] {
+    if (!this.productsPage) {
+      return [];
+    }
+    return Array(this.productsPage.totalPages).fill(0).map((x,i) => i);
+  }
+
+  get totalResults():number{
+  if(!this.productsPage){
+    return 0
+  }
+  return this.productsPage.totalElements;
   }
 }
