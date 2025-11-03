@@ -84,14 +84,14 @@ export class Profile implements OnInit {
   }
 
   verCompras() {
-    this.router.navigate([""])  //TODO
+    this.router.navigate(["/purchases"])
   }
 
   ayuda() {
-    this.router.navigate([""])  //TODO
+    this.router.navigate(["/help"])
   }
 
   verMas() {
-    this.router.navigate([""]) //TODO
+    this.router.navigate([""]) //TODO cuando agreguemos wishlist
   }
 }

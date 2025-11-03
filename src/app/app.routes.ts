@@ -9,6 +9,8 @@ import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
 import { authGuard } from './core/guards/auth-guard';
 import { publicGuard } from './core/guards/public-guard';
+import { Help } from './pages/help/help';
+import { ConfigPages } from './layouts/config-pages/config-pages';
 
 
 export const routes: Routes = [
@@ -26,16 +28,22 @@ export const routes: Routes = [
 
   {
     path: '',
+    component: ConfigPages,
+    children: [
+      { path: 'profile', component: Profile, canActivate: [authGuard] },
+      { path: 'help', component: Help},
+    ]
+  },
+
+  {
+    path: '',
     component: Main,
     children: [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
       { path: 'products/search/:q', component: ProductsPage},
-      { path: 'profile', component: Profile, canActivate: [authGuard] },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
-  
-
     ]
   },
 ];
