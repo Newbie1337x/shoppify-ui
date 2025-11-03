@@ -2,65 +2,61 @@
   <h2>🛒 Tu carrito</h2>
 
   @if (cartItems().length > 0) {
+  <div class="cart-main-content">
+
     <div class="cart-list">
       @for (item of cartItems(); track item.id) {
-        <div class="cart-item">
-          <app-product-card class="product-card" [product]="item"></app-product-card>
+      <div class="cart-item">
+        <label class="select-label">
+          <input type="checkbox" [checked]="selectedItems().has(item.id)"
+            (change)="toggleSelection(item.id, $any($event.target).checked)" />
+          Seleccionar
+        </label>
 
-          <div class="cart-controls">
+        <app-product-card class="product-card" [product]="item"></app-product-card>
 
-            <label class="select-label">
-              <input
-                type="checkbox"
-                [checked]="selectedItems().has(item.id)"
-                (change)="toggleSelection(item.id, $any($event.target).checked)"
-              />
-              Seleccionar
-            </label>
-
-            <div class="quantity-control">
-              <label>Cantidad:</label>
-              <input type="number"
-                     min="1"
-                     [value]="item.stock"
-                     (input)="updateQuantity(item, $any($event.target).value)">
+        <div class="cart-controls">
+          <div class="quantity-control">
+            <label>Cantidad:</label>
+            <div class="quantity-buttons">
+              <button type="button" (click)="changeQuantity(item, -1)">-</button>
+              <input type="number" [value]="item.stock" readonly />
+              <button type="button" (click)="changeQuantity(item, 1)">+</button>
             </div>
-
-            <p class="item-subtotal">
-              Subtotal:
-              <strong>${{ selectedItems().has(item.id) ? item.price * item.stock : 0 }}</strong>
-            </p>
-
-            <button class="remove-btn" (click)="removeFromCart(item.id)">Eliminar del carrito ❌</button>
           </div>
-        </div>
-      }
-    </div>
 
-    @if (selectedItems().size > 0) {
+          <p class="item-subtotal">
+            Subtotal:
+            <strong>${{ item.price * item.stock }}</strong>
+          </p>
+          
+          <button class="remove-btn" (click)="removeFromCart(item.id)">Eliminar del carrito ❌</button>
+        </div>
+      </div>
+      }
+
+      @if (selectedItems().size > 0) {
       <div class="remove-selected-container">
         <button class="remove-selected-btn" (click)="removeSelected()">
           🗑️ Eliminar seleccionados
         </button>
       </div>
-    }
-
-    <div class="cart-summary">
-      <p><strong>Total:</strong> ${{ total() }}</p>
+      }
     </div>
+    <div class="cart-right-column">
 
-    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
-      <div class="form-grid">
-        <label>
-          Método de pago:
-          <select formControlName="paymentMethod" required>
-            <option value="CASH">Efectivo</option>
-            <option value="CARD">Tarjeta</option>
-            <option value="TRANSFER">Transferencia</option>
-          </select>
-        </label>
+      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+        <div class="form-grid">
+          <label>
+            Método de pago:
+            <select formControlName="paymentMethod" required>
+              <option value="CASH">Efectivo</option>
+              <option value="CARD">Tarjeta</option>
+              <option value="TRANSFER">Transferencia</option>
+            </select>
+          </label>
 
-        @if (isAdmin !== false) {
+          @if (permits.includes("ADMIN")) {
           <label>
             Tipo de transacción:
             <select formControlName="type" required>
@@ -78,19 +74,30 @@
             Descripción:
             <textarea formControlName="description" rows="2" placeholder="Notas de la venta..."></textarea>
           </label>
+          }
+        </div>
+      </form>
+
+      <div class="cart-summary">
+        @if (selectedTotal() == 0) {
+          <p><strong>Total:</strong> ${{ total() }}</p>
+        } @else {
+          <p><strong>Total:</strong> ${{ selectedTotal() }}</p>
         }
       </div>
-
-      <button type="submit"
-              [disabled]="checkoutForm.invalid || cartItems().length === 0"
-              class="checkout-btn">
-        Finalizar transacción
-      </button>
-    </form>
-  } @else {
-    <div class="empty-cart">
-      <h3>Tu carrito está vacío 😕</h3>
-      <p>Agrega algunos productos para comenzar 💪.</p>
     </div>
+
+  </div>
+
+  <button type="submit" form="checkout-form" [disabled]="checkoutForm.invalid || cartItems().length === 0"
+    class="checkout-btn">
+    Finalizar transacción
+  </button>
+
+  } @else {
+  <div class="empty-cart">
+    <h3>Tu carrito está vacío 😕</h3>
+    <p>Agrega algunos productos para comenzar 💪.</p>
+  </div>
   }
 </div>
