@@ -18,6 +18,6 @@ export class ProductCard {
 constructor(private router:Router){}
 
 getDetails(id: number){
-  this.router.navigate(["/products/detail", id]);
+  this.router.navigate(["/products/details", id]);
 }
 }

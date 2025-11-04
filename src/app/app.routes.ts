@@ -13,6 +13,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { Help } from './pages/help/help';
 import { ConfigPages } from './layouts/config-pages/config-pages';
 import { publicGuard } from './core/guards/public-guard';
+import { ProductDetail } from './pages/product-detail/product-detail';
 
 
 export const routes: Routes = [
@@ -29,14 +30,7 @@ export const routes: Routes = [
     ]
   },
 
-  {
-    path: '',
-    component: ConfigPages,
-    children: [
-      { path: 'profile', component: Profile, canActivate: [authGuard] },
-      { path: 'help', component: Help},
-    ]
-  },
+  
 
   {
     path: '',
@@ -44,11 +38,22 @@ export const routes: Routes = [
     children: [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
+      { path: 'products/details/:id', component: ProductDetail},
       { path: 'products/search/:q', component: ProductsPage},
       { path: 'categories', component: CategoriesPage},
       { path: 'profile', component: Profile },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
+     
+    ]
+  },
+  {
+    path: '',
+    component: ConfigPages,
+    children: [
+      { path: 'profile', component: Profile, canActivate: [authGuard] },
+      { path: 'help', component: Help},
+       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
 ];
