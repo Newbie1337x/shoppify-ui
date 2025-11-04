@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from '../../components/product-card/product-card';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-detail',
@@ -56,12 +57,31 @@ export class ProductDetail implements OnInit {
 
   onAddToCart(): void {
     if (!this.product) return;
-    this.cartService.addToCart(this.product);
+    this.cartService.addToCart(this.product)
+    this.showCartSuccessToast(this.product.name)
   }
 
   onBuyNow(): void {
     if (!this.product) return;
     this.cartService.addToCart(this.product);
     this.router.navigate(['/cart']);
+  }
+
+  showCartSuccessToast = (productName: string) => {
+  Swal.fire({
+
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    
+    timer: 1500,
+    timerProgressBar: true,
+    
+    icon: 'success',
+    title: `"${productName}" agregado.`,
+    customClass: {
+        popup: 'swal2-toast-dark'
+    }
+  })
   }
 }
