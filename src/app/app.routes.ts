@@ -22,9 +22,11 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: Login },
       { path: 'admin', component: AdminPage },
+      { path: 'admin/createP', component: ProductForm},
       { path: 'register', component: Register },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: '**', redirectTo: 'login' }
+      { path: '**', redirectTo: 'login' },
+
     ]
   },
 
@@ -35,6 +37,7 @@ export const routes: Routes = [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
       { path: 'products/search/:q', component: ProductsPage},
+
       { path:'categories', component: CategoriesPage},
       { path:'categories/edit/:id', component: EditCategoryPage},
       { path: 'profile', component: Profile },

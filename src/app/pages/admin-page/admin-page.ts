@@ -16,7 +16,7 @@ export class AdminPage {
 
 
 createProduct(){
-  this.router.navigate([""]);
+  this.router.navigate(["auth/admin/createP"]);
 }
 
 }

@@ -1,9 +1,9 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
     <!-- ID -->
-    @if (this.product()) {
+    @if (this.product) {
     <fieldset>
         <label>ID</label>
-        <input type="text" id="id-input" formControlName="id" readonly>
+        <input type="text" id="id-input" formControlName="id" [disabled]="true" readonly>
     </fieldset>
     }
 
@@ -31,8 +31,6 @@
                 <h5>El SKU es obligatorio</h5>
             }@else if (controls['sku'].hasError("minlength") || controls['sku'].hasError("maxlength")) {
                 <h5>El SKU debe tener entre 6 y 12 caracteres</h5>
-            }@else if (this.repeatedFields?.includes('sku')) {
-                <h5>El SKU ya esta en uso</h5>
             }
         }
     </fieldset>
@@ -47,8 +45,6 @@
                 <h5>El barcode es obligatorio</h5>
             }@else if (controls['barcode'].hasError("minlength") || controls['barcode'].hasError("maxlength")) {
                 <h5>El barcode debe tener 12 caracteres</h5>
-            }@else if (this.repeatedFields?.includes('barcode')) {
-                <h5>El barcode ya esta en uso</h5>
             }
         }
     </fieldset>
@@ -134,11 +130,15 @@
         <mat-form-field appearance="fill">
             <mat-label>Categorías</mat-label>
             <mat-select multiple formControlName="categories" panelClass="custom-select-panel">
-                @for (category of categories(); track $index) {
+                @if (categories) {
+                @for (category of categories; track $index) {
                     <mat-option [value]="category.name"> 
                         {{category.name.charAt(0).toUpperCase() + category.name.slice(1).toLowerCase()}} 
                     </mat-option>
                 }
+
+                }
+              
             </mat-select>
         </mat-form-field>
 
@@ -147,5 +147,5 @@
         }
     </fieldset>
 
-    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid || repeatedProduct">
-</form>
+    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid">
+        
