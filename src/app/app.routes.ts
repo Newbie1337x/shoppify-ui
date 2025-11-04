@@ -11,13 +11,10 @@ import { AdminPage } from './pages/admin-page/admin-page';
 import { CategoriesPage } from './pages/categories-page/categories-page';
 import { authGuard } from './core/guards/auth-guard';
 import { Help } from './pages/help/help';
-import { ConfigPages } from './layouts/config-pages/config-pages';
 import { publicGuard } from './core/guards/public-guard';
 import { ProductDetail } from './pages/product-detail/product-detail';
 
-
 export const routes: Routes = [
-
   {
     path: 'auth',
     component: Auth,
@@ -29,31 +26,29 @@ export const routes: Routes = [
       { path: '**', redirectTo: 'login' }
     ]
   },
-
-  
-
   {
     path: '',
     component: Main,
     children: [
-      { path: 'home', component:Home},
-      { path: 'products', component: ProductsPage},
-      { path: 'products/details/:id', component: ProductDetail},
-      { path: 'products/search/:q', component: ProductsPage},
-      { path: 'categories', component: CategoriesPage},
-      { path: 'profile', component: Profile },
+      { path: 'home', component: Home },
+      { path: 'products', component: ProductsPage },
+      { path: 'products/details/:id', component: ProductDetail },
+      { path: 'products/search/:q', component: ProductsPage },
+      { path: 'categories', component: CategoriesPage },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
-      { path: '**', redirectTo: 'home', pathMatch: 'full' }
-     
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
   {
-    path: '',
-    component: ConfigPages,
-    children: [
-      { path: 'profile', component: Profile, canActivate: [authGuard] },
-      { path: 'help', component: Help},
-       { path: '**', redirectTo: 'home', pathMatch: 'full' }
-    ]
+    path: 'profile',
+    component: Auth,
+    canActivate: [authGuard],
+    children: [{ path: '', component: Profile }]
   },
+  {
+    path: 'help',
+    component: Auth,
+    children: [{ path: '', component: Help }]
+  },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

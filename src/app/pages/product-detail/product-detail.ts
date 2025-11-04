@@ -4,11 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from '../../components/product-card/product-card';
-import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [ProductCard, DecimalPipe],
+  imports: [ProductCard],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -47,7 +46,7 @@ export class ProductDetail implements OnInit {
   loadRelatedProducts(): void {
     this.pService.getList({ page: 0, size: 8 }).subscribe({
       next: products => {
-        this.relatedProducts = products.filter(p => p.id !== this.id).slice(0, 6);
+        //FIX WITH PROPER FILTERS.
       },
       error: (e) => {
         console.error('Error loading related products:', e);
