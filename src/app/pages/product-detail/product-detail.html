@@ -1,26 +1,94 @@
 @if (product) {
 <div class="product-detail-container">
-
+  
   <div class="product-detail">
-    <div>
-      <h1>{{product.name}}</h1>
-
-      
-    <img src="{{product.imgURL}}">
     
-      <span>${{product.price}}</span>
-
-      <div class="actions">
-        <button class="btn btn-primary" (click)="onBuyNow()">Comprar ahora</button>
-        <button class="btn btn-outline" (click)="onAddToCart()">Agregar al carrito</button>
-
-      
+    <!-- Left sidebar - Product Image -->
+    <div class="product-image-section">
+      <div class="main-image-container">
+        <img [src]="product.imgURL || 'public/image/genericProduct.png'" [alt]="product.name" class="main-product-image">
       </div>
-
     </div>
 
+    <!-- Center section - Product Information -->
+    <div class="product-info-section">
+      <div class="product-badge">
+        @if (product.soldQuantity > 0) {
+          <span class="badge-new">Nuevo</span>
+          <span class="sold-badge">+{{product.soldQuantity}} vendidos</span>
+        }
+      </div>
+
+      <h1 class="product-title">{{product.name}}</h1>
+
+      @if (product.brand) {
+        <div class="product-brand">
+          <span class="brand-label">Marca:</span>
+          <span class="brand-name">{{product.brand}}</span>
+        </div>
+      }
+
+      @if (product.description) {
+        <div class="product-description">
+          <h3>Descripción</h3>
+          <p>{{product.description}}</p>
+        </div>
+      }
+
+      <div class="delivery-info">
+        <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>Stock disponible</span>
+      </div>
+    </div>
+
+    <!-- Right sidebar - Price and Actions -->
+    <div class="product-purchase-section">
+      <div class="price-container">
+        <span class="price-label">Precio</span>
+        <span class="product-price">${{product.price | number:'1.0-0'}}</span>
+      </div>
+
+      <div class="stock-info">
+        <span class="stock-available">✅ Stock disponible ({{product.stock}} unidades)</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-buy" (click)="onBuyNow()">
+          <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          Comprar ahora
+        </button>
+        <button class="btn btn-cart" (click)="onAddToCart()">
+          <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
+            <path d="M9 22V12h6v10"></path>
+            <path d="M1 10.6L12 2l11 8.6"></path>
+          </svg>
+          Agregar al carrito
+        </button>
+      </div>
+    </div>
 
   </div>
+
+  <!-- Related Products Section -->
+  @if (relatedProducts.length > 0) {
+    <div class="related-products-section">
+      <h2 class="section-title">Productos relacionados</h2>
+      <div class="products-grid">
+        @for (relatedProduct of relatedProducts; track relatedProduct.id) {
+          <app-product-card [product]="relatedProduct"></app-product-card>
+        }
+      </div>
+    </div>
+  }
 
 </div>
 }
