@@ -81,7 +81,7 @@ export class Profile implements OnInit {
   }
 
   editarConfiguracion() {
-    this.router.navigate([""])  //TODO
+    this.router.navigate([''])  //TODO
   }
 
   verCompras() {

@@ -37,15 +37,15 @@
       <h2>Configuracion de la cuenta</h2>
       <p class="account-description">Accede rapidamente a las secciones mas utilizadas.</p>
       <div class="setting-grid">
-        <button class="setting-card" type="button">
+        <button class="setting-card" type="button" (click)="editarConfiguracion()">
           <span class="setting-title">Editar configuracion</span>
           <span class="setting-desc">Gestiona correo, contrasena y preferencias.</span>
         </button>
-        <button class="setting-card" type="button">
+        <button class="setting-card" type="button" (click)="verCompras()">
           <span class="setting-title">Ver mis compras</span>
           <span class="setting-desc">Consulta tu historial de pedidos.</span>
         </button>
-        <button class="setting-card" type="button">
+        <button class="setting-card" type="button" (click)="ayuda()">
           <span class="setting-title">Centro de ayuda</span>
           <span class="setting-desc">Obten soporte o revisa preguntas frecuentes.</span>
         </button>
