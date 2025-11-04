@@ -18,8 +18,8 @@ export class Login implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService:AuthService
-  ) {}
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.fg = this.fb.group({
@@ -29,23 +29,30 @@ export class Login implements OnInit {
   }
 
   onsubmit() {
-  this.login();
+    this.login();
   }
 
 
-  login(){
+  login() {
     this.authService.login(this.fg.value).subscribe({
-       next: ()=>{
+      next: () => {
         Swal.fire({
-        title: "Bienvenido, "+ this.authService.user()?.firstName,
-        text: "Has iniciado sesión correctamente.",
-        icon: "success",
-        background:"#f7f7f8",
-        color:"black"});
-       },
-       error(err) {
-         alert("Hubo un error al logearse.")
-       },
+          title: "Bienvenido, " + this.authService.user()?.firstName,
+          text: "Has iniciado sesión correctamente.",
+          icon: "success",
+          background: "#f7f7f8",
+          color: "black"
+        });
+      },
+      error(err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.error.message,
+          iconColor: '#6141e8',
+          background: "#f7f7f8"
+        });
+      },
     })
   }
 }

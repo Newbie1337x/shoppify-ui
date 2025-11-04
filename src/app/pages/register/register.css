@@ -167,8 +167,21 @@
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
 }
 
+.form-input.is-invalid {
+  border-color: rgba(220, 38, 38, 0.75);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.18);
+}
+
 .form-input::placeholder {
   color: #94a3b8;
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin-top: -0.35rem;
+  margin-bottom: 0.35rem;
 }
 
 .name-row,
