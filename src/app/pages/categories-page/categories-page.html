@@ -12,7 +12,7 @@
       <header class="category-toolbar">
         <div class="toolbar-details">
           <h2>Resultados</h2>
-          <p>{{ refinedCategories.length }} categorias encontradas</p>
+          <p>{{ categories.length }} categorias encontradas</p>
         </div>
 
         @if (auth.permits().includes('ADMIN')) {
@@ -31,14 +31,14 @@
         }
       </header>
 
-      @if (refinedCategories.length > 0) {
+      @if (categories.length > 0) {
         <section class="category-grid" aria-label="Listado de productos">
           @if (auth.permits().includes('ADMIN') && editMode) {
             <article class="category-card category-card--create">
               <button 
                 type="button"
                 class="create-category-button"
-                (click)="createProduct()">
+                (click)="createCategory()">
                 <span class="create-category-button__icon" aria-hidden="true">+</span>
                 <span class="create-category-button__content">
                   <span class="create-category-button__title">Crear nueva categoria</span>
@@ -48,7 +48,7 @@
             </article>
           }
 
-          @for (p of refinedCategories; track p.id) {
+          @for (p of categories; track p.id) {
             <article
               class="category-card"
               [class.category-card--editing]="auth.permits().includes('ADMIN') && editMode">

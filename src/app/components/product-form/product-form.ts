@@ -13,6 +13,9 @@ import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { SwalService } from '../../services/swal-service';
 import { CategoryService } from '../../services/category-service';
 import { ProductCard } from '../product-card/product-card';
+import { Optional } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-form',
@@ -41,7 +44,9 @@ export class ProductForm implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private swal: SwalService,
-    private categoryService:CategoryService
+    private categoryService:CategoryService,
+    private router: Router,
+    @Optional() private dialogRef?: MatDialogRef<unknown>
   ) {}
 
   get controls() {
