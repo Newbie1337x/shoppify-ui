@@ -9,19 +9,32 @@ import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
 import { AdminPage } from './pages/admin-page/admin-page';
 import { CategoriesPage } from './pages/categories-page/categories-page';
+import { authGuard } from './core/guards/auth-guard';
+import { Help } from './pages/help/help';
+import { ConfigPages } from './layouts/config-pages/config-pages';
+import { publicGuard } from './core/guards/public-guard';
 
 
 export const routes: Routes = [
-  
+
   {
     path: 'auth',
     component: Auth,
     children: [
-      { path: 'login', component: Login },
+      { path: 'login', component: Login, canActivate: [publicGuard] },
+      { path: 'register', component: Register, canActivate: [publicGuard] },
       { path: 'admin', component: AdminPage },
-      { path: 'register', component: Register },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
+    ]
+  },
+
+  {
+    path: '',
+    component: ConfigPages,
+    children: [
+      { path: 'profile', component: Profile, canActivate: [authGuard] },
+      { path: 'help', component: Help},
     ]
   },
 
@@ -32,12 +45,10 @@ export const routes: Routes = [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
       { path: 'products/search/:q', component: ProductsPage},
-      { path:'categories', component: CategoriesPage},
+      { path: 'categories', component: CategoriesPage},
       { path: 'profile', component: Profile },
-      { path: 'cart', component: CartPage},
+      { path: 'cart', component: CartPage, canActivate: [authGuard] },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
-  
-
     ]
   },
 ];
