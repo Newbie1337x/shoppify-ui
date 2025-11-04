@@ -15,9 +15,19 @@ export class ProductCard {
 @Input() product!: Product
 @Input() isMostrarStock: boolean = false
 @Input() isMostrarCuotas: boolean = false
+@Input() isMostrarDescuento: boolean = false
+@Input() isNavegar: boolean = true
 constructor(private router:Router){}
 
 getDetails(id: number){
+  if(this.isNavegar){
   this.router.navigate(["/products/details", id]);
+  }
+ 
+}
+
+get hasDiscount(){
+  return this.product.discountPercentage > 0
 }
 }
+

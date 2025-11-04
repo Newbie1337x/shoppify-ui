@@ -91,6 +91,19 @@
         }
     </fieldset>
 
+    <!-- Discount Percentage -->
+    <fieldset>
+        <label for="discount-input">Descuento (%)</label>
+        <input type="number" id="discount-input" formControlName="discountPercentage" min="0" max="100">
+
+        @if(controls['discountPercentage'].dirty) {
+            @if (controls['discountPercentage'].hasError("min") || controls['discountPercentage'].hasError("max")) {
+                <h5>El descuento debe estar entre 0 y 100</h5>
+            }
+        }
+    </fieldset>
+
+
     <!-- Unit Price -->
     <fieldset>
         <label for="unit-price-input">Precio Unitario*</label>
@@ -104,6 +117,22 @@
             }
         }
     </fieldset>
+
+    
+    <fieldset class="price-preview-fieldset">
+        <label>Preview</label>
+        <div class="price-preview">
+             <app-product-card 
+             [product]="previewProduct"  
+             [isMostrarCuotas]="true" 
+             [isMostrarDescuento]="true" 
+             [isMostrarStock]="true" 
+             [isNavegar]="false">
+            </app-product-card>
+           
+        </div>
+    </fieldset>
+
 
     <!-- Image -->
     <fieldset>
@@ -128,7 +157,7 @@
     <!-- Categories -->
     <fieldset class="categories-fieldset">
         <mat-form-field appearance="fill">
-            <mat-label>Categorías</mat-label>
+            <mat-label>Categorias</mat-label>
             <mat-select multiple formControlName="categories" panelClass="custom-select-panel">
                 @if (categories) {
                 @for (category of categories; track $index) {

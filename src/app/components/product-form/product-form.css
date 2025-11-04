@@ -121,6 +121,62 @@ fieldset h6.over-limit {
   font-weight: 500;
 }
 
+.price-preview-fieldset {
+  gap: 0.4rem;
+}
+
+.price-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1.2rem;
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.16);
+}
+
+.price {
+  font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+  font-weight: 700;
+  color: #4f46e5;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.price-original {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.price-final {
+  color: #312e81;
+}
+
+.discount-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #047857;
+  background: rgba(16, 185, 129, 0.14);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.price-savings {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #047857;
+}
+
 app-product-form .mat-form-field {
   width: 100%;
 }

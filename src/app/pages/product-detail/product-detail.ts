@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
@@ -7,7 +8,7 @@ import { ProductCard } from '../../components/product-card/product-card';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [ProductCard],
+  imports: [ProductCard, DecimalPipe],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -64,4 +65,6 @@ export class ProductDetail implements OnInit {
     this.cartService.addToCart(this.product);
     this.router.navigate(['/cart']);
   }
+
+
 }
