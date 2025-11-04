@@ -1,21 +1,19 @@
 :host {
   display: block;
-  min-height: 100vh;
   color: #f5f5f7;
   padding: 1rem 1.5rem;
 }
 
 #category-form {
-  max-width: 900px;
-  margin: 0 auto;
+  display: grid;
+  max-width: 1100px;
   padding: 3rem;
   border-radius: 32px;
-  background: rgba(33, 33, 33, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(12px);
-  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+  grid-template-columns: repeat(auto-fit, minmax(350px, auto));
   gap: 1.5rem;
 }
 
@@ -26,42 +24,37 @@ fieldset {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 10px;
 }
 
 fieldset label {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #e5e4ea;
+  color: #475569;
 }
 
 fieldset input {
   width: 100%;
   padding: 0.85rem 1rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid rgba(148, 163, 184, 0.6);
   border-radius: 14px;
-  background: rgba(18, 18, 18, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
-  color: #f7f7f9;
+  color: #1f2937;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
+
 fieldset input:focus {
   outline: none;
-  border-color: #ff7543;
-  background: rgba(28, 28, 28, 0.95);
-  box-shadow: 0 0 0 4px rgba(255, 117, 67, 0.18);
+  border-color: #4338ca;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
 }
 
 fieldset input::placeholder {
   color: #8f8f93;
-}
-
-fieldset textarea {
-  min-height: 100px;
-  max-height: 400px;
-  resize: none;
-  overflow-y: auto;
 }
 
 fieldset h5 {
@@ -71,6 +64,10 @@ fieldset h5 {
   color: #ff5a6d;
 }
 
+fieldset:has(#id-input) {
+  grid-column: 1 / -1;
+}
+
 #submit-button {
   grid-column: 1 / -1;
   margin-top: 0.5rem;
@@ -78,8 +75,9 @@ fieldset h5 {
   padding: 0.95rem 1.25rem;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(90deg, #ff7543 0%, #ff5a6d 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+  box-shadow: 0 16px 30px rgba(79, 70, 229, 0.35);
+  color: #f8fafc;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -87,6 +85,7 @@ fieldset h5 {
 }
 
 #submit-button:hover:not(:disabled) {
+  box-shadow: 0 20px 36px rgba(99, 102, 241, 0.45);
   transform: translateY(-1px);
   filter: brightness(1.05);
 }

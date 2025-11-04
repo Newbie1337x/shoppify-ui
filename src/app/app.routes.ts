@@ -8,27 +8,29 @@ import { Profile } from './pages/profile/profile';
 import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
 import { AdminPage } from './pages/admin-page/admin-page';
-import { ProductForm } from './components/product-form/product-form';
-import { EditProductPage } from './pages/edit-product-page/edit-product-page';
-import { EditCategoryPage } from './pages/edit-category-page/edit-category-page';
 import { CategoriesPage } from './pages/categories-page/categories-page';
+import { authGuard } from './core/guards/auth-guard';
+import { Help } from './pages/help/help';
+import { ConfigPages } from './layouts/config-pages/config-pages';
+import { publicGuard } from './core/guards/public-guard';
+import { ProductDetail } from './pages/product-detail/product-detail';
 
 
 export const routes: Routes = [
-  
+
   {
     path: 'auth',
     component: Auth,
     children: [
-      { path: 'login', component: Login },
+      { path: 'login', component: Login, canActivate: [publicGuard] },
+      { path: 'register', component: Register, canActivate: [publicGuard] },
       { path: 'admin', component: AdminPage },
-      { path: 'admin/createP', component: ProductForm},
-      { path: 'register', component: Register },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: '**', redirectTo: 'login' },
-
+      { path: '**', redirectTo: 'login' }
     ]
   },
+
+  
 
   {
     path: '',
@@ -36,15 +38,22 @@ export const routes: Routes = [
     children: [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
+      { path: 'products/details/:id', component: ProductDetail},
       { path: 'products/search/:q', component: ProductsPage},
-
-      { path:'categories', component: CategoriesPage},
-      { path:'categories/edit/:id', component: EditCategoryPage},
+      { path: 'categories', component: CategoriesPage},
       { path: 'profile', component: Profile },
-      { path: 'cart', component: CartPage},
+      { path: 'cart', component: CartPage, canActivate: [authGuard] },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
-  
-
+     
+    ]
+  },
+  {
+    path: '',
+    component: ConfigPages,
+    children: [
+      { path: 'profile', component: Profile, canActivate: [authGuard] },
+      { path: 'help', component: Help},
+       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
 ];

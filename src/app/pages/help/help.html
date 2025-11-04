@@ -1,0 +1,57 @@
+<div class="help-container">
+
+  <div class="card">
+    <button class="card-header" (click)="toggleFaq()">
+      <h3>❓ Faq <h6>Preguntas Frecuentes</h6></h3>
+      <span [class.rotated]="showFaq">⌄</span>
+    </button>
+
+    <div class="card-body-wrapper" [class.show]="showFaq">
+      <div class="card-body">
+        @for (q of [
+          { q: "¿Cómo puedo realizar una compra?", a: "Agrega los productos al carrito y completa el formulario de pago con tus datos" },
+          { q: "¿Qué medios de pago aceptan?", a: "Podés pagar con tarjeta, transferencia bancaria o efectivo al retirar" },
+          { q: "¿Puedo devolver un producto?", a: "Sí, dentro de los 7 días posteriores a la entrega y en su empaque original" },
+          { q: "¿Cuánto tarda en llegar mi pedido?", a: "Por ahora no tenemos sistema de envios, por lo que el retiro es en sucursal. Lamentamos las molestias" }
+        ]; let i = $index; track $index) {
+          <div class="faq-item">
+            <button class="faq-question" (click)="toggleQuestion(i)">
+              <span>{{ q.q }}</span>
+              <span class="arrow" [class.rotated]="activeQuestion() === i">⌄</span>
+            </button>
+            <div class="faq-answer" [class.show]="activeQuestion() === i">
+              <p>{{ q.a }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <button class="card-header" (click)="toggleContact()">
+      <h3>📩 ¿Necesitás ayuda con algo particular?<h6>Contactanos</h6></h3>
+      <span [class.rotated]="showContact">⌄</span>
+    </button>
+
+    <div class="card-body-wrapper" [class.show]="showContact">
+      <div class="card-body contact">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+          <label for="email">Email:</label>
+          <input id="email" type="email" formControlName="email" placeholder="tuemail@ejemplo.com">
+
+          <label for="subject">Asunto:</label>
+          <input id="subject" type="text" formControlName="subject" placeholder="Asunto de tu consulta">
+
+          <label for="message">Contanos el problema:</label>
+          <textarea id="message" rows="4" formControlName="message" placeholder="Contanos brevemente tu consulta..."></textarea>
+
+          <button type="submit" [disabled]="contactForm.invalid">Enviar mensaje</button>
+        </form>
+
+        <h4>O envianos un <a [href]="wpp">WhatsApp 📱</a></h4>
+      </div>
+    </div>
+  </div>
+
+</div>

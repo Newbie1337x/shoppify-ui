@@ -20,12 +20,13 @@ export class AuthService {
   isLogged = computed(() => !!this.token())
 
   readonly API_URL = `${environment.apiUrl}/auth`;
-constructor(private http:HttpClient, private storageService:StorageService, private router:Router){
+
+  constructor(private http:HttpClient, private storageService:StorageService, private router:Router){
   this.user.set(this.getUser())
   this.permits.set(this.getPermits())
   const tk = this.getToken()
   this.token.set(tk || null)
-}
+  }
 
 register(payload: RegisterPayload){
 return this.http.post<AuthResponse>(`${this.API_URL}/register`,payload)

@@ -1,42 +1,29 @@
 import { User } from '../../models/auth/user';
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatFormField, MatError, MatLabel } from "@angular/material/form-field";
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { ImageFallbackDirective } from '../../directives/image-fallback';
-import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-edit-profile-form',
   standalone: true,
-  imports: [
-    ImageFallbackDirective,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatFormField,
-    MatInputModule,
-    MatButtonModule,
-    MatError, MatLabel],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './edit-profile-form.html',
-  styleUrl: './edit-profile-form.css'
+  styleUrl: './edit-profile-form.css',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class EditProfileForm {
-  form!: FormGroup;
-
-  constructor(
-    private auth:AuthService,
-    private fb: FormBuilder,
-    public dialogRef: MatDialogRef<EditProfileForm>,
-    @Inject(MAT_DIALOG_DATA) public data: User
-  ) {}
+  form!: FormGroup
+  private fb = inject(FormBuilder)
+  private dialogRef = inject(MatDialogRef<EditProfileForm>)
+  private data = inject<User>(MAT_DIALOG_DATA) //inyeccion de token de datos provenientes del perfil
 
   ngOnInit() {
+    this.crearForm()
+  }
+
+  crearForm() {
     this.form = this.fb.group({
       firstName: [this.data.firstName, [Validators.required, Validators.minLength(2)]],
       lastName: [this.data.lastName, [Validators.required, Validators.minLength(2)]],
@@ -52,10 +39,9 @@ export class EditProfileForm {
         ...this.data,
         ...this.form.value
       };
-      this.dialogRef.close(updatedUser);
-      this.auth.updateUser(updatedUser)
+      this.dialogRef.close(updatedUser)
     } else {
-      this.form.markAllAsTouched();
+      this.form.markAllAsTouched() //para que las validaciones se muestren
     }
   }
 

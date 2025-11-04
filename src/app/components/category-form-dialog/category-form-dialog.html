@@ -1,0 +1,9 @@
+<section class="category-dialog">
+    <app-category-form 
+        [category]="data.category"
+        [categories]="data.categories"
+        (submit)="close($event)">
+    </app-category-form>
+
+    <button class="close-button" (click)="close()">Cerrar</button>
+</section>

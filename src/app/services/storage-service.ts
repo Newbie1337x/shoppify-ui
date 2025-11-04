@@ -8,26 +8,36 @@ export class StorageService{
 
 
   setSession(token:string,permits:string[],user:User){
-  localStorage.setItem('token',token)
-  localStorage.setItem('permits',JSON.stringify(permits))
-  localStorage.setItem('user',JSON.stringify(user))
+    try {
+      localStorage.setItem('token',token)
+      localStorage.setItem('permits',JSON.stringify(permits))
+      localStorage.setItem('user',JSON.stringify(user))
+    } catch (e) {/* almacenamiento no soportado/bloqueado */}
   }
 
   clearSession(){
-    localStorage.clear()
+    try {
+      localStorage.clear()
+    } catch (e) {/* nada que limpiar o acceso denegado */}
   }
 
   getToken(){
-    return localStorage.getItem('token') || ''
+    try {
+      return localStorage.getItem('token') || ''
+    } catch (e) { return '' }
   }
 
   getPermits(){
-    return JSON.parse(localStorage.getItem('permits') || '[]') 
+    try {
+      return JSON.parse(localStorage.getItem('permits') || '[]') 
+    } catch (e) { return [] }
   }
 
   getUser(){
-    return JSON.parse(localStorage.getItem('user') || 'null')
-}
+    try {
+      return JSON.parse(localStorage.getItem('user') || 'null')
+    } catch (e) { return null }
+  }
 
   setUser(user: User | null) {
     if (!user) {

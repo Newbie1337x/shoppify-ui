@@ -2,9 +2,8 @@ import { Component, input, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
 import { combineLatest, debounceTime, distinct, distinctUntilChanged, filter, map, startWith } from 'rxjs';
-import Swal from 'sweetalert2';
+import { SwalService } from '../../services/swal-service';
 
 @Component({
   selector: 'app-category-form',
@@ -13,47 +12,45 @@ import Swal from 'sweetalert2';
   styleUrl: './category-form.css'
 })
 export class CategoryForm {
-  categories = input.required<Category[]>()
   form!: FormGroup
-  name!: FormControl
-  imgUrl!: FormControl
 
-  id!: string
   repeatedCategory!: Category | undefined
   repeatedFields!: string[] | undefined
 
-  change = output<void>()
+  category =  input<Category>()
+  categories = input.required<Category[]>()
+  submit = output<Category | void>()
 
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private swal: SwalService
+  ) {}
+
+  get controls() {
+    return this.form.controls
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      id: [''],
-      name: ['', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
-      imgUrl: ['', Validators.maxLength(200)]
+      id: [this.category()?.id || ''],
+      name: [this.category()?.name || '', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
+      imgUrl: [this.category()?.imgUrl || '', Validators.maxLength(200)]
     })
-    this.name = this.form.controls['name'] as FormControl
-    this.imgUrl = this.form.controls['imgUrl'] as FormControl
 
-    this.id = this.route.snapshot.params['id']
-    if (this.id) {
-      this.getCategoryByID()
+    if (this.category()) {
+      this.form.markAllAsDirty()
     } else {
       this.form.controls['id'].setValue(undefined)
     }
 
     combineLatest([
-      this.name.valueChanges.pipe(startWith(this.name.value), debounceTime(300), distinctUntilChanged()),
-      this.imgUrl.valueChanges.pipe(startWith(this.imgUrl.value), debounceTime(300), distinctUntilChanged())
+      this.controls['name'].valueChanges.pipe(startWith(this.controls['name'].value), debounceTime(300), distinctUntilChanged()),
+      this.controls['imgUrl'].valueChanges.pipe(startWith(this.controls['imgUrl'].value), debounceTime(300), distinctUntilChanged())
     ]).pipe(
       map(([name, imgUrl]) => {
         const category = this.categories().find(c =>
-          c.id !== Number(this.id) &&
+          c.id !== this.category()?.id &&
           (c.name?.trim().toLowerCase() === name?.trim().toLowerCase() ||
             c.imgUrl === imgUrl)
         )
@@ -71,34 +68,10 @@ export class CategoryForm {
           this.repeatedFields = data?.repeatedFields || []
       },
       error: () => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Ocurrio un problema al obtener las categorias",
-          confirmButtonText: "Volver",
-          confirmButtonColor: "#ff7543"
-        }).then((res) => {
+       this.swal.error("Ocurrio un problema al obtener las categorias")
+       .then((res) => {
           if (res.isConfirmed) {
-            this.router.navigate([''])
-          }
-        })
-      }
-    })
-  }
-
-  getCategoryByID() {
-    this.categoryService.get(Number.parseInt(this.id)).subscribe({
-      next: data => this.form.patchValue(data),
-      error: () => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Ocurrio un problema al obtener la categoria",
-          confirmButtonText: "Volver",
-          confirmButtonColor: "#ff7543"
-        }).then((res) => {
-          if (res.isConfirmed) {
-            this.router.navigate(['/categories'])
+            this.submit.emit()
           }
         })
       }
@@ -106,61 +79,30 @@ export class CategoryForm {
   }
 
   submitForm() {
-    if (this.form.valid && !this.repeatedCategory) {
-      if (Number(this.id)) {
-        this.categoryService.patch(this.form.value).subscribe({
-          next: () => {
-            Swal.fire({
-              title: "Categoria editada con exito!",
-              icon: "success",
-              confirmButtonText: "Volver",
-              confirmButtonColor: "#ff7543"
-            }).then((res) => {
-              if (res.isConfirmed) {
-                this.form.reset()
-                this.router.navigate(['/categories'])
-              }
-            })
-          },
-          error: () => {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Ocurrio un problema al editar el producto",
-              confirmButtonText: "Volver",
-              confirmButtonColor: "#ff7543"
-            })
-          }
-        })
-      } else {
-        this.categoryService.post(this.form.value).subscribe({
-          next: () => {
-            Swal.fire({
-              title: "Categoria agregada con exito!",
-              icon: "success",
-              confirmButtonText: "Volver",
-              confirmButtonColor: "#ff7543"
-            }).then((res) => {
-              if (res.isConfirmed) {
-                this.form.reset()
-                this.change.emit()
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }
-            })
-          },
-          error: () => {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Ocurrio un problema al cargar la categoria",
-              confirmButtonText: "Volver",
-              confirmButtonColor: "#ff7543"
-            })
-          }
-        })
-      }
-    } else {
-      this.form.markAllAsTouched()
+    if (this.form.invalid || this.repeatedCategory) {
+      this.form.markAllAsDirty()
+      return;
     }
+
+    const formValues = this.form.value;
+    const editMode = !!this.category()
+
+    const request = editMode
+      ? this.categoryService.patch(formValues)
+      : this.categoryService.post(formValues)
+
+    request.subscribe({
+      next: () => {
+        this.swal.success(editMode ? "Categoria editada con éxito!" : "Categoria agregada con éxito!")
+          .then(() => {
+            this.form.reset();
+            this.submit.emit(formValues)
+          });
+      },
+      error: () => {
+        this.swal.error(editMode ? "Error al editar la categoria" : "Error al agregar la categoria")
+          .then(() => this.submit.emit())
+      }
+    })
   }
 }

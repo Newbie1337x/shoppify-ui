@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoryCard } from '../../components/category-card/category-card';
 import { CategoryForm } from '../../components/category-form/category-form';
 import { CategoryRefiner } from '../../components/category-refiner/category-refiner';
+import { CategoryParams } from '../../models/filters/category-params';
+import { SwalService } from '../../services/swal-service';
+import { MatDialog } from '@angular/material/dialog';
+import { CategoryFormDialog } from '../../components/category-form-dialog/category-form-dialog';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-categories-page',
@@ -16,53 +20,151 @@ import { CategoryRefiner } from '../../components/category-refiner/category-refi
 export class CategoriesPage implements OnInit {
   categories: Category[] = []
   refinedCategories: Category[] = []
+  currentFilters: CategoryParams = { page: 0, size: 6 }
+  editMode = false;
 
   constructor(
+    public auth: AuthService,
     private categoryService: CategoryService,
+    private swal: SwalService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.renderCategories()
+    this.route.queryParams.subscribe(params => {
+      const filters = this.parseFilters(params);
+      this.currentFilters = filters;
+
+      if (this.hasFilterCriteria(filters)) {
+        this.renderRefinedCategories(filters);
+      } else {
+        this.renderCategories();
+      }
+    })
+  }
+
+  editToggle(): void {
+    this.editMode = !this.editMode;
+  }
+
+  onFilterChange(filters: CategoryParams): void {
+    const merged: CategoryParams = { page: 0, size: 6, ...filters };
+    this.currentFilters = merged;
+    this.navigateWithFilters(merged);
   }
 
   renderCategories(): void {
     this.categoryService.getList().subscribe({
       next: (categories) => {
-        this.categories = categories.data,
-        this.refinedCategories = [...categories.data]
+        this.categories = categories;
+        this.refinedCategories = [...categories];
       },
-      error: (err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Ocurrio un problema al obtener las categorias",
-          confirmButtonText: "Volver",
-          confirmButtonColor: "#ff7543"
-        })
+      error: () => {
+        this.swal.error("Ocurrio un error al buscar las categorias")
       }
     })
+  }
+
+  renderRefinedCategories(filters: CategoryParams): void {
+    this.categoryService.getList(filters).subscribe({
+      next: (data) => {
+        this.refinedCategories = data;
+      },
+      error: (err) => {
+        this.swal.error("Ocurrio un error al filtrar las categorias")
+      }
+    });
   }
 
   deleteCategory(id: number): void {
     this.categoryService.delete(id).subscribe({
       next: () => {
-        Swal.fire({
-          title: "Categoria eliminada con exito!",
-          icon: "success",
-          confirmButtonText: "Volver",
-          confirmButtonColor: "#ff7543"
-        })
+        this.swal.success('Categoria eliminada con éxito!')
         this.renderCategories();
       },
-      error: (err) => {
-        console.error('Error al eliminar la categoria:')
+      error: () => {
+        this.swal.error('Error al eliminar la categoria')
+      }
+    });
+  }
+
+  onDelete() {
+    if (this.currentFilters) {
+      this.renderRefinedCategories(this.currentFilters)
+    } else {
+      this.renderCategories()
+    }
+  }
+
+  editCategory(category: Category): void {
+    this.dialog.open(CategoryFormDialog, {
+      maxWidth: "none",
+      width: '80vw',
+      data: {
+        category: category,
+        categories: this.categories
+      },
+      disableClose: true,
+      panelClass: 'category-dialog-panel'
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.swal.success("La categoria se edito correctamente!")
+        this.renderRefinedCategories(this.currentFilters)
       }
     })
   }
 
-  editCategory(id: number) {
-    this.router.navigate([`/categories/edit/${id}`])
+
+  private navigateWithFilters(filters: CategoryParams): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: this.cleanParams(filters)
+    });
+  }
+
+
+  createProduct() {
+    this.dialog.open(CategoryFormDialog, {
+      maxWidth: "none",
+      width: '80vw',
+      data: {
+        categories: this.categories
+      },
+      disableClose: true,
+      panelClass: 'category-dialog-panel'
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.swal.success("La categoria se agrego correctamente!")
+        this.renderRefinedCategories(this.currentFilters)
+      }
+    })
+  }
+
+  private parseFilters(params: Params): CategoryParams {
+    const filters: CategoryParams = {
+      page: params['page'] ? Number(params['page']) : 0,
+      size: params['size'] ? Number(params['size']) : 6
+    };
+    if (params['name']) filters.name = params['name'];
+    if (params['sort']) filters.sort = params['sort'];
+    return filters;
+  }
+
+  private cleanParams(filters: CategoryParams): Params {
+    const query: Params = {};
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        query[key] = value;
+      }
+    });
+    return query;
+  }
+
+  private hasFilterCriteria(filters: CategoryParams): boolean {
+    const { page, size, ...rest } = filters;
+    return Object.keys(rest).length > 0;
   }
 }

@@ -1,20 +1,44 @@
-<section id="refined-form">
-    <section id="filter-section">
-        <h5 class="refined-form-title">Filtrado</h5>
-        <fieldset class="filter-fieldset">
-            <label for="name-filter">Nombre</label>
-            <input type="text" id="name-filter" [(ngModel)]="nameFilter" (ngModelChange)="onFilterChange()">
-        </fieldset>
+<form [formGroup]="filtersForm" class="refiner-panel" (ngSubmit)="onFiltersSubmit()">
+  <header class="panel-header">
+    <div class="panel-header-content">
+      <p class="panel-helper">Ajustá los resultados</p>
+    </div>
+    @if (hasActiveFilters) {
+      <button type="button" class="clear-button" (click)="resetFilters()">Limpiar</button>
+    }
+  </header>
+
+  <div class="panel-body">
+    <section class="filter-group" aria-labelledby="group-busqueda">
+      <label class="field" for="name-filter">
+        <span class="field-label">Nombre o palabra clave</span>
+        <input
+          id="name-filter"
+          class="field-input"
+          type="text"
+          placeholder="Ej: auriculares gamer"
+          formControlName="name"
+          autocomplete="off"
+        />
+      </label>
     </section>
 
-    <section id="order-section">
-        <h5 class="refined-form-title">Ordenamiento</h5>
-        <fieldset class="">
-            <label for="name-order">Orden Alfabetico</label>
-            <select id="name-order" [(ngModel)]="nameSort" (ngModelChange)="onFilterChange()">
-                <option value="asc">A-Z</option>
-                <option value="desc">Z-A</option>
+    <section class="filter-group" aria-labelledby="group-orden">
+      <h3 id="group-orden" class="group-title">Ordenar por</h3>
+      <section class="sort-grid">
+            <label class="field" for="name-order">
+            <span class="field-label">Alfabético</span>
+            <select id="name-order" class="field-select" formControlName="nameSort">
+                <option value="">Sin orden</option>
+                <option value="asc">A → Z</option>
+                <option value="desc">Z → A</option>
             </select>
-        </fieldset>
+            </label>
+        </section>
     </section>
-</section>
+  </div>
+
+  <footer class="panel-footer">
+    <button type="submit" class="apply-button">Aplicar filtros</button>
+  </footer>
+</form>
