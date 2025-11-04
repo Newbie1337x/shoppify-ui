@@ -29,22 +29,24 @@ export const routes: Routes = [
 
   {
     path: '',
-    component: ConfigPages,
-    children: [
-      { path: 'profile', component: Profile, canActivate: [authGuard] },
-      { path: 'help', component: Help},
-    ]
-  },
-
-  {
-    path: '',
     component: Main,
     children: [
       { path: 'home', component:Home},
       { path: 'products', component: ProductsPage},
       { path: 'products/search/:q', component: ProductsPage},
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
+    ]
+  },
+
+  {
+    path: '',
+    component: ConfigPages,
+    children: [
+      { path: 'profile', component: Profile, canActivate: [authGuard] },
+      { path: 'help', component: Help},
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
+
+  
 ];

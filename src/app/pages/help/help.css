@@ -1,9 +1,10 @@
 .help-container {
-  max-width: 900px;
+  width: 900px;
   margin: 2rem auto;
   padding: 1rem;
   font-family: 'Segoe UI', Arial, sans-serif;
   gap: 30px;
+  min-height: 60vh;
 }
 
 .card {
