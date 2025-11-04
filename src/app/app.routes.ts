@@ -7,6 +7,7 @@ import { Home } from './pages/home/home';
 import { Profile } from './pages/profile/profile';
 import { CartPage } from './pages/cart-page/cart-page';
 import { ProductsPage } from './pages/products-page/products-page';
+import { ProductDetail } from './pages/product-detail/product-detail';
 import { authGuard } from './core/guards/auth-guard';
 import { publicGuard } from './core/guards/public-guard';
 import { Help } from './pages/help/help';
@@ -14,7 +15,7 @@ import { ConfigPages } from './layouts/config-pages/config-pages';
 
 
 export const routes: Routes = [
-  
+
   {
     path: 'auth',
     component: Auth,

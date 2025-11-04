@@ -1,10 +1,12 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { TransactionService } from '../../services/transaction-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from "../../components/product-card/product-card";
 import { Product } from '../../models/product';
+import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
@@ -12,19 +14,17 @@ import { AuthService } from '../../services/auth-service';
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.css'
 })
-export class CartPage implements OnInit{
+export class CartPage implements OnInit {
+
+  private aService = inject(AuthService)
+  private tService = inject(TransactionService)
+  private fb = inject(FormBuilder)
+  private cService = inject(CartService)
+  private router = inject(Router)
 
   checkoutForm!: FormGroup
-  isAdmin = false
-
+  permits = this.aService.permits()
   selectedItems = signal<Set<number>>(new Set())
-
-  constructor(
-    private tService: TransactionService,
-    private fb: FormBuilder,
-    private cService: CartService,
-    private aServuce: AuthService
-  ) {}
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
@@ -75,14 +75,72 @@ export class CartPage implements OnInit{
     this.cService.updateQuantity(item, newQty)
   }
 
+  async changeQuantity(item: Product, unidad: number) {
+    const newQty = item.stock + unidad
+    if (newQty < 1) {
+      Swal.fire({
+        icon: "warning",
+        title: "Cantidad mínima alcanzada",
+        text: "No puedes tener menos de 1 unidad."
+      });
+      return
+    }
+
+    try {
+      await this.cService.updateQuantity(item, newQty)
+
+    } catch (e: any) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops..",
+        text: e.message ?? "Hubo un error al actualizar la cantidad"
+      })
+    }
+  }
+
+
   onSubmit() {
     if (this.checkoutForm.valid && this.cartItems().length) {
-      const payload = this.cService.prepareTransaction(this.checkoutForm.value)
-      console.log("Payload a enviar :", payload)
+      const payload = this.cService.prepareTransaction(this.checkoutForm.value);
+      console.log("Payload a enviar :", payload);
+
       this.tService.post(payload).subscribe({
-        next: (transaction) => console.log("Transacción lista: ", transaction),
-        error: (e) => console.error("Error preparando transacción", e)
-      })
+        next: (transaction) => {
+          console.log("Transacción lista: ", transaction);
+          this.selectedItems.set(new Set());
+          this.cService.clearCart();
+          this.checkoutForm.reset();
+
+          Swal.fire({
+            icon: "success",
+            title: "Okey!",
+            text: "Transacción realizada correctamente"
+          }).then(() => {
+            Swal.fire({
+              title: "¿Ver compras?",
+              text: "También puedes quedarte por aquí",
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonText: "Ir a compras",
+              cancelButtonText: "Permanecer en tu carrito",
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/compras']);
+              }
+            });
+          });
+        },
+        error: (e) => {
+          console.error("Error preparando transacción", e);
+          Swal.fire({
+            icon: "error",
+            title: "Oops..",
+            text: "Hubo un error al realizar la transacción",
+            footer: e
+          });
+        }
+      });
     }
   }
 }
