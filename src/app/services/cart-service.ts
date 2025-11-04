@@ -3,14 +3,15 @@ import { Product } from '../models/product';
 import { Transaction } from '../models/transaction';
 import { ProductService } from './product-service';
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  cartItems = signal<Product[]>([]);
+  cartItems = signal<Product[]>([])
+  itemsInCart = computed(() => this.cartItems().length)
+  
   total = computed(() =>
     this.cartItems().reduce((sum, item) => sum + item.price * item.stock, 0)
   )
