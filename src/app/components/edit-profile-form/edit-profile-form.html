@@ -1,0 +1,52 @@
+
+  <h2>Editar perfil</h2>
+
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="form-field">
+      <label for="firstName">Nombre</label>
+      <input id="firstName" type="text" formControlName="firstName" />
+      @if (form.controls['firstName']?.hasError('required')) {
+        <span class="error">El nombre es obligatorio</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="lastName">Apellido</label>
+      <input id="lastName" type="text" formControlName="lastName" />
+      @if (form.controls['lastName']?.hasError('required')) {
+        <span class="error">El apellido es obligatorio</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="dni">DNI</label>
+      <input id="dni" type="text" formControlName="dni" maxlength="8" />
+      @if (form.controls['dni']?.hasError('required')) {
+        <span class="error">El DNI es obligatorio</span>
+      }
+      @if (form.controls['dni']?.hasError('minlength') || form.get('dni')?.hasError('maxlength')) {
+        <span class="error">El DNI debe tener 8 dígitos</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="phone">Teléfono</label>
+      <input id="phone" type="text" formControlName="phone" />
+      @if (form.controls['phone']?.hasError('required')) {
+        <span class="error">El teléfono es obligatorio</span>
+      }
+      @if (form.controls['phone']?.hasError('pattern')) {
+        <span class="error">Solo se permiten números</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="img">URL de imagen (opcional)</label>
+      <input id="img" type="text" formControlName="img" />
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="cancelar-btn" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="enviar-btn" [disabled]="form.invalid">Guardar</button>
+    </div>
+  </form>

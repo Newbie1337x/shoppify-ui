@@ -1,0 +1,135 @@
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+:host {
+  display: block;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.search-bar:hover {
+  border-color: rgba(79, 70, 229, 0.35);
+  box-shadow: 0 22px 48px rgba(79, 70, 229, 0.18);
+}
+
+.search-bar:focus-within {
+  border-color: rgba(79, 70, 229, 0.55);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.16), 0 22px 48px rgba(79, 70, 229, 0.18);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.search-bar input::placeholder {
+  color: #94a3b8;
+}
+
+.search-bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 16px 30px rgba(79, 70, 229, 0.22);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.search-bar button:hover,
+.search-bar button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 36px rgba(79, 70, 229, 0.28);
+}
+
+.search-bar button img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 1.25rem;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 20;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.14);
+}
+
+.suggestions li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  cursor: pointer;
+  border-radius: 0.9rem;
+  color: #1f2937;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.suggestions li:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: #312e81;
+}
+
+.sugg-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.sugg-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.95rem;
+}
+
+.suggestions strong {
+  font-weight: 700;
+  color: #4338ca;
+}

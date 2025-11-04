@@ -1,0 +1,112 @@
+/* Este es el mat-dialog (contenedor externo)*/
+.contenedor { 
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #4f46e5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Esta es la superficie blanca */
+.mat-mdc-dialog-surface{
+  border-radius: 20px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 1.5rem;
+}
+
+.form-field {
+  padding: 0 15px;
+  padding-top: 15px;
+  width: 100%;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.contenedor h2 {
+  color: #6a0dad;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 650;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #6a0dad;
+}
+
+input {
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid #b88af7;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6a0dad;
+  box-shadow: 0 0 4px rgba(106, 13, 173, 0.3);
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.cancelar-btn {
+  background-color: #fff;
+  color: #6a0dad;
+  border: 2px solid #6a0dad;
+}
+
+.cancelar-btn:hover {
+  background-color: #f3e8ff;
+}
+
+.enviar-btn {
+  background-color: #6a0dad;
+  color: #fff;
+}
+
+.enviar-btn:hover:not([disabled]) {
+  background-color: #580c9c;
+}
+
+button[disabled] {
+  background-color: #d1b3f7;
+  cursor: not-allowed;
+}

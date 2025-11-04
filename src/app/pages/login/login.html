@@ -1,0 +1,40 @@
+<section class="login-page">
+  <div class="login-card">
+    <header class="card-header">
+      
+      <p class="welcome-text">Bienvenido!</p>
+
+    </header>
+
+    <form class="login-form" [formGroup]="fg" (ngSubmit)="onsubmit()">
+      <label class="form-label" for="email">E-mail</label>
+      <input
+        id="email"
+        class="form-input"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+      />
+
+      <label class="form-label" for="password">Password</label>
+      <div class="password-row">
+        <input
+          id="password"
+          class="form-input"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+ 
+      </div>
+
+      <button class="action-button" type="submit" [disabled]="fg.invalid">Iniciar Sesión</button>
+    </form>
+
+    <footer class="card-footer">
+      <span class="footnote-text">No tenes una cuenta?</span>
+      <a class="primary-link" routerLink="/auth/register">Registrate</a>
+    </footer>
+  </div>
+</section>
+

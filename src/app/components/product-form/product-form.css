@@ -1,0 +1,280 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #f5f5f7;
+  padding: 1rem 1.5rem;
+}
+
+#product-form {
+  display: grid;
+  max-width: 1100px;
+  padding: 3rem;
+  border-radius: 32px;
+  background: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+  gap: 1.5rem;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 10px;
+}
+
+fieldset label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+fieldset input,
+fieldset textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  color: #1f2937;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+fieldset input[type="number"]::-webkit-inner-spin-button,
+fieldset input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+fieldset input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+fieldset input[type="text"] {
+  min-width: 180px;
+}
+
+fieldset input:focus,
+fieldset textarea:focus {
+  outline: none;
+  border-color: #4338ca;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
+}
+
+fieldset input::placeholder,
+fieldset textarea::placeholder {
+  color: #8f8f93;
+}
+
+fieldset textarea {
+  min-height: 100px;
+  max-height: 400px;
+  resize: none;
+  overflow-y: auto;
+}
+
+fieldset textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+fieldset textarea::-webkit-scrollbar-track {
+  background: rgba(18, 18, 18, 0.5);
+  border-radius: 10px;
+}
+
+fieldset textarea::-webkit-scrollbar-thumb {
+  background: #4338ca;
+  border-radius: 10px;
+}
+
+fieldset textarea::-webkit-scrollbar-thumb:hover {
+  background: #4338ca;
+}
+
+fieldset h5 {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ff5a6d;
+}
+
+fieldset h6 {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #8f8f93;
+  text-align: right;
+  transition: color 0.2s ease;
+}
+
+fieldset h6.over-limit {
+  color: #ff5a6d;
+  font-weight: 500;
+}
+
+app-product-form .mat-form-field {
+  width: 100%;
+}
+
+app-product-form .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: rgba(18, 18, 18, 0.9);
+  border: 1px solid #3a3a3a;
+  border-radius: 14px;
+  padding: 0.5rem 1rem;
+}
+
+app-product-form .mat-form-field-appearance-fill:hover .mat-form-field-flex {
+  background: rgba(18, 18, 18, 0.95);
+}
+
+app-product-form .mat-pseudo-checkbox {
+  border: none !important;
+  background: transparent !important;
+}
+
+app-product-form .mat-pseudo-checkbox::after {
+  color: #4338ca !important;
+  font-size: 1.1rem;
+}
+
+app-product-form .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
+
+app-product-form .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
+
+app-product-form .mat-mdc-text-field-wrapper {
+  background: rgba(248, 250, 252, 0.95) !important;
+  border-radius: 0.9rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  padding: 0 0.75rem !important;
+}
+
+app-product-form .mat-mdc-form-field-focus-overlay {
+  background: rgba(99, 102, 241, 0.08) !important;
+} 
+
+app-product-form .mat-mdc-select-trigger {
+  min-height: 2.75rem;
+  align-items: center;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+app-product-form .mat-mdc-floating-label {
+  color: #4f46e5 !important;
+  font-weight: 600;
+}
+
+app-product-form .mat-mdc-select-arrow {
+  color: #4f46e5 !important;
+}
+
+app-product-form .mat-mdc-select-value-text {
+  color: #1f2937 !important;
+}
+
+
+.custom-select-panel {
+  background-color: #f8fafc !important;
+  border-radius: 1rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.5) !important;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12) !important;
+  color: #1f2937 !important;
+}
+
+.custom-select-panel .mat-mdc-option {
+  color: #1f2937 !important;
+  font-weight: 500;
+}
+
+.custom-select-panel .mat-mdc-option.mat-mdc-option-active,
+.custom-select-panel .mat-mdc-option.mat-selected:not(.mat-option-disabled) {
+  background: rgba(79, 70, 229, 0.12) !important;
+  color: #312e81 !important;
+}
+
+.custom-select-panel .mat-pseudo-checkbox {
+  border: none !important;
+  background: transparent !important;
+}
+
+.custom-select-panel .mat-pseudo-checkbox::after {
+  color: #4338ca !important;
+  font-size: 1.1rem;
+}
+
+.custom-select-panel .mat-mdc-option:not(.mdc-list-item--selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
+
+fieldset:has(textarea),
+fieldset:has(#image-input),
+.categories-fieldset {
+  grid-column: 1 / -1;
+}
+
+.categories-fieldset {
+  display: flex;
+  justify-content: center;
+}
+
+#submit-button {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.95rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+  box-shadow: 0 16px 30px rgba(79, 70, 229, 0.35);
+  color: #f8fafc;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+#submit-button:hover:not(:disabled) {
+  box-shadow: 0 20px 36px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+#submit-button:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
+#submit-button:disabled {
+  cursor: not-allowed;
+  background: #5f3e36;
+  opacity: 0.65;
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 2rem 1rem;
+  }
+  
+  #product-form {
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+    grid-template-columns: 1fr;
+  }
+  
+  #submit-button {
+    font-size: 0.95rem;
+  }
+}
