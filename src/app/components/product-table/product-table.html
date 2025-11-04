@@ -1,0 +1,65 @@
+<table class="collection-table" id="products-table">
+    <thead class="collection-table-head" id="products-head">
+        <tr class="header-row">
+            <td>ID</td>
+            <td>Nombre</td>
+            <td>Precio</td>
+            <td>Precio Unitario</td>
+            <td>Stock</td>
+            <td>SKU</td>
+            <td>Codigo de Barras</td>
+            <td>Unidades Vendidas</td>
+            <td>Categorias</td>
+            @if (isEditMode()) {
+                <td>Acciones</td>
+            }
+        </tr>
+    </thead>
+    <tbody class="collection-table-body">
+        @for (p of products(); track p.id) {
+        <tr class="product-row">
+            <td> {{p.id}} </td>
+            <td> {{p.name}} </td>
+            <td> {{p.price}} </td>
+            <td> {{p.unitPrice}} </td>
+            <td> {{p.stock}} </td>
+            <td> {{p.sku}} </td>
+            <td> {{p.barcode}} </td>
+            <td> {{p.soldQuantity}} </td>
+            <td>
+                @for (c of p.categories; track $index) {
+                    @if ($index === p.categories.length - 1) {
+                        {{c}}
+                    }@else {
+                        {{c + ", "}}
+                    }
+                }
+            </td>
+            @if (isEditMode()) {
+                <td>
+                    <div class="product-actions">
+                        <button class="action-button action-button--delete" type="button" (click)="deleteProduct(p.id)">
+                            <svg class="action-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path
+                                    d="M9 3h6l1 2h4v2h-1v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7H4V5h4l1-2Zm-1 4v11h2V7H8Zm4 0v11h2V7h-2Zm4 0v11h2V7h-2Z"
+                                    fill="currentColor" />
+                            </svg>
+                            <span class="action-button__label">Borrar</span>
+                        </button>
+
+                        <button class="action-button action-button--edit" type="button" (click)="editProduct(p)">
+                            <svg class="action-button__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path
+                                    d="M4 17.25V20h2.75L17.81 8.94l-2.75-2.75L4 17.25ZM19.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z"
+                                    fill="currentColor" />
+                            </svg>
+                            <span class="action-button__label">Editar</span>
+                        </button>
+                    </div>
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+

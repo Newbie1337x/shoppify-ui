@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { ResponseJSON } from '../models/hal/responseJson';
 import { ResponseList } from '../models/hal/responseList';
+import { PaginatedResponse} from '../models/hal/paginatedResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,12 @@ export abstract class BaseService<T extends { id?: number }> {
 
   constructor(protected http: HttpClient) {}
 
-  getAll(query: string = ''): Observable<ResponseJSON<T>> {
+  getAll(query: string = '') {
     return this.http.get<ResponseJSON<T>>(`${this.getURL()}${query}`);
   }
 
-getList(filterParams?: any){ // Es mejor usar un tipo que 'any', como ProductApiParams
-
-
+getList(filterParams?: any): Observable<PaginatedResponse<T>> {
+  
   const defaultParams = {
     page: 0,
     size: 10
@@ -36,12 +36,14 @@ getList(filterParams?: any){ // Es mejor usar un tipo que 'any', como ProductApi
   const params = new HttpParams({ fromObject: finalParams });
   
   return this.http.get<ResponseJSON<T>>(this.getURL(), { params }).pipe(
-    map((response: ResponseJSON<T>) =>
-      this.unwrapEmbeddedList(response?._embedded)
-    )
+    map((response: ResponseJSON<T>) => {
+      
+      const dataList = this.unwrapEmbeddedList(response?._embedded);
+      const pageInfo = response.page; 
+      return { data: dataList, page: pageInfo };
+    })
   );
 }
-
 
   get(id: number): Observable<T> {
     return this.http.get<T>(`${this.getURL()}/${id}`);

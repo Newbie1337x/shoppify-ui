@@ -1,9 +1,9 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" autocomplete="off">
+<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
     <!-- ID -->
-    @if (this.id) {
+    @if (this.product) {
     <fieldset>
         <label>ID</label>
-        <input type="text" id="id-input" formControlName="id" readonly>
+        <input type="text" id="id-input" formControlName="id" [disabled]="true" readonly>
     </fieldset>
     }
 
@@ -12,11 +12,67 @@
         <label for="name-input">Nombre*</label>
         <input type="text" id="name-input" formControlName="name">
 
-        @if(this.name.touched) {
-            @if (this.name.hasError("required") || this.name.hasError("pattern")) {
+        @if(controls['name'].dirty) {
+            @if (controls['name'].hasError("required") || controls['name'].hasError("pattern")) {
                 <h5>El nombre es obligatorio</h5>
-            }@else if (this.name.hasError("minlength") || this.name.hasError("maxlength")) {
+            }@else if (controls['name'].hasError("minlength") || controls['name'].hasError("maxlength")) {
                 <h5>El nombre debe tener entre 2 y 50 caracteres</h5>
+            }
+        }
+    </fieldset>
+
+    <!-- SKU -->
+    <fieldset>
+        <label for="sku-input">SKU*</label>
+        <input type="text" id="sku-input" formControlName="sku">
+
+        @if(controls['sku'].dirty) {
+            @if (controls['sku'].hasError("required") || controls['sku'].hasError("pattern")) {
+                <h5>El SKU es obligatorio</h5>
+            }@else if (controls['sku'].hasError("minlength") || controls['sku'].hasError("maxlength")) {
+                <h5>El SKU debe tener entre 6 y 12 caracteres</h5>
+            }
+        }
+    </fieldset>
+
+    <!-- Bar Code -->
+    <fieldset>
+        <label for="barcode-input">Codigo de Barras*</label>
+        <input type="text" id="barcode-input" formControlName="barcode">
+
+        @if(controls['barcode'].dirty) {
+            @if (controls['barcode'].hasError("required") || controls['barcode'].hasError("pattern")) {
+                <h5>El barcode es obligatorio</h5>
+            }@else if (controls['barcode'].hasError("minlength") || controls['barcode'].hasError("maxlength")) {
+                <h5>El barcode debe tener 12 caracteres</h5>
+            }
+        }
+    </fieldset>
+
+    <!-- Brand -->
+    <fieldset>
+        <label for="brand-input">Marca*</label>
+        <input type="text" id="brand-input" formControlName="brand">
+
+        @if(controls['brand'].dirty) {
+            @if (controls['brand'].hasError("required") || controls['brand'].hasError("pattern")) {
+                <h5>La marca es obligatoria</h5>
+            }@else if (controls['brand'].hasError("minlength") || controls['brand'].hasError("maxlength")) {
+                <h5>La marca debe tener entre 2 y 50 caracteres</h5>
+            }
+        }
+    </fieldset>
+
+    <!-- Stock -->
+    <fieldset>
+        <label for="stock-input">Stock*</label>
+        <input type="number" id="stock-input" formControlName="stock">
+
+        @if(controls['stock'].dirty) {
+            @if (controls['stock'].hasError("required")) {
+                <h5>El stock es obligatorio</h5>
+            }@else if (controls['stock'].hasError("max") || controls['stock'].hasError("min")) {
+                <h5>El stock tiene que tener un valor entre 0 y 100.000</h5>
             }
         }
     </fieldset>
@@ -26,10 +82,10 @@
         <label for="price-input">Precio*</label>
         <input type="number" id="price-input" formControlName="price">
 
-        @if(this.price.touched) {
-            @if (this.price.hasError("required")) {
+        @if(controls['price'].dirty) {
+            @if (controls['price'].hasError("required")) {
                 <h5>El precio es obligatorio</h5>
-            }@else if (this.price.hasError("max") || this.price.hasError("min")) {
+            }@else if (controls['price'].hasError("max") || controls['price'].hasError("min")) {
                 <h5>El precio debe tener un valor entre $0 y $100.000.000</h5>
             }
         }
@@ -40,84 +96,11 @@
         <label for="unit-price-input">Precio Unitario*</label>
         <input type="number" id="unit-price-input" formControlName="unitPrice">
 
-        @if(this.unitPrice.touched) {
-            @if (this.unitPrice.hasError("required")) {
+        @if(controls['unitPrice'].dirty) {
+            @if (controls['unitPrice'].hasError("required")) {
                 <h5>El precio unitario es obligatorio</h5>
-            }@else if (this.unitPrice.hasError("max") || this.unitPrice.hasError("min")) {
+            }@else if (controls['unitPrice'].hasError("max") || controls['unitPrice'].hasError("min")) {
                 <h5>El precio unitario debe tener un valor entre $0 y $100.000.000</h5>
-            }
-        }
-    </fieldset>
-
-    <!-- Stock -->
-    <fieldset>
-        <label for="stock-input">Stock*</label>
-        <input type="number" id="stock-input" formControlName="stock">
-
-        @if(this.stock.touched) {
-            @if (this.stock.hasError("required")) {
-                <h5>El stock es obligatorio</h5>
-            }@else if (this.stock.hasError("max") || this.stock.hasError("min")) {
-                <h5>El stock tiene que tener un valor entre 0 y 100.000</h5>
-            }
-        }
-    </fieldset>
-
-    <!-- SKU -->
-    <fieldset>
-        <label for="sku-input">SKU*</label>
-        <input type="text" id="sku-input" formControlName="sku">
-
-        @if(this.sku.touched) {
-            @if (this.sku.hasError("required") || this.sku.hasError("pattern")) {
-                <h5>El SKU es obligatorio</h5>
-            }@else if (this.sku.hasError("minlength") || this.sku.hasError("maxlength")) {
-                <h5>El SKU debe tener entre 6 y 12 caracteres</h5>
-            }@else if (this.repeatedFields?.includes('sku')) {
-                <h5>El SKU ya esta en uso</h5>
-            }
-        }
-    </fieldset>
-
-    <!-- Bar Code -->
-    <fieldset>
-        <label for="barcode-input">Codigo de Barras*</label>
-        <input type="text" id="barcode-input" formControlName="barcode">
-
-        @if(this.barcode.touched) {
-            @if (this.barcode.hasError("required") || this.barcode.hasError("pattern")) {
-                <h5>El barcode es obligatorio</h5>
-            }@else if (this.barcode.hasError("minlength") || this.barcode.hasError("maxlength")) {
-                <h5>El barcode debe tener 12 caracteres</h5>
-            }@else if (this.repeatedFields?.includes('barcode')) {
-                <h5>El barcode ya esta en uso</h5>
-            }
-        }
-    </fieldset>
-
-    <!-- Description -->
-    <fieldset>
-        <label for="description-input">Descripcion</label>
-        <textarea id="description-input" formControlName="description" (input)="DynamicDescription($event)"></textarea>
-        <h6 [class.over-limit]="this.description.value.length > 500">
-            {{this.description.value.length}}/500
-        </h6>
-
-        @if(this.description.touched && this.description.hasError("maxlength")) {
-            <h5>La descripcion debe tener un maximo de 500 caracteres</h5>
-        }
-    </fieldset>
-
-    <!-- Brand -->
-    <fieldset>
-        <label for="brand-input">Marca*</label>
-        <input type="text" id="brand-input" formControlName="brand">
-
-        @if(this.brand.touched) {
-            @if (this.brand.hasError("required") || this.brand.hasError("pattern")) {
-                <h5>La marca es obligatoria</h5>
-            }@else if (this.brand.hasError("minlength") || this.brand.hasError("maxlength")) {
-                <h5>La marca debe tener entre 2 y 50 caracteres</h5>
             }
         }
     </fieldset>
@@ -129,21 +112,40 @@
             placeholder="Ingrese la url de la imagen del producto">
     </fieldset>
 
-    <!-- Categories -->
+    <!-- Description -->
     <fieldset>
+        <label for="description-input">Descripcion</label>
+        <textarea id="description-input" formControlName="description" (input)="DynamicDescription($event)"></textarea>
+        <h6 [class.over-limit]="controls['description'].value.length > 500">
+            {{controls['description'].value.length}}/500
+        </h6>
+
+        @if(controls['description'].dirty && controls['description'].hasError("maxlength")) {
+            <h5>La descripcion debe tener un maximo de 500 caracteres</h5>
+        }
+    </fieldset>
+
+    <!-- Categories -->
+    <fieldset class="categories-fieldset">
         <mat-form-field appearance="fill">
             <mat-label>Categorías</mat-label>
             <mat-select multiple formControlName="categories" panelClass="custom-select-panel">
+                @if (categories) {
                 @for (category of categories; track $index) {
-                <mat-option [value]="category.name"> {{category.name.toUpperCase()}} </mat-option>
+                    <mat-option [value]="category.name"> 
+                        {{category.name.charAt(0).toUpperCase() + category.name.slice(1).toLowerCase()}} 
+                    </mat-option>
                 }
+
+                }
+              
             </mat-select>
         </mat-form-field>
 
-        @if (this.categoryControl.touched && this.categoryControl.hasError('required')){
+        @if (controls['categories'].dirty && controls['categories'].hasError('required')){
             <h5>Se debe elegir al menos una categoria</h5>
         }
     </fieldset>
 
-    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid && !repeatedProduct">
-</form>
+    <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid">
+        

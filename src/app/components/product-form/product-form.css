@@ -6,16 +6,15 @@
 }
 
 #product-form {
-  max-width: 900px;
-  margin: 0 auto;
+  display: grid;
+  max-width: 1100px;
   padding: 3rem;
   border-radius: 32px;
-  background: rgba(33, 33, 33, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(12px);
-  box-shadow: 0 28px 65px rgba(10, 10, 10, 0.6);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
   gap: 1.5rem;
 }
 
@@ -26,23 +25,24 @@ fieldset {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 10px;
 }
 
 fieldset label {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #e5e4ea;
+  color: #475569;
 }
 
 fieldset input,
 fieldset textarea {
   width: 100%;
   padding: 0.85rem 1rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid rgba(148, 163, 184, 0.6);
   border-radius: 14px;
-  background: rgba(18, 18, 18, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
-  color: #f7f7f9;
+  color: #1f2937;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
@@ -58,12 +58,16 @@ fieldset input[type="number"] {
   appearance: textfield;
 }
 
+fieldset input[type="text"] {
+  min-width: 180px;
+}
+
 fieldset input:focus,
 fieldset textarea:focus {
   outline: none;
-  border-color: #ff7543;
-  background: rgba(28, 28, 28, 0.95);
-  box-shadow: 0 0 0 4px rgba(255, 117, 67, 0.18);
+  border-color: #4338ca;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.15);
 }
 
 fieldset input::placeholder,
@@ -88,12 +92,12 @@ fieldset textarea::-webkit-scrollbar-track {
 }
 
 fieldset textarea::-webkit-scrollbar-thumb {
-  background: #ff7543;
+  background: #4338ca;
   border-radius: 10px;
 }
 
 fieldset textarea::-webkit-scrollbar-thumb:hover {
-  background: #ff8358;
+  background: #4338ca;
 }
 
 fieldset h5 {
@@ -117,61 +121,113 @@ fieldset h6.over-limit {
   font-weight: 500;
 }
 
-::ng-deep .mat-form-field {
+app-product-form .mat-form-field {
   width: 100%;
 }
 
-::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+app-product-form .mat-form-field-appearance-fill .mat-form-field-flex {
   background: rgba(18, 18, 18, 0.9);
   border: 1px solid #3a3a3a;
   border-radius: 14px;
   padding: 0.5rem 1rem;
 }
 
-::ng-deep .mat-form-field-appearance-fill:hover .mat-form-field-flex {
+app-product-form .mat-form-field-appearance-fill:hover .mat-form-field-flex {
   background: rgba(18, 18, 18, 0.95);
 }
 
-::ng-deep .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
-  background: rgba(28, 28, 28, 0.95);
-  border-color: #ff7543;
-  box-shadow: 0 0 0 4px rgba(255, 117, 67, 0.18);
-}
-
-::ng-deep .mat-form-field-label,
-::ng-deep .mat-select-value {
-  color: #f7f7f9 !important;
-}
-
-::ng-deep .mat-form-field-underline {
-  display: none;
-}
-
-::ng-deep .mat-select-arrow {
-  color: #ff7543;
-}
-
-::ng-deep .mat-pseudo-checkbox {
+app-product-form .mat-pseudo-checkbox {
   border: none !important;
   background: transparent !important;
 }
 
-::ng-deep .mat-pseudo-checkbox::after {
-  color: #ff7543 !important;
+app-product-form .mat-pseudo-checkbox::after {
+  color: #4338ca !important;
   font-size: 1.1rem;
 }
 
-::ng-deep .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
+app-product-form .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
   visibility: hidden;
 }
 
+app-product-form .mat-option:not(.mat-selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
+
+app-product-form .mat-mdc-text-field-wrapper {
+  background: rgba(248, 250, 252, 0.95) !important;
+  border-radius: 0.9rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  padding: 0 0.75rem !important;
+}
+
+app-product-form .mat-mdc-form-field-focus-overlay {
+  background: rgba(99, 102, 241, 0.08) !important;
+} 
+
+app-product-form .mat-mdc-select-trigger {
+  min-height: 2.75rem;
+  align-items: center;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+app-product-form .mat-mdc-floating-label {
+  color: #4f46e5 !important;
+  font-weight: 600;
+}
+
+app-product-form .mat-mdc-select-arrow {
+  color: #4f46e5 !important;
+}
+
+app-product-form .mat-mdc-select-value-text {
+  color: #1f2937 !important;
+}
+
+
+.custom-select-panel {
+  background-color: #f8fafc !important;
+  border-radius: 1rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.5) !important;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12) !important;
+  color: #1f2937 !important;
+}
+
+.custom-select-panel .mat-mdc-option {
+  color: #1f2937 !important;
+  font-weight: 500;
+}
+
+.custom-select-panel .mat-mdc-option.mat-mdc-option-active,
+.custom-select-panel .mat-mdc-option.mat-selected:not(.mat-option-disabled) {
+  background: rgba(79, 70, 229, 0.12) !important;
+  color: #312e81 !important;
+}
+
+.custom-select-panel .mat-pseudo-checkbox {
+  border: none !important;
+  background: transparent !important;
+}
+
+.custom-select-panel .mat-pseudo-checkbox::after {
+  color: #4338ca !important;
+  font-size: 1.1rem;
+}
+
+.custom-select-panel .mat-mdc-option:not(.mdc-list-item--selected) .mat-pseudo-checkbox {
+  visibility: hidden;
+}
 
 fieldset:has(textarea),
 fieldset:has(#image-input),
-fieldset:has(#brand-input),
-fieldset:has(.mat-form-field),
-fieldset:has(#id-input) {
+.categories-fieldset {
   grid-column: 1 / -1;
+}
+
+.categories-fieldset {
+  display: flex;
+  justify-content: center;
 }
 
 #submit-button {
@@ -181,8 +237,9 @@ fieldset:has(#id-input) {
   padding: 0.95rem 1.25rem;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(90deg, #ff7543 0%, #ff5a6d 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+  box-shadow: 0 16px 30px rgba(79, 70, 229, 0.35);
+  color: #f8fafc;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -190,6 +247,7 @@ fieldset:has(#id-input) {
 }
 
 #submit-button:hover:not(:disabled) {
+  box-shadow: 0 20px 36px rgba(99, 102, 241, 0.45);
   transform: translateY(-1px);
   filter: brightness(1.05);
 }

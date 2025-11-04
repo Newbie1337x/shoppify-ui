@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductsRefiner } from './products-refiner';
+import { CategoryRefiner } from './category-refiner';
 
-describe('ProductsRefiner', () => {
-  let component: ProductsRefiner;
-  let fixture: ComponentFixture<ProductsRefiner>;
+describe('CategoryRefiner', () => {
+  let component: CategoryRefiner;
+  let fixture: ComponentFixture<CategoryRefiner>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductsRefiner]
+      imports: [CategoryRefiner]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProductsRefiner);
+    fixture = TestBed.createComponent(CategoryRefiner);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -76,4 +76,11 @@ private getToken(){
 private getPermits(){
   return this.storageService.getPermits()
 }
+
+updateUser(user: User | Partial<User>){
+  const current = this.user();
+  const nextUser: User = current ? { ...current, ...user } : user as User;
+  this.storageService.setUser(nextUser)
+  this.user.set(nextUser)
+}
 }

@@ -1,0 +1,78 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Category } from '../../models/category';
+import { CategoryService } from '../../services/category-service';
+import { SwalService } from '../../services/swal-service';
+import { CommonModule } from '@angular/common'; 
+import {Router } from '@angular/router';
+
+@Component({
+  selector: 'app-category-form',
+
+  imports: [ReactiveFormsModule, CommonModule], 
+  templateUrl: './category-form.html',
+  styleUrl: './category-form.css'
+})
+export class CategoryForm implements OnInit {
+  form!: FormGroup
+
+  @Input() category?: Category 
+
+  constructor(
+    private fb: FormBuilder,
+    private categoryService: CategoryService,
+    private swal: SwalService,
+    private router:Router
+  ) {}
+
+  get controls() {
+    return this.form.controls
+  }
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      id: [this.category?.id || ''], 
+      name: [this.category?.name || '', [Validators.required, Validators.pattern(/\S/), Validators.minLength(2), Validators.maxLength(50)]],
+      imgUrl: [this.category?.imgUrl || '', Validators.maxLength(200)]
+    })
+
+    if (this.category) {
+      this.form.markAllAsDirty()
+    } else {
+      this.form.controls['id'].setValue(undefined) 
+    }
+
+  }
+
+  submitForm() {
+
+    if (this.form.invalid) { 
+      this.form.markAllAsDirty()
+      return;
+    }
+
+    const formValues = this.form.value;
+    const editMode = !!this.category 
+
+    const request = editMode
+      ? this.categoryService.patch(formValues)
+      : this.categoryService.post(formValues)
+
+    request.subscribe({
+      next: () => {
+        this.swal.success(editMode ? "Categoría editada con éxito!" : "Categoría agregada con éxito!")
+          .then(() => {
+            this.form.reset();
+            this.router.navigate(["categories"]);
+          });
+      },
+      error: (err) => {
+        const defaultMessage = editMode ? "Error al editar la categoría" : "Error al agregar la categoría";
+        const errorMessage = err.error?.message || defaultMessage; 
+
+        this.swal.error(errorMessage)
+      }
+    })
+  }
+}
+

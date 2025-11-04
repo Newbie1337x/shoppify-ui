@@ -8,10 +8,11 @@ import { EditProfileForm } from '../../components/edit-profile-form/edit-profile
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth-service';
 import Swal from 'sweetalert2';
+import { ImageFallbackDirective } from "../../directives/image-fallback";
 
 @Component({
   selector: 'app-profile',
-  imports: [ProductCard, EditProfileForm],
+  imports: [ProductCard, EditProfileForm, ImageFallbackDirective],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
   encapsulation: ViewEncapsulation.None
