@@ -12,7 +12,7 @@ import { ImageFallbackDirective } from "../../directives/image-fallback";
 
 @Component({
   selector: 'app-profile',
-  imports: [ProductCard, EditProfileForm, ImageFallbackDirective],
+  imports: [ImageFallbackDirective],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
   encapsulation: ViewEncapsulation.None

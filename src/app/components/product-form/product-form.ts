@@ -27,7 +27,6 @@ import { MatDialogRef } from '@angular/material/dialog';
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
-    ImageFallbackDirective,
     ProductCard,
   ],
   templateUrl: './product-form.html',

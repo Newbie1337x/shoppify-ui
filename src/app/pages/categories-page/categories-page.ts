@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-categories-page',
-  imports: [CategoryCard, CategoryForm, CategoryRefiner, CommonModule], 
+  imports: [CategoryCard, CategoryRefiner, CommonModule], 
   templateUrl: './categories-page.html',
   styleUrl: './categories-page.css',
 })
