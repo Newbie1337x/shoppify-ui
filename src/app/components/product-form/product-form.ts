@@ -14,8 +14,8 @@ import { SwalService } from '../../services/swal-service';
 import { CategoryService } from '../../services/category-service';
 import { ProductCard } from '../product-card/product-card';
 import { Optional } from '@angular/core';
-import { Router } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-form',
@@ -29,7 +29,6 @@ import { DecimalPipe } from '@angular/common';
     MatOptionModule,
     ImageFallbackDirective,
     ProductCard,
-    DecimalPipe
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
@@ -41,7 +40,6 @@ export class ProductForm implements OnInit {
   @Input() product?: Product
   categories?: Category[]
   
-
   previewProduct!: Product
 
   constructor(
@@ -49,8 +47,7 @@ export class ProductForm implements OnInit {
     private productService: ProductService,
     private swal: SwalService,
     private categoryService: CategoryService,
-    private router: Router,
-   
+    @Optional() private dialogRef?: MatDialogRef<any>
   ) {}
 
   get controls() {
@@ -132,13 +129,9 @@ export class ProductForm implements OnInit {
     } else {
       this.controls['id'].setValue(undefined)
     }
-
-    // CAMBIO: Establecemos el estado inicial del preview
     this.updatePreview();
 
-    // CAMBIO: Nos suscribimos a los cambios del formulario
     this.form.valueChanges.subscribe(() => {
-      // Cada vez que el formulario cambia, actualizamos nuestro objeto 'previewProduct'
       this.updatePreview();
     });
 
@@ -156,8 +149,6 @@ export class ProductForm implements OnInit {
       this.form.markAllAsDirty()
       return;
     }
-
-    // Usamos el snapshot más reciente del preview, que está sincronizado
     const formValues = this.previewProduct;
     const editMode = !!this.product
 
@@ -169,7 +160,10 @@ export class ProductForm implements OnInit {
       next: () => {
         this.swal.success(editMode ? "Producto editado con éxito!" : "Producto agregado con éxito!")
           .then(() => {
-            this.form.reset();
+            if (!editMode) {
+              this.form.reset();
+            }
+            this.dialogRef?.close(true);
           });
       },
       error: (err) => {
@@ -188,23 +182,15 @@ export class ProductForm implements OnInit {
     if (!isFinite(price) || price <= 0) {
       return price > 0 ? price : 0;
     }
-
-    // CAMBIO: Modifiqué tu lógica. El descuento debe ser en DECIMAL (0.15)
-    // Pero tu form lo maneja como 15 (max 100). Así que lo dividimos por 100.
     const discountDecimal = discount / 100;
 
     if (!isFinite(discountDecimal) || discountDecimal <= 0) {
       return price;
     }
 
-    // Aplicamos el descuento
     const discounted = price - (price * discountDecimal);
     return discounted > 0 ? discounted : 0;
   }
-
-  // CAMBIO: Estos getters ya no son necesarios.
-  // get previewPriceWithDiscount(): number { ... }
-  // get previewSavings(): number { ... }
 
 
   getCategories() {
