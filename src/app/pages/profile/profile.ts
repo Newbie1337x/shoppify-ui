@@ -1,6 +1,5 @@
 import { Component, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { Product } from '../../models/product';
-import { ProductCard } from "../../components/product-card/product-card";
 import { UserService } from '../../services/user-service';
 import { Router } from '@angular/router';
 import { User } from '../../models/auth/user';

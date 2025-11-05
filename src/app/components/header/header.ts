@@ -1,36 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SearchBar } from '../search-bar/search-bar';
 import { UserAvatar } from '../user-avatar/user-avatar';
 import { User } from '../../models/auth/user';
-import { AuthService } from '../../services/auth-service';
 import { ImageFallbackDirective } from '../../directives/image-fallback';
+import { BadgeComponent, ButtonDirective } from '@coreui/angular';
+import { CartService } from '../../services/cart-service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, SearchBar, UserAvatar, ImageFallbackDirective],
+  imports: [RouterLink, SearchBar, UserAvatar, ImageFallbackDirective, ButtonDirective, BadgeComponent],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header implements OnInit{
+export class Header{
 
-  constructor(public auth:AuthService){
- 
-  }
+  private cService = inject(CartService)
 
   mostrarNav = false;
   mostrarBusquedaMovil = false;
   user! : User
+  itemsInCart = this.cService.itemsInCart
 
   toggleNav() {
     this.mostrarNav = !this.mostrarNav;
     if (this.mostrarNav) {
       this.mostrarBusquedaMovil = false;
     }
-  }
-
-    ngOnInit(){
-    // user is consumed from auth signals in template
   }
 
   toggleBusquedaMovil() {

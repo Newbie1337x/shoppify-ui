@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from '../../components/product-card/product-card';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [ProductCard, DecimalPipe],
+  imports: [ProductCard],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
@@ -57,7 +57,8 @@ export class ProductDetail implements OnInit {
 
   onAddToCart(): void {
     if (!this.product) return;
-    this.cartService.addToCart(this.product);
+    this.cartService.addToCart(this.product)
+    this.showCartSuccessToast(this.product.name)
   }
 
   onBuyNow(): void {
@@ -66,5 +67,21 @@ export class ProductDetail implements OnInit {
     this.router.navigate(['/cart']);
   }
 
+  showCartSuccessToast = (productName: string) => {
+  Swal.fire({
 
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    
+    timer: 1500,
+    timerProgressBar: true,
+    
+    icon: 'success',
+    title: `"${productName}" agregado.`,
+    customClass: {
+        popup: 'swal2-toast-dark'
+    }
+  })
+  }
 }
