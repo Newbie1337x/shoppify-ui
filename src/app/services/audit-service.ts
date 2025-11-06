@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { BaseService } from './base-service';
+import { Transaction } from '../models/transaction';
+import { HttpParams } from '@angular/common/http';
+import { map } from 'rxjs';
+import { SalesParams } from '../models/filters/salesParams';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuditService extends BaseService<Transaction> {
+  override endpoint = 'audit';
+
+  getAllTransactions(page: number, size: number, filters?: SalesParams) {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params = params.set(key, value as string);
+        }
+      });
+    }
+
+    return this.http.get<any>(this.API_URL, { params }).pipe(
+      map((response) => {
+        const list = response._embedded?.saleAuditDTOList || [];
+        return list.map((item: any) => item.transaction as Transaction);
+      })
+    )
+  }
+}

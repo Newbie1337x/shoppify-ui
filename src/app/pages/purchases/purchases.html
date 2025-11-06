@@ -1,0 +1,69 @@
+<div class="purchases-container">
+  <h2>🛍️ Mis Compras</h2>
+
+  @if (purchases().length > 0) {
+    <div class="filters">
+  <label>Desde: <input type="date" [(ngModel)]="filters.startDate"></label>
+  <label>Hasta: <input type="date" [(ngModel)]="filters.endDate"></label>
+  <label>Método de pago:
+    <select [(ngModel)]="filters.paymentMethod">
+      <option value="">Todos</option>
+      <option value="CASH">Efectivo</option>
+      <option value="CARD">Tarjeta</option>
+      <option value="TRANSFER">Transferencia</option>
+    </select>
+  </label>
+  <label>Total mínimo: <input type="number" [(ngModel)]="filters.minTotal"></label>
+  <label>Total máximo: <input type="number" [(ngModel)]="filters.maxTotal"></label>
+
+  <button (click)="applyFilters()">Filtrar</button>
+</div>
+    <div class="purchases-list">
+      @for (purchase of purchases(); let i = $index; track purchase.id) {
+        <div class="purchase-card">
+          <div class="purchase-header">
+            <div class="purchase-summary">
+              <p><strong>Compra #{{ purchase.id }}</strong></p>
+              <p>Fecha: {{ purchase.dateTime| date:'short' }}</p>
+              <p>Total: <strong>${{ purchase.total | number:'1.2-2' }}</strong></p>
+            </div>
+            <button class="toggle-details" (click)="toggleDetails(i)">
+              {{ activePurchase() === i ? 'Ocultar detalles ⌃' : 'Mostrar detalles ⌄' }}
+            </button>
+          </div>
+
+          <div class="purchase-details-wrapper" [class.show]="activePurchase() === i">
+            <div class="purchase-details">
+              <h4>Productos</h4>
+              <ul>
+                @for (item of purchase.detailTransactions; track item.id) {
+                  <li>
+                    <div class="item-info">
+                      <img [src]="item.product?.imgURL" alt="{{ item.product?.name }}" />
+                      <div class="item-text">
+                        <p><strong>{{ item.product?.name }}</strong></p>
+                        <p>Cantidad: {{ item.quantity }}</p>
+                        <p>Precio unitario: ${{ item.product?.price| number:'1.2-2' }}</p>
+                        <p>Subtotal: <strong>${{ item.subtotal | number:'1.2-2' }}</strong></p>
+                      </div>
+                    </div>
+                  </li>
+                }
+              </ul>
+
+              <div class="purchase-extra">
+                <p><strong>Método de pago:</strong> {{ purchase.paymentMethod }}</p>
+                <p><strong>Descripción:</strong> {{ purchase.description || 'Sin descripción' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-purchases">
+      <p>No tenés compras registradas todavía 😕</p>
+    </div>
+  }
+</div>
+

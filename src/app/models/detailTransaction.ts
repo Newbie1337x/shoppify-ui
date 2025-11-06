@@ -5,4 +5,5 @@ export interface DetailTransaction {
   quantity: number;
   subtotal: number;
   productId: number;
+  product?: Product;
 }

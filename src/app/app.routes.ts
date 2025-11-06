@@ -13,6 +13,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { Help } from './pages/help/help';
 import { publicGuard } from './core/guards/public-guard';
 import { ProductDetail } from './pages/product-detail/product-detail';
+import { Purchases } from './pages/purchases/purchases';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,7 @@ export const routes: Routes = [
       { path: 'products/search/:q', component: ProductsPage },
       { path: 'categories', component: CategoriesPage },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
+      { path: 'purchases', component: Purchases, canActivate: [authGuard] },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
