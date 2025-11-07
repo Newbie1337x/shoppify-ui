@@ -9,7 +9,7 @@ import { SalesParams } from '../models/filters/salesParams';
   providedIn: 'root'
 })
 export class AuditService extends BaseService<Transaction> {
-  override endpoint = 'audit';
+  override endpoint = 'sales'
 
   getAllTransactions(page: number, size: number, filters?: SalesParams) {
     let params = new HttpParams()
@@ -19,16 +19,13 @@ export class AuditService extends BaseService<Transaction> {
     if (filters) {
       Object.entries(filters).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== '') {
-          params = params.set(key, value as string);
+          params = params.set(key, value as string)
         }
-      });
+      })
     }
 
-    return this.http.get<any>(this.API_URL, { params }).pipe(
-      map((response) => {
-        const list = response._embedded?.saleAuditDTOList || [];
-        return list.map((item: any) => item.transaction as Transaction);
-      })
+    return this.http.get<any>(this.API_URL+"/"+this.endpoint, { params }).pipe(
+      map(response => response._embedded?.saleResponseList || [])
     )
   }
 }

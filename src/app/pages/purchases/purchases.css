@@ -11,6 +11,36 @@
   color: #333;
 }
 
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.admin-actions--toolbar {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.view-toggle--compact {
+  padding-inline: 1.2rem;
+}
+
+.view-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  background: rgba(79, 70, 229, 0.08);
+  color: #4338ca;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -150,6 +180,13 @@
 }
 
 @media (max-width: 600px) {
+
+  .edit-toggle--compact[_ngcontent-ng-c2332498431],
+  .view-toggle--compact[_ngcontent-ng-c2332498431] {
+    width: 100%;
+    justify-content: center;
+  }
+
   .purchase-header {
     flex-direction: column;
     align-items: flex-start;
