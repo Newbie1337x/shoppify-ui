@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoryCard } from '../../components/category-card/category-card';
-import { CategoryForm } from '../../components/category-form/category-form';
 import { CategoryRefiner } from '../../components/category-refiner/category-refiner';
 import { CategoryParams } from '../../models/filters/category-params';
 import { SwalService } from '../../services/swal-service';
@@ -14,7 +13,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-categories-page',
-  imports: [CategoryCard, CategoryForm, CategoryRefiner, CommonModule], 
+  imports: [CategoryCard, CategoryRefiner, CommonModule], 
   templateUrl: './categories-page.html',
   styleUrl: './categories-page.css',
 })

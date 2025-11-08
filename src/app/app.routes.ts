@@ -16,6 +16,9 @@ import { ProductDetail } from './pages/product-detail/product-detail';
 import { StoreForm } from './components/store-form/store-form';
 import { CarouselForm } from './components/carousel-form/carousel-form';
 import { Purchases } from './pages/purchases/purchases';
+import { Terms } from './pages/terms/terms';
+import { ConfigPages } from './layouts/config-pages/config-pages';
+import { Privacy } from './pages/privacy/privacy';
 
 export const routes: Routes = [
   {
@@ -49,14 +52,18 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    component: Auth,
+    component: ConfigPages,
     canActivate: [authGuard],
     children: [{ path: '', component: Profile }]
   },
   {
     path: 'help',
-    component: Auth,
-    children: [{ path: '', component: Help }]
+    component: ConfigPages,
+    children: [
+      { path: '', component: Help },
+      { path: 'terms', component: Terms },
+      { path: 'privacy', component: Privacy},
+    ]
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
