@@ -61,6 +61,11 @@ export class CarouselForm implements OnInit {
 
 
   onSubmit(){
+    if(this.fg.invalid){
+      this.fg.markAllAsTouched();
+      return;
+    }
+
     if(this.selectedItem){
          this.carouselService.putCarouselItem(this.fg.value).subscribe({
       next:(value) => {
@@ -97,9 +102,9 @@ export class CarouselForm implements OnInit {
   initForm(){
   this.fg = this.fb.group({
     id:[''],
-    title: ['', [Validators.required],],
-    href: ['', [Validators.required]],
-    url: ['', [Validators.required]]
+    title: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]],
+    href: ['', [Validators.required, Validators.pattern(/^(\/|https?:\/\/).+/)]],
+    url: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]]
   });
   }
 
@@ -116,6 +121,14 @@ export class CarouselForm implements OnInit {
     this.router.navigate(['/auth','admin'])
   }
 
+  showErrors(controlName: string): boolean {
+    const control = this.fg.get(controlName);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
 
+  hasError(controlName: string, errorCode: string): boolean {
+    const control = this.fg.get(controlName);
+    return !!control && control.hasError(errorCode);
+  }
 
 }

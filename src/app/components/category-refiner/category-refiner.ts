@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, input, OnInit, output, SimpleChanges } from '@angular/core';
 import { Category } from '../../models/category';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryParams } from '../../models/filters/category-params';
+import { CardBodyComponent, CardComponent, CollapseDirective } from '@coreui/angular';
 
 type RefinerFormValue = {
   name: string;
@@ -10,7 +12,8 @@ type RefinerFormValue = {
 
 @Component({
   selector: 'app-category-refiner',
-  imports: [FormsModule, ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardComponent, CardBodyComponent, CollapseDirective],
   templateUrl: './category-refiner.html',
   styleUrl: './category-refiner.css'
 })
@@ -20,6 +23,7 @@ export class CategoryRefiner implements OnInit{
   filterChange = output<CategoryParams>();
 
   filtersForm!: FormGroup;
+  visible = false;
 
   constructor(private fb: FormBuilder) {}
 
@@ -36,6 +40,10 @@ export class CategoryRefiner implements OnInit{
 
   onFiltersSubmit(): void {
     this.filterChange.emit(this.buildFiltersFromForm())
+  }
+
+  toggleCollapse(): void {
+    this.visible = !this.visible;
   }
 
   resetFilters(): void {

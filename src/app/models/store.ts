@@ -9,5 +9,6 @@ export interface Store {
   twitter: string
   facebook:string
   instagram:string
+  youtube:string //Implementar en backend
   homeCarousel?:Carouselitem[]
 }

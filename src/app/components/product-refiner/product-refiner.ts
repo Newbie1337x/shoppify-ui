@@ -18,7 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { Category } from '../../models/category';
 import { ProductParams } from '../../models/filters/productParams';
-import { CardBodyComponent, CardComponent, CollapseDirective } from '@coreui/angular';
+import { CardBodyComponent, CardComponent } from '@coreui/angular';
 
 type RefinerFormValue = {
   name: string;
@@ -42,8 +42,6 @@ type RefinerFormValue = {
     MatOptionModule,
     MatButtonModule,
     CardComponent,
-    CardBodyComponent,
-    CollapseDirective,
     CardBodyComponent
   ],
   templateUrl: 'product-refiner.html',
@@ -54,7 +52,6 @@ export class ProductsRefiner implements OnInit, OnChanges {
   @Input() categories: Category[] = [];
   @Input() initialFilters: ProductParams = {};
   @Output() filterChange = new EventEmitter<ProductParams>();
-  visible = false
 
   filtersForm!: FormGroup;
 
@@ -73,10 +70,6 @@ export class ProductsRefiner implements OnInit, OnChanges {
 
   onFiltersSubmit(): void {
     this.filterChange.emit(this.buildFiltersFromForm());
-  }
-
-  toggleCollapse(): void {
-    this.visible = !this.visible;
   }
 
   resetFilters(): void {

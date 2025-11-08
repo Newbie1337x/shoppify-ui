@@ -1,16 +1,4 @@
 
-<button
-  type="button"
-  class="filter-toggle"
-  (click)="toggleCollapse()"
-  [attr.aria-expanded]="visible">
-
-  <span class="toggle-label">{{ visible ? 'Ocultar filtros' : 'Filtrar resultados' }}</span>
-</button>
-
-  <c-card class="refiner-card" [visible]="visible" cCollapse horizontal>
-    <c-card-body class="refiner-card-body">
-  
 
 <form [formGroup]="filtersForm" class="refiner-panel" (ngSubmit)="onFiltersSubmit()">
   <header class="panel-header">
@@ -126,7 +114,3 @@
 </form>
 
 
-
-
-    </c-card-body>
-  </c-card>

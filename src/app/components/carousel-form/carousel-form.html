@@ -73,13 +73,47 @@
                 <form class="carousel-form" [formGroup]="fg" (ngSubmit)="onSubmit()">
                     <div class="form-field">
                         <label for="title">Titulo destacado</label>
-                        <input id="title" type="text" placeholder="Ej. Envio gratis en todo el pais" formControlName="title"/>
-                   
+                        <input
+                          id="title"
+                          type="text"
+                          placeholder="Ej. Envio gratis en todo el pais"
+                          formControlName="title"
+                          [class.is-invalid]="showErrors('title')"
+                        />
+                        @if (showErrors('title')) {
+                          <div class="form-error">
+                            @if (hasError('title', 'required')) {
+                              <span>El titulo es obligatorio.</span>
+                            }
+                            @if (hasError('title', 'minlength')) {
+                              <span>Debe tener al menos 4 caracteres.</span>
+                            }
+                            @if (hasError('title', 'maxlength')) {
+                              <span>No puede superar los 80 caracteres.</span>
+                            }
+                          </div>
+                        }
                     </div>
 
                     <div class="form-field">
                         <label for="href">Ruta de destino</label>
-                        <input id="href" type="text" placeholder="/products/ofertas" formControlName="href"/>
+                        <input
+                          id="href"
+                          type="text"
+                          placeholder="/products/ofertas"
+                          formControlName="href"
+                          [class.is-invalid]="showErrors('href')"
+                        />
+                        @if (showErrors('href')) {
+                          <div class="form-error">
+                            @if (hasError('href', 'required')) {
+                              <span>La ruta de destino es obligatoria.</span>
+                            }
+                            @if (hasError('href', 'pattern')) {
+                              <span>Debe comenzar con "/" o "http(s)://".</span>
+                            }
+                          </div>
+                        }
                         @if (fg.get('href')?.hasError('urlNoExiste') && fg.get('href')?.touched) {
                         <small>Nigasso.</small>
                         }
@@ -89,7 +123,23 @@
 
                     <div class="form-field">
                         <label for="url">Imagen (URL)</label>
-                        <input id="url" type="url" formControlName="url" placeholder="https://cdn.tu-tienda.com/hero.jpg"/>
+                        <input
+                          id="url"
+                          type="url"
+                          formControlName="url"
+                          placeholder="https://cdn.tu-tienda.com/hero.jpg"
+                          [class.is-invalid]="showErrors('url')"
+                        />
+                        @if (showErrors('url')) {
+                          <div class="form-error">
+                            @if (hasError('url', 'required')) {
+                              <span>La URL de la imagen es obligatoria.</span>
+                            }
+                            @if (hasError('url', 'pattern')) {
+                              <span>Debe ser una URL valida que comience con http(s)://</span>
+                            }
+                          </div>
+                        }
                         <small>Utiliza imagenes horizontales (1920x600) para un mejor resultado.</small>
 
                     </div>
