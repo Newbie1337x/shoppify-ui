@@ -2,20 +2,15 @@
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
-
 import { Category } from '../../models/category'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { SwalService } from '../../services/swal-service';
 import { CategoryService } from '../../services/category-service';
-import { ProductCard } from '../product-card/product-card';
-import { Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-product-form',
@@ -27,8 +22,6 @@ import { MatDialogRef } from '@angular/material/dialog';
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
-    ImageFallbackDirective,
-    ProductCard
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
@@ -45,8 +38,6 @@ export class ProductForm implements OnInit {
     private productService: ProductService,
     private swal: SwalService,
     private categoryService:CategoryService,
-    private router: Router,
-    @Optional() private dialogRef?: MatDialogRef<unknown>
   ) {}
 
   get controls() {
