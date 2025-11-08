@@ -25,7 +25,6 @@ import { DecimalPipe } from '@angular/common';
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
-    ImageFallbackDirective,
     ProductCard,
     DecimalPipe
   ],
@@ -53,42 +52,7 @@ export class ProductForm implements OnInit {
     return this.form.controls
   }
 
-  get previewProduct(): Product {
-    if (!this.form) {
-      return {
-        id: this.product?.id ?? 0,
-        name: this.product?.name ?? 'Producto sin nombre',
-        price: this.product?.price ?? 0,
-        unitPrice: this.product?.unitPrice ?? this.product?.price ?? 0,
-        stock: this.product?.stock ?? 0,
-        sku: this.product?.sku ?? '',
-        barcode: this.product?.barcode ?? '',
-        description: this.product?.description ?? '',
-        brand: this.product?.brand ?? '',
-        imgURL: this.product?.imgURL ?? '',
-        soldQuantity: this.product?.soldQuantity ?? 0,
-        categories: this.product?.categories ?? [],
-        _links: this.product?._links
-      }
-    }
 
-    const values = this.form.value;
-    return {
-      id: Number(values['id'] ?? this.product?.id ?? 0),
-      name: values['name'] || 'Producto sin nombre',
-      price: (values['price']),
-      unitPrice: values['unitPrice'] ?? values['price'],
-      stock: values['stock'],
-      sku: values['sku'] || '',
-      barcode: values['barcode'] || '',
-      description: values['description'] || '',
-      brand: values['brand'] || '',
-      imgURL: values['imgURL'] || '',
-      soldQuantity: this.product?.soldQuantity ?? 0,
-      categories: Array.isArray(values['categories']) ? values['categories'] : [],
-      _links: this.product?._links
-    }
-  }
 
   @HostListener('window:scroll')
   onScroll() {
@@ -121,11 +85,7 @@ export class ProductForm implements OnInit {
       this.controls['id'].setValue(undefined)
     }
 
-    this.updatePreview();
 
-    this.form.valueChanges.subscribe(() => {
-      this.updatePreview();
-    });
 
     this.getCategories()
   }
@@ -153,7 +113,6 @@ export class ProductForm implements OnInit {
       next: (productResponse: Product) => {
         this.swal.success(editMode ? "Producto editado con Exito!" : "Producto agregado con Exito!")
           .then(() => {
-            this.saved.emit(productResponse);
             if (!editMode) {
               this.form.reset();
             }
