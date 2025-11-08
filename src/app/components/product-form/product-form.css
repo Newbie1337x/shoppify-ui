@@ -342,7 +342,6 @@ fieldset:has(#image-input),
   }
 
   .product-preview {
-    background-color: red;
     display: none !important;
   }
   

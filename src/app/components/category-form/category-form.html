@@ -1,5 +1,7 @@
 <section class="form-wrapper">
-    
+    <article class="category-preview">
+             <app-category-card [category]="previewCategory"></app-category-card>
+    </article>
 
     <form [formGroup]="form" (ngSubmit)="submitForm()" id="category-form" autocomplete="off">
         <!-- Name -->
