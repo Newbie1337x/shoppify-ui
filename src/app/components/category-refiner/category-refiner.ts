@@ -13,7 +13,7 @@ type RefinerFormValue = {
 @Component({
   selector: 'app-category-refiner',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardComponent, CardBodyComponent, CollapseDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './category-refiner.html',
   styleUrl: './category-refiner.css'
 })

@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { StoreService } from '../../services/store-service';
 import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { Store } from '../../models/store';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',

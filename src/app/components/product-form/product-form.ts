@@ -34,6 +34,7 @@ export class ProductForm implements OnInit {
   form!: FormGroup
 
   @Input() product?: Product
+  @Output() saved = new EventEmitter<Product>()
   categories?: Category[]
 
   constructor(
@@ -106,6 +107,7 @@ export class ProductForm implements OnInit {
       next: (productResponse: Product) => {
         this.swal.success(editMode ? "Producto editado con Exito!" : "Producto agregado con Exito!")
           .then(() => {
+            this.saved.emit(productResponse)
             if (!editMode) {
               this.form.reset();
             }
