@@ -2,12 +2,15 @@
   <section class="admin-section admin-hero">
     <div class="hero-copy">
       <span class="hero-chip">Panel de control</span>
+      
       <h1>Impulsa tu tienda con decisiones inteligentes</h1>
       <p>
         Supervisa las metricas clave, coordina a tu equipo y mantene tu inventario siempre listo.
         Todo lo que necesitas para administrar Shoppify con confianza esta aqui.
       </p>
+    
       <div class="hero-actions">
+        
         <a class="btn btn-primary" routerLink="/products">
           <span class="btn-icon" aria-hidden="true">🛒</span>
           <span class="btn-content">
@@ -37,6 +40,17 @@
             <small>Edita nombre, direccion y detalles</small>
           </span>
         </a>
+      </div>
+    </div>
+    <div class="hero-chart">
+      <div class="chart-card">
+        <header class="chart-card__header">
+ 
+          <div class="chart-meta">
+            <h3>Productos más vendidos</h3>
+          </div>
+        </header>
+        <c-chart [data]="data" type="bar" />
       </div>
     </div>
 
@@ -83,4 +97,5 @@
       </div>
     </div>
   </section> 
+  
 </div>

@@ -6,7 +6,7 @@ import { PromotionCarousel } from "../promotion-carousel/promotion-carousel";
 import { CarouselService } from '../../services/carousel-service';
 import { Carouselitem } from '../../models/carouselitem';
 import { ImageFallbackDirective } from '../../directives/image-fallback';
-import { HttpValidationService } from '../../services/http-validation-service';
+
 
 
 @Component({
@@ -27,7 +27,7 @@ export class CarouselForm implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private httpValidator: HttpValidationService
+
   ) {}
 
   ngOnInit(): void {

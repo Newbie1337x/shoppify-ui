@@ -62,6 +62,67 @@
   gap: 1rem;
 }
 
+.hero-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  box-shadow: 0 20px 50px rgba(79, 70, 229, 0.18);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chart-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.chart-chip {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(79, 70, 229, 0.16);
+  color: #3730a3;
+}
+
+.chart-meta h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #111827;
+}
+
+.chart-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.chart-meta small {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.hero-chart c-chart {
+  width: 100%;
+  height: 320px;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
