@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
@@ -8,7 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [ProductCard],
+  imports: [ProductCard, DecimalPipe],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
