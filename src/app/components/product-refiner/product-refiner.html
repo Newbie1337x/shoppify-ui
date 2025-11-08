@@ -1,4 +1,8 @@
-<form [formGroup]="filtersForm" class="refiner-panel" (ngSubmit)="onFiltersSubmit()">
+<form #refinerPanel
+    [formGroup]="filtersForm" 
+    class="refiner-panel" 
+    (ngSubmit)="onFiltersSubmit()"
+  >
   <header class="panel-header">
     <div class="panel-header-content">
       <p class="panel-helper">Ajustá los resultados</p>

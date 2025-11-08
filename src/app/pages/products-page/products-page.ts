@@ -33,7 +33,7 @@ import { PaginationModule } from '@coreui/angular';
 export class ProductsPage {
   //Paginacion
   productsPage!: Page
-  defaultSize:number = 8
+  defaultSize:number = 9
   //Arreglos
   refinedProducts: Product[] = [];
   categories: Category[] = [];
@@ -104,12 +104,7 @@ export class ProductsPage {
   deleteProduct(id: number): void {
     this.productService.delete(id).subscribe({
       next: () => {
-        Swal.fire({
-          title: 'Producto eliminado con éxito!',
-          icon: 'success',
-          confirmButtonText: 'Volver',
-          confirmButtonColor: '#ff7543'
-        });
+        this.swal.success('Producto eliminado con éxito!')
         this.renderRefinedProducts(this.currentFilters); 
       },
       error: (err) => {

@@ -111,6 +111,9 @@
   flex-wrap: wrap;
   gap: clamp(1.5rem, 3vw, 2rem);
   justify-content: center;
+  overflow-x: hidden;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
 }
 
 .category-toolbar {

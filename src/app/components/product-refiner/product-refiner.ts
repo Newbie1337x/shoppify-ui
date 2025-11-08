@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -45,23 +49,38 @@ type RefinerFormValue = {
   styleUrls: ['product-refiner.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProductsRefiner implements OnInit, OnChanges {
+export class ProductsRefiner implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() categories: Category[] = [];
   @Input() initialFilters: ProductParams = {};
   @Output() filterChange = new EventEmitter<ProductParams>();
 
+  @ViewChild('refinerPanel') refiner!: ElementRef<HTMLFormElement>
+  private wheelListener = (event: WheelEvent) => this.scroll(event)
+
   filtersForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.patchFormWithFilters(this.initialFilters);
+    this.patchFormWithFilters(this.initialFilters)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['initialFilters'] && this.filtersForm) {
       this.patchFormWithFilters(this.initialFilters);
+    }
+  }
+
+   ngAfterViewInit(): void {
+    if (this.refiner && this.refiner.nativeElement) {
+      this.refiner.nativeElement.addEventListener('wheel', this.wheelListener, { passive: false });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.refiner && this.refiner.nativeElement) {
+      this.refiner.nativeElement.removeEventListener('wheel', this.wheelListener);
     }
   }
 
@@ -205,5 +224,14 @@ export class ProductsRefiner implements OnInit, OnChanges {
     if (value === undefined || value === null || value === '') return null;
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  private scroll(event: WheelEvent) {
+    event.preventDefault()
+
+    const element = this.refiner.nativeElement as HTMLElement
+    const speed = 40
+
+    element.scrollTop += event.deltaY > 0 ? speed : -speed;
   }
 }
