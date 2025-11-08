@@ -11,10 +11,6 @@
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(226, 232, 240, 0.8) 100%);
   border: 1px solid rgba(148, 163, 184, 0.22);
   box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  max-height: 700px;
 }
 
 .panel-header {
@@ -115,7 +111,7 @@
   background: #ffffff;
 }
 
-.price-range {
+.price-range, .discount-range {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.9rem;
@@ -254,5 +250,14 @@ app-products-refiner .mat-mdc-select-value-text {
   .price-range,
   .sort-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1100px) {
+  .refiner-panel {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    max-height: 700px;
   }
 }
