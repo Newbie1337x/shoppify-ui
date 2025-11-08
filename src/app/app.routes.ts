@@ -14,6 +14,8 @@ import { Help } from './pages/help/help';
 import { publicGuard } from './core/guards/public-guard';
 import { ProductDetail } from './pages/product-detail/product-detail';
 import { Purchases } from './pages/purchases/purchases';
+import { Terms } from './pages/terms/terms';
+import { ConfigPages } from './layouts/config-pages/config-pages';
 
 export const routes: Routes = [
   {
@@ -43,14 +45,17 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    component: Auth,
+    component: ConfigPages,
     canActivate: [authGuard],
     children: [{ path: '', component: Profile }]
   },
   {
     path: 'help',
-    component: Auth,
-    children: [{ path: '', component: Help }]
+    component: ConfigPages,
+    children: [
+      { path: '', component: Help },
+      { path: 'terms', component: Terms }
+    ]
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
