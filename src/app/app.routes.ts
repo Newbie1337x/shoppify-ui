@@ -16,6 +16,7 @@ import { ProductDetail } from './pages/product-detail/product-detail';
 import { Purchases } from './pages/purchases/purchases';
 import { Terms } from './pages/terms/terms';
 import { ConfigPages } from './layouts/config-pages/config-pages';
+import { Privacy } from './pages/privacy/privacy';
 
 export const routes: Routes = [
   {
@@ -54,7 +55,8 @@ export const routes: Routes = [
     component: ConfigPages,
     children: [
       { path: '', component: Help },
-      { path: 'terms', component: Terms }
+      { path: 'terms', component: Terms },
+      { path: 'privacy', component: Privacy},
     ]
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }

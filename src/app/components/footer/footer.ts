@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { StoreService } from '../../services/store-service';
 import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { RouterLink } from "@angular/router";
@@ -10,32 +10,29 @@ import { RouterLink } from "@angular/router";
   styleUrl: './footer.css'
 })
 export class Footer implements OnInit {
-  linkFb: string
-  linkIg: string
-  linkX: string
-  linkYT: string
-  thisYear: string
-  storeAddress :string
-  phone?: string
 
+  storeService = inject(StoreService)
+  linkFb = "https://facebook.com"
+  linkIg = "https://instagram.com"
+  linkX = "https://x.com"
+  linkYT = "https://youtube.com"
+  thisYear = ""
+  storeAddress = "Av. SiempreViva 123, Piso 2, C.P. 1264, Nueva York, CABA"
+  phone = ""
 
-
-
-  constructor(private storeService:StoreService){
-    this.linkFb = "https://facebook.com"
-    this.linkIg = "https://instagram.com"
-    this.linkX = "https://x.com"
-    this.linkYT = "https://youtube.com"
-    this.thisYear = "2025"
-    this.storeAddress = "Av. SiempreViva 123, Piso 2, C.P. 1264, Nueva York, CABA"
-  }
-  ngOnInit(){
+  ngOnInit() {
     this.renderStore()
   }
 
-  renderStore(){
+  renderStore() {
     this.storeService.getStore().subscribe({
-      next:(value) => {
+      next: (value) => {
+        //this.linkFb = value.facebook
+        //this.linkIg = value.instagram
+        //this.linkX = value.x
+        //this.linkYT = value.youtube
+        this.thisYear = new Date().getFullYear().toString()
+        this.storeAddress = value.adress
         this.phone = value.phone
       },
     })
