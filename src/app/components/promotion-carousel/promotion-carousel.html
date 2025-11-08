@@ -1,0 +1,26 @@
+     <div class="hero-media">
+      @if (carouselItems.length) {
+        <c-carousel [interval]="6000">
+          <c-carousel-indicators />
+          <c-carousel-inner>
+            @for (item of carouselItems; track item.title) {
+
+              <c-carousel-item>
+                <img (click)="onClick(item)"
+                  [src]="item.url"
+                  alt="{{ item.title }}"
+                  class="hero-image"
+                  loading="lazy"
+                />
+              </c-carousel-item>
+            }
+          </c-carousel-inner>
+          <c-carousel-control caption="Anterior" direction="prev"></c-carousel-control>
+          <c-carousel-control caption="Siguiente" direction="next"></c-carousel-control>
+        </c-carousel>
+      } @else {
+        <div class="carousel-placeholder">
+          <span>Estamos preparando nuevas ofertas para ti...</span>
+        </div>
+      }
+    </div>

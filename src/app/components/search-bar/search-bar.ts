@@ -85,7 +85,7 @@ export class SearchBar implements OnInit {
   }
 
   selectSuggestion(product: Product): void {
-    this.fg.patchValue({ search: product.name });
+    this.fg.reset()
     this.results = [];
 
     const currentFilters = this.route.snapshot.queryParams;
@@ -93,6 +93,6 @@ export class SearchBar implements OnInit {
 
     delete (filters as any).productOrCategory;
 
-    this.router.navigate(['/products'], { queryParams: filters });
+    this.router.navigate(['/products/details/',product.id] );
   }
 }

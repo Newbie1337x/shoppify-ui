@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrl: './product-detail.css'
 })
 export class ProductDetail implements OnInit {
-  
+
   product!: Product;
   id?: number;
   relatedProducts: Product[] = [];
@@ -23,23 +23,35 @@ export class ProductDetail implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cartService: CartService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id']
-    this.renderProduct();
-    this.loadRelatedProducts();
+    this.route.paramMap.subscribe({
+      next: (params) => {
+        const idParam = params.get('id');
+        const parsedId = idParam ? Number(idParam) : NaN;
+
+        if (!idParam || Number.isNaN(parsedId)) {
+          this.router.navigate(['/']);
+          return;
+        }
+
+        this.id = parsedId;
+        this.renderProduct(parsedId);
+        this.loadRelatedProducts();
+      },
+      error: () => this.router.navigate(['/'])
+    });
   }
 
-  renderProduct(){
-    this.pService.get(this.id!).subscribe({
+  renderProduct(id: number){
+    this.pService.get(id).subscribe({
       next: prod => {
-        this.product = prod
+        this.product = prod;
       },
       error:(e) =>{
-        console.log(e)
-        this.router.navigate(["/"])
+        console.log(e);
+        this.router.navigate(['/']);
       }
     })
   }

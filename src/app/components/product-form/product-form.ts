@@ -1,21 +1,16 @@
-﻿import { Component, HostListener, Input, OnInit, ViewEncapsulation } from '@angular/core';
+﻿import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
-
 import { Category } from '../../models/category'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
-import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { SwalService } from '../../services/swal-service';
 import { CategoryService } from '../../services/category-service';
-import { ProductCard } from '../product-card/product-card';
-import { Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-product-form',
@@ -27,8 +22,6 @@ import { MatDialogRef } from '@angular/material/dialog';
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
-    ImageFallbackDirective,
-    ProductCard
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
@@ -39,55 +32,17 @@ export class ProductForm implements OnInit {
 
   @Input() product?: Product 
   categories?: Category[] 
+  @Output() saved = new EventEmitter<Product>();
   
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private swal: SwalService,
     private categoryService:CategoryService,
-    private router: Router,
-    @Optional() private dialogRef?: MatDialogRef<unknown>
   ) {}
 
   get controls() {
     return this.form.controls
-  }
-
-  get previewProduct(): Product {
-    if (!this.form) {
-      return {
-        id: this.product?.id ?? 0,
-        name: this.product?.name ?? 'Producto sin nombre',
-        price: this.product?.price ?? 0,
-        unitPrice: this.product?.unitPrice ?? this.product?.price ?? 0,
-        stock: this.product?.stock ?? 0,
-        sku: this.product?.sku ?? '',
-        barcode: this.product?.barcode ?? '',
-        description: this.product?.description ?? '',
-        brand: this.product?.brand ?? '',
-        imgURL: this.product?.imgURL ?? '',
-        soldQuantity: this.product?.soldQuantity ?? 0,
-        categories: this.product?.categories ?? [],
-        _links: this.product?._links
-      }
-    }
-
-    const values = this.form.value;
-    return {
-      id: Number(values['id'] ?? this.product?.id ?? 0),
-      name: values['name'] || 'Producto sin nombre',
-      price: (values['price']),
-      unitPrice: values['unitPrice'] ?? values['price'],
-      stock: values['stock'],
-      sku: values['sku'] || '',
-      barcode: values['barcode'] || '',
-      description: values['description'] || '',
-      brand: values['brand'] || '',
-      imgURL: values['imgURL'] || '',
-      soldQuantity: this.product?.soldQuantity ?? 0,
-      categories: Array.isArray(values['categories']) ? values['categories'] : [],
-      _links: this.product?._links
-    }
   }
 
   @HostListener('window:scroll')
@@ -143,10 +98,13 @@ export class ProductForm implements OnInit {
       : this.productService.post(formValues)
 
     request.subscribe({
-      next: () => {
-        this.swal.success(editMode ? "Producto editado con éxito!" : "Producto agregado con éxito!")
+      next: (productResponse: Product) => {
+        this.swal.success(editMode ? "Producto editado con Exito!" : "Producto agregado con Exito!")
           .then(() => {
-            this.form.reset();
+            this.saved.emit(productResponse);
+            if (!editMode) {
+              this.form.reset();
+            }
           });
       },
       error: (err) => {
@@ -172,6 +130,7 @@ export class ProductForm implements OnInit {
 
 
 }
+
 
 
 

@@ -1,10 +1,14 @@
-import { HomeCarousel } from "./homeCarousel";
+import { Carouselitem } from "./carouselitem";
 
 export interface Store {
   id: number;
   storeName: string;
-  adress: string;
+  address: string;
   city: string;
   phone:string
-  homeCarousel?:HomeCarousel
+  twitter: string
+  facebook:string
+  instagram:string
+  youtube:string //Implementar en backend
+  homeCarousel?:Carouselitem[]
 }

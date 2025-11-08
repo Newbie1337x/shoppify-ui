@@ -135,7 +135,6 @@ export class ProductsPage {
       panelClass: 'product-dialog-panel'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.swal.success("El producto se edito correctamente!")
         this.renderRefinedProducts(this.currentFilters); 
       }
     })
@@ -162,7 +161,6 @@ export class ProductsPage {
       panelClass: 'product-dialog-panel'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.swal.success("El producto se agrego correctamente!")
         this.renderRefinedProducts(this.currentFilters);
       }
     })

@@ -13,6 +13,8 @@ import { authGuard } from './core/guards/auth-guard';
 import { Help } from './pages/help/help';
 import { publicGuard } from './core/guards/public-guard';
 import { ProductDetail } from './pages/product-detail/product-detail';
+import { StoreForm } from './components/store-form/store-form';
+import { CarouselForm } from './components/carousel-form/carousel-form';
 import { Purchases } from './pages/purchases/purchases';
 
 export const routes: Routes = [
@@ -23,8 +25,12 @@ export const routes: Routes = [
       { path: 'login', component: Login, canActivate: [publicGuard] },
       { path: 'register', component: Register, canActivate: [publicGuard] },
       { path: 'admin', component: AdminPage },
+      { path:'admin/edit/store',component:StoreForm},
+      { path:'admin/edit/carousel',component:CarouselForm},
+      { path:'admin/edit/carousel/:id',component:CarouselForm},
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
+
     ]
   },
   {

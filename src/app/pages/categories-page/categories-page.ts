@@ -91,7 +91,6 @@ export class CategoriesPage implements OnInit {
       panelClass: 'category-dialog-panel'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.swal.success("La categoría se editó correctamente!")
         this.renderCategoriesWithFilters(this.currentFilters) 
       }
     })
@@ -116,7 +115,6 @@ export class CategoriesPage implements OnInit {
       panelClass: 'category-dialog-panel'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.swal.success("La categoría se agregó correctamente!")
         this.renderCategoriesWithFilters(this.currentFilters) 
       }
     })
