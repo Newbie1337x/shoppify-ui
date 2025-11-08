@@ -10,23 +10,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { SwalService } from '../../services/swal-service';
 import { CategoryService } from '../../services/category-service';
-import { ProductCard } from '../product-card/product-card';
-import { Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
-    ProductCard,
-    DecimalPipe
+    CommonModule,
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
@@ -37,9 +35,6 @@ export class ProductForm implements OnInit {
 
   @Input() product?: Product
   categories?: Category[]
-  
-
-  previewProduct!: Product
 
   constructor(
     private fb: FormBuilder,
@@ -85,8 +80,6 @@ export class ProductForm implements OnInit {
       this.controls['id'].setValue(undefined)
     }
 
-
-
     this.getCategories()
   }
 
@@ -102,7 +95,7 @@ export class ProductForm implements OnInit {
       return;
     }
 
-    const formValues = this.previewProduct;
+    const formValues = this.form.getRawValue() as Product;
     const editMode = !!this.product
 
     const request = editMode
