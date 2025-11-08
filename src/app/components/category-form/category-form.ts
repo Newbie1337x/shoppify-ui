@@ -5,6 +5,7 @@ import { CategoryService } from '../../services/category-service';
 import { SwalService } from '../../services/swal-service';
 import { CommonModule } from '@angular/common'; 
 import {Router } from '@angular/router';
+import { CategoryCard } from '../category-card/category-card';
 
 @Component({
   selector: 'app-category-form',

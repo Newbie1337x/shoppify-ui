@@ -52,13 +52,12 @@ type RefinerFormValue = {
   styleUrls: ['product-refiner.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProductsRefiner implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class ProductsRefiner implements OnInit, OnChanges{
   @Input() categories: Category[] = [];
   @Input() initialFilters: ProductParams = {};
   @Output() filterChange = new EventEmitter<ProductParams>();
 
   @ViewChild('refinerPanel') refiner!: ElementRef<HTMLFormElement>
-  private wheelListener = (event: WheelEvent) => this.scroll(event)
 
   filtersForm!: FormGroup;
 
@@ -72,18 +71,6 @@ export class ProductsRefiner implements OnInit, OnChanges, AfterViewInit, OnDest
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['initialFilters'] && this.filtersForm) {
       this.patchFormWithFilters(this.initialFilters);
-    }
-  }
-
-   ngAfterViewInit(): void {
-    if (this.refiner && this.refiner.nativeElement) {
-      this.refiner.nativeElement.addEventListener('wheel', this.wheelListener, { passive: false });
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.refiner && this.refiner.nativeElement) {
-      this.refiner.nativeElement.removeEventListener('wheel', this.wheelListener);
     }
   }
 
@@ -271,11 +258,23 @@ export class ProductsRefiner implements OnInit, OnChanges, AfterViewInit, OnDest
   }
 
   private scroll(event: WheelEvent) {
-    event.preventDefault()
-
-    const element = this.refiner.nativeElement as HTMLElement
-    const speed = 70
-
-    element.scrollTop += event.deltaY > 0 ? speed : -speed;
+  const element = this.refiner.nativeElement as HTMLElement;
+  
+  if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) {
+    return; 
   }
+
+  const isScrollingDown = event.deltaY > 0;
+  const isAtBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 1;
+  const isAtTop = element.scrollTop <= 1;
+  if ((isScrollingDown && isAtBottom) || (!isScrollingDown && isAtTop)) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  const speed = 40;
+  element.scrollTop += event.deltaY > 0 ? speed : -speed;
+}
 }
