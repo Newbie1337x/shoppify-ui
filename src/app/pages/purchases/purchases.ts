@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { AuditService } from '../../services/audit-service';
 import { SalesParams } from '../../models/filters/salesParams';
 import { FormsModule } from "@angular/forms";
-import { ProductTable } from "../../components/product-table/product-table";
 
 @Component({
   selector: 'app-purchases',
-  imports: [CommonModule, FormsModule, ProductTable],
+  imports: [CommonModule, FormsModule],
   templateUrl: './purchases.html',
   styleUrl: './purchases.css'
 })

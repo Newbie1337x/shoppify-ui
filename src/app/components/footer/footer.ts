@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { StoreService } from '../../services/store-service';
 import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { Store } from '../../models/store';
 
 @Component({
   selector: 'app-footer',
-  imports: [ImageFallbackDirective],
+  imports: [ImageFallbackDirective, RouterLink],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })
@@ -20,7 +20,7 @@ export class Footer implements OnInit {
     this.renderStore()
   }
 
-  renderStore(){
+  renderStore() {
     this.storeService.getStore().subscribe({
       next:(value) => {
         this.store = value
