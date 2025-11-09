@@ -33,7 +33,7 @@ import { PaginationModule } from '@coreui/angular';
 export class ProductsPage {
   //Paginacion
   productsPage!: Page
-  defaultSize:number = 8
+  defaultSize:number = 9
   //Arreglos
   refinedProducts: Product[] = [];
   categories: Category[] = [];
@@ -104,12 +104,7 @@ export class ProductsPage {
   deleteProduct(id: number): void {
     this.productService.delete(id).subscribe({
       next: () => {
-        Swal.fire({
-          title: 'Producto eliminado con éxito!',
-          icon: 'success',
-          confirmButtonText: 'Volver',
-          confirmButtonColor: '#ff7543'
-        });
+        this.swal.success('Producto eliminado con éxito!')
         this.renderRefinedProducts(this.currentFilters); 
       },
       error: (err) => {
@@ -178,6 +173,9 @@ export class ProductsPage {
     if (params['priceBetween']) filters.priceBetween = params['priceBetween'];
     if (params['priceGreater']) filters.priceGreater = Number(params['priceGreater']);
     if (params['priceLess']) filters.priceLess = Number(params['priceLess']);
+    if (params['discountBetween']) filters.discountBetween = params['discountBetween'];
+    if (params['discountGreater']) filters.discountGreater = Number(params['discountGreater']);
+    if (params['discountLess']) filters.discountLess = Number(params['discountLess']);
     if (params['sort']) filters.sort = params['sort'];
 
     return filters;
