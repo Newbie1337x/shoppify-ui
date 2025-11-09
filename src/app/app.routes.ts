@@ -19,6 +19,7 @@ import { Purchases } from './pages/purchases/purchases';
 import { Terms } from './pages/terms/terms';
 import { ConfigPages } from './layouts/config-pages/config-pages';
 import { Privacy } from './pages/privacy/privacy';
+import { CredentialsForm } from './pages/credentials-form/credentials-form';
 
 export const routes: Routes = [
   {
@@ -27,13 +28,13 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: Login, canActivate: [publicGuard] },
       { path: 'register', component: Register, canActivate: [publicGuard] },
-      { path: 'admin', component: AdminPage },
-      { path:'admin/edit/store',component:StoreForm},
-      { path:'admin/edit/carousel',component:CarouselForm},
-      { path:'admin/edit/carousel/:id',component:CarouselForm},
+      { path: 'settings', component:CredentialsForm, canActivate: [authGuard] },
+      { path: 'admin', component: AdminPage, canActivate: [authGuard] },
+      { path: 'admin/edit/store',component:StoreForm},
+      { path: 'admin/edit/carousel',component:CarouselForm},
+      { path: 'admin/edit/carousel/:id',component:CarouselForm},
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
-
     ]
   },
   {

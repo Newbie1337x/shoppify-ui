@@ -4,7 +4,6 @@ import { type ChartData } from 'chart.js';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { ProductService } from '../../services/product-service';
 import { ProductParams } from '../../models/filters/productParams';
-import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-admin-page',
