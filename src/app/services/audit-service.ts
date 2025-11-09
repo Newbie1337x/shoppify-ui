@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base-service';
 import { Transaction } from '../models/transaction';
 import { HttpParams } from '@angular/common/http';
-import { map } from 'rxjs';
 import { SalesParams } from '../models/filters/salesParams';
 
 @Injectable({
@@ -24,8 +23,6 @@ export class AuditService extends BaseService<Transaction> {
       })
     }
 
-    return this.http.get<any>(this.API_URL+"/"+this.endpoint, { params }).pipe(
-      map(response => response._embedded?.saleResponseList || [])
-    )
+    return this.http.get<any>(this.API_URL+"/"+this.endpoint, { params })
   }
 }
