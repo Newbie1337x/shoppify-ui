@@ -111,6 +111,9 @@
   flex-wrap: wrap;
   gap: clamp(1.5rem, 3vw, 2rem);
   justify-content: center;
+  overflow-x: hidden;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
 }
 
 .category-toolbar {
@@ -379,13 +382,77 @@
 }
 
 @media (max-width: 768px) {
-
+  /* Toolbar */
   .categories-toolbar {
     padding: 1rem;
     gap: 1rem;
+    flex-direction: column;      /* Apila los elementos de la toolbar */
+    align-items: stretch;        /* Ocupa todo el ancho disponible */
   }
 
+  /* Admin actions */
   .category-admin-actions {
-    flex-direction: column;
+    flex-direction: column;      /* Apila los botones verticalmente */
+    align-items: stretch;        /* Que ocupen todo el ancho */
+    gap: 0.5rem;                 /* Ajusta el espacio entre botones */
+  }
+
+  .admin-actions--toolbar {
+    flex-direction: column;      /* Apila los elementos de la toolbar de admin */
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  /* Sidebar y main content */
+  .category-content {
+    display: grid;
+    grid-template-columns: 1fr;  /* Solo una columna */
+    gap: 1rem;                   /* Ajusta espacio entre filas */
+  }
+
+  .category-sidebar {
+    position: static;            /* Evita sticky en móvil */
+    width: 100%;
+  }
+
+  .category-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;      /* Asegura que se apilen los elementos dentro del main */
+    gap: 1rem;
+  }
+
+  /* Grid de cards */
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr;  /* Cada card ocupa toda la fila */
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Formularios */
+  .categories-form-panel {
+    width: 100%;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .form-header {
+    text-align: center;
+  }
+
+  /* Botones y toggles */
+  .edit-toggle--compact {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Cualquier card de administración se adapta */
+  .category-card,
+  .category-card--create {
+    width: 100%;                 /* Ocupa todo el ancho */
+    flex: 1 1 auto;
   } 
 }
