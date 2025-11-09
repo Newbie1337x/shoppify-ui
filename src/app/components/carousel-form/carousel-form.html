@@ -1,0 +1,167 @@
+<section class="carousel-editor">
+    <div class="editor-shell">
+        <header class="editor-header">
+            <div class="header-copy">
+                <p class="eyebrow">Gestion del carrusel</p>
+                <h1>Diseña el banner principal de la tienda</h1>
+                <p>
+                    Visualiza tus imagenes destacadas y actualiza la informacion clave sin perder la estetica de
+                    Shoppify.
+                </p>
+
+            </div>
+            <div class="header-meta">
+                <span class="panel-eyebrow">Vista previa</span>
+
+                <app-promotion-carousel  [carouselItems]="carouselItems"></app-promotion-carousel>
+            </div>
+                    <button type="button" class="header-back" (click)="goBack()">Volver</button>
+</header>
+
+        <div class="editor-grid">
+            <article class="panel preview-panel">
+                <div class="panel-header">
+                   <div class="slides-grid-container">
+                        <div class="slides-grid">
+
+                                <button type="button" class="slide-card"
+                                
+                                (click)="createItem()"
+                                 [class.active] = "!selectedItem">
+                                
+                                <div class="thumb" aria-hidden="true">
+                                    <img src="" alt="+" loading="lazy" />
+                                </div>
+                                
+                            </button>
+
+
+                            @for (item of carouselItems; track item.id) {
+                            <button type="button" class="slide-card"
+                                (click)="onPreviewSelect(item)"
+                                [class.active] = "selectedItem?.id == item.id">
+                                <div class="thumb" aria-hidden="true">
+                                    <img [src]="item.url" [alt]="item.title" loading="lazy" />
+                                </div>
+                                <div class="slide-meta">
+                                    <span class="slide-title">{{ item.title }}</span>
+                                    <span class="slide-link">{{ item.href }}</span>
+                                </div>
+                            </button>
+                            }
+                         
+                        </div>
+
+
+                   </div>
+
+                </div>
+
+            </article>
+
+            <article class="panel form-panel">
+                <div class="panel-header">
+                    <div class="panel-header-copy">
+                        @if (selectedItem) {
+                            <span class="panel-eyebrow">Slide seleccionado</span>
+                        } @else {
+                            <span class="panel-eyebrow">Crea tu nuevo banner</span>
+                        }
+                    </div>
+                </div>
+
+                <form class="carousel-form" [formGroup]="fg" (ngSubmit)="onSubmit()">
+                    <div class="form-field">
+                        <label for="title">Titulo destacado</label>
+                        <input
+                          id="title"
+                          type="text"
+                          placeholder="Ej. Envio gratis en todo el pais"
+                          formControlName="title"
+                          [class.is-invalid]="showErrors('title')"
+                        />
+                        @if (showErrors('title')) {
+                          <div class="form-error">
+                            @if (hasError('title', 'required')) {
+                              <span>El titulo es obligatorio.</span>
+                            }
+                            @if (hasError('title', 'minlength')) {
+                              <span>Debe tener al menos 4 caracteres.</span>
+                            }
+                            @if (hasError('title', 'maxlength')) {
+                              <span>No puede superar los 80 caracteres.</span>
+                            }
+                          </div>
+                        }
+                    </div>
+
+                    <div class="form-field">
+                        <label for="href">Ruta de destino</label>
+                        <input
+                          id="href"
+                          type="text"
+                          placeholder="/products/ofertas"
+                          formControlName="href"
+                          [class.is-invalid]="showErrors('href')"
+                        />
+                        @if (showErrors('href')) {
+                          <div class="form-error">
+                            @if (hasError('href', 'required')) {
+                              <span>La ruta de destino es obligatoria.</span>
+                            }
+                            @if (hasError('href', 'pattern')) {
+                              <span>Debe comenzar con "/" o "http(s)://".</span>
+                            }
+                          </div>
+                        }
+                        @if (fg.get('href')?.hasError('urlNoExiste') && fg.get('href')?.touched) {
+                        <small>Nigasso.</small>
+                        }
+                        <small>Define a donde se dirige el usuario al hacer click.</small>
+
+                    </div>
+
+                    <div class="form-field">
+                        <label for="url">Imagen (URL)</label>
+                        <input
+                          id="url"
+                          type="url"
+                          formControlName="url"
+                          placeholder="https://cdn.tu-tienda.com/hero.jpg"
+                          [class.is-invalid]="showErrors('url')"
+                        />
+                        @if (showErrors('url')) {
+                          <div class="form-error">
+                            @if (hasError('url', 'required')) {
+                              <span>La URL de la imagen es obligatoria.</span>
+                            }
+                            @if (hasError('url', 'pattern')) {
+                              <span>Debe ser una URL valida que comience con http(s)://</span>
+                            }
+                          </div>
+                        }
+                        <small>Utiliza imagenes horizontales (1920x600) para un mejor resultado.</small>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn primary" type="submit"
+                            [disabled]="fg.invalid || !fg.dirty">
+                            Guardar
+                        </button>
+                        <button class="btn ghost" type="button" (click)="resetCurrent()" [disabled]="!fg.dirty">
+                            Restablecer
+                        </button>
+                        <button class="btn danger" type="button" (click)="onDelete()"
+                            [disabled]="!selectedItem">Eliminar
+                        </button>
+                    </div>
+
+                </form>
+            </article>
+        </div>
+
+    </div>
+</section>
+
+

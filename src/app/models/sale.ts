@@ -1,9 +1,16 @@
-import { Transaction } from "./transaction";
-
-export interface Sale {
-  id: number;
+export interface SaleRequest {
   clientId: number;
-  clientDni: number;
-  transaction: Transaction;
-  description:string;
+  transaction: TransactionRequest;
+}
+
+export interface TransactionRequest {
+  paymentMethod: string;
+  description: string;
+  detailTransactions: DetailTransactionRequest[];
+}
+
+export interface DetailTransactionRequest {
+  productID: number;
+  quantity: number;
+  subtotal: number;
 }

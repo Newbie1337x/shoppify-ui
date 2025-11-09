@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { Category } from '../../models/category';
 import { ProductParams } from '../../models/filters/productParams';
+import { CardBodyComponent, CardComponent } from '@coreui/angular';
 
 type RefinerFormValue = {
   name: string;
@@ -46,7 +47,9 @@ type RefinerFormValue = {
     MatSelectModule,
     MatInputModule,
     MatOptionModule,
-    MatButtonModule
+    MatButtonModule,
+    CardComponent,
+    CardBodyComponent
   ],
   templateUrl: 'product-refiner.html',
   styleUrls: ['product-refiner.css'],

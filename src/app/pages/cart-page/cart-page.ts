@@ -29,8 +29,8 @@ export class CartPage implements OnInit {
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
       paymentMethod: ["CASH", Validators.required],
-      type: ["SALE", Validators.required],
-      storeName: ["", Validators.required],
+      type: ["SALE"],
+      storeName: [""],
       description: [""]
     })
   }
@@ -101,15 +101,31 @@ export class CartPage implements OnInit {
 
   onSubmit() {
     if (this.checkoutForm.valid && this.cartItems().length) {
-      const payload = this.cService.prepareTransaction(this.checkoutForm.value);
-      console.log("Payload a enviar :", payload);
+      const user = this.aService.user()
 
-      this.tService.post(payload).subscribe({
+      if (!user) {
+        Swal.fire({
+          icon: "warning",
+          title: "Usuario no logueado",
+          text: "Necesitás iniciar sesión antes de completar la compra",
+          confirmButtonText: "Iniciar sesión"
+        }).then(() => {
+          this.router.navigate(['/auth/login'])
+        })
+        return
+      }
+
+      const payload = this.cService.prepareSaleRequest(this.checkoutForm.value, user.id)
+
+      if (!payload) return
+      console.log("Payload a enviar :", payload)
+
+      this.tService.postSale(payload).subscribe({
         next: (transaction) => {
-          console.log("Transacción lista: ", transaction);
-          this.selectedItems.set(new Set());
-          this.cService.clearCart();
-          this.checkoutForm.reset();
+          console.log("Transacción lista: ", transaction)
+          this.selectedItems.set(new Set())
+          this.cService.clearCart()
+          this.checkoutForm.reset()
 
           Swal.fire({
             icon: "success",
@@ -126,21 +142,21 @@ export class CartPage implements OnInit {
               reverseButtons: true
             }).then((result) => {
               if (result.isConfirmed) {
-                this.router.navigate(['/compras']);
+                this.router.navigate(['/purchases'])
               }
-            });
-          });
+            })
+          })
         },
         error: (e) => {
-          console.error("Error preparando transacción", e);
+          console.error("Error preparando transacción", e)
           Swal.fire({
             icon: "error",
             title: "Oops..",
             text: "Hubo un error al realizar la transacción",
             footer: e
-          });
+          })
         }
-      });
+      })
     }
   }
 }

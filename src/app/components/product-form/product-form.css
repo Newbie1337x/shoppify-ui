@@ -359,3 +359,19 @@ fieldset:has(#image-input),
     font-size: 0.95rem;
   }
 }
+#product-form .discount-preview {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #2c2c2c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+#product-form .discount-preview strong {
+    color: #1b5e20;
+    font-size: 1rem;
+}

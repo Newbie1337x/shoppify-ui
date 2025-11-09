@@ -13,6 +13,12 @@ import { authGuard } from './core/guards/auth-guard';
 import { Help } from './pages/help/help';
 import { publicGuard } from './core/guards/public-guard';
 import { ProductDetail } from './pages/product-detail/product-detail';
+import { StoreForm } from './components/store-form/store-form';
+import { CarouselForm } from './components/carousel-form/carousel-form';
+import { Purchases } from './pages/purchases/purchases';
+import { Terms } from './pages/terms/terms';
+import { ConfigPages } from './layouts/config-pages/config-pages';
+import { Privacy } from './pages/privacy/privacy';
 
 export const routes: Routes = [
   {
@@ -22,8 +28,12 @@ export const routes: Routes = [
       { path: 'login', component: Login, canActivate: [publicGuard] },
       { path: 'register', component: Register, canActivate: [publicGuard] },
       { path: 'admin', component: AdminPage },
+      { path:'admin/edit/store',component:StoreForm},
+      { path:'admin/edit/carousel',component:CarouselForm},
+      { path:'admin/edit/carousel/:id',component:CarouselForm},
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
+
     ]
   },
   {
@@ -36,19 +46,24 @@ export const routes: Routes = [
       { path: 'products/search/:q', component: ProductsPage },
       { path: 'categories', component: CategoriesPage },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
+      { path: 'purchases', component: Purchases, canActivate: [authGuard] },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
   {
     path: 'profile',
-    component: Auth,
+    component: ConfigPages,
     canActivate: [authGuard],
     children: [{ path: '', component: Profile }]
   },
   {
     path: 'help',
-    component: Auth,
-    children: [{ path: '', component: Help }]
+    component: ConfigPages,
+    children: [
+      { path: '', component: Help },
+      { path: 'terms', component: Terms },
+      { path: 'privacy', component: Privacy},
+    ]
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

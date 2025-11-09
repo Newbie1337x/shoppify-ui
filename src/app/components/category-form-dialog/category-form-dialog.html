@@ -1,7 +1,8 @@
 <section class="category-dialog">
-    <article class="dialog-body">
-        <app-category-form [category]="data.category"></app-category-form>
-    </article>
+    <app-category-form 
+        [category]="data.category"
+        (saved)="close($event)">
+    </app-category-form>
 
     <article class="dialog-footer">
         <button class="close-button" (click)="close()">Cerrar</button>

@@ -1,7 +1,8 @@
 <section class="product-dialog">
-    <article class="dialog-body">
-        <app-product-form [product]="data.product"></app-product-form>
-    </article>
+    <app-product-form 
+        [product]="data.product"
+        (saved)="close($event)">
+    </app-product-form>
 
     <article class="dialog-footer">
         <button class="close-button" (click)="close()">Cerrar</button>

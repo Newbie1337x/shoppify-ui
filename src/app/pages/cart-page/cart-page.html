@@ -45,30 +45,31 @@
     </div>
     <div class="cart-right-column">
 
-      <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+      <form [formGroup]="checkoutForm" class="checkout-form">
         <div class="form-grid">
           <label>
             Método de pago:
             <select formControlName="paymentMethod" required>
               <option value="CASH">Efectivo</option>
-              <option value="CARD">Tarjeta</option>
-              <option value="TRANSFER">Transferencia</option>
+              <option value="CREDIT">Tarjeta</option>
+              <option value="DEBIT">Debito</option>
+              <option value="DIGITAL">Pago digital</option>
             </select>
           </label>
 
           @if (permits.includes("ADMIN")) {
           <label>
             Tipo de transacción:
-            <select formControlName="type" required>
+            <select formControlName="type" required defaultValue="SALE">
               <option value="SALE">Venta</option>
-              <option value="PURCHASE">Compra</option>
+              <!-- <option value="PURCHASE">Compra</option> -->
             </select>
           </label>
 
-          <label>
+          <!-- <label>
             Tienda:
-            <input type="text" formControlName="storeName" required placeholder="Nombre de la tienda">
-          </label>
+            <input type="text" formControlName="storeName" placeholder="Nombre de la tienda">
+          </label> -->
 
           <label class="description">
             Descripción:
@@ -89,7 +90,7 @@
 
   </div>
 
-  <button type="submit" form="checkout-form" [disabled]="checkoutForm.invalid || cartItems().length === 0"
+  <button form="checkout-form" (click)="onSubmit()" [disabled]="checkoutForm.invalid || cartItems().length === 0"
     class="checkout-btn">
     Finalizar transacción
   </button>

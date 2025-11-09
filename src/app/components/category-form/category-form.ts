@@ -1,11 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
 import { SwalService } from '../../services/swal-service';
 import { CommonModule } from '@angular/common'; 
-import {Router } from '@angular/router';
-import { CategoryCard } from '../category-card/category-card';
 
 @Component({
   selector: 'app-category-form',
@@ -18,13 +16,14 @@ export class CategoryForm implements OnInit {
   @Input() category?: Category
   
   form!: FormGroup
-  previewCategory!: Category 
+
+  @Input() category?: Category 
+  @Output() saved = new EventEmitter<Category>();
 
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private swal: SwalService,
-    private router:Router
   ) {}
 
   get controls() {
@@ -81,11 +80,13 @@ export class CategoryForm implements OnInit {
       : this.categoryService.post(formValues)
 
     request.subscribe({
-      next: () => {
+      next: (categoryResponse: Category) => {
         this.swal.success(editMode ? "Categoría editada con éxito!" : "Categoría agregada con éxito!")
           .then(() => {
-            this.form.reset();
-            this.router.navigate(["categories"]);
+            this.saved.emit(categoryResponse);
+            if (!editMode) {
+              this.form.reset();
+            }
           });
       },
       error: (err) => {

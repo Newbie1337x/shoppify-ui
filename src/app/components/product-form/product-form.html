@@ -104,6 +104,20 @@
                 <h5>El descuento debe estar entre 0 y 100</h5>
             }
         }
+
+
+        @if(((+controls['price'].value || 0) > 0) && ((+controls['discountPercentage'].value || 0) > 0)) {
+            <div class="discount-preview">
+                <span>Precio con descuento</span>
+                <strong>
+                    ${{
+                        (+controls['price'].value || 0) -
+                        ((+controls['price'].value || 0) * (+controls['discountPercentage'].value || 0) / 100)
+                        | number:'1.2-2'
+                    }}
+                </strong>
+            </div>
+        }
     </fieldset>
 
 
@@ -120,6 +134,8 @@
             }
         }
     </fieldset>
+
+
 
     <!-- Image -->
     <fieldset>
