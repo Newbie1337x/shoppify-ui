@@ -50,7 +50,6 @@ export class ProductForm implements OnInit {
 
 
 
-
   @HostListener('window:scroll')
   onScroll() {
     const backdrop = document.querySelector('.cdk-overlay-backdrop');
@@ -81,11 +80,6 @@ export class ProductForm implements OnInit {
     } else {
       this.controls['id'].setValue(undefined)
     }
-    this.updatePreview();
-
-    this.form.valueChanges.subscribe(() => {
-      this.updatePreview();
-    });
 
     this.getCategories()
   }
@@ -139,3 +133,6 @@ export class ProductForm implements OnInit {
     })
   }
 }
+
+
+

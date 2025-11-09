@@ -17,8 +17,8 @@
 }
 
 .collection-table-head td {
-  padding: 0.7vw 0.7vw;
-  font-size: clamp(5px, 1vw, 10px);
+  padding: 0.5vw 2vw;
+  font-size: 0.6rem;
   font-weight: bold;
 }
 
@@ -27,17 +27,13 @@
   text-align: center;
 }
 
-.product-row {
-  background-color: #fefefe;
-}
-
 .product-row td {
-  padding: 0.5vw 0.5vw;
+  padding: 0.3em 0.5em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: background-color 0.2s ease;
-  font-size: clamp(5px, 1vw, 10px);
+  font-size: 0.6rem;
 }
 
 .product-row:hover {
@@ -54,20 +50,21 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: clamp(5px, 1vw, 10px) clamp(10px, 2vw, 15px);
+  padding: 0.6rem 1.2rem;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.85);
   color: #0f172a;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  font-size: clamp(5px, 1vw, 10px);
+  font-size: 0.6rem;
 }
 
 .action-button__icon {
-  width: clamp(5px, 1vw, 10px);
-  height: clamp(5px, 1vw, 10px);
+  width: 18px;
+  height: 18px;
 }
 
 .action-button:hover,

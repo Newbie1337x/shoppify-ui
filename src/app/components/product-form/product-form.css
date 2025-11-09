@@ -5,26 +5,8 @@
   padding: 1rem 1.5rem;
 }
 
-.form-wrapper {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;  
-}
-
-.product-preview {
-  display: block;
-  margin-top: 4rem;
-  background: rgba(226, 232, 240, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.22);
-  border-radius: 32px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
-  padding: 1rem;
-}
-
 #product-form {
   display: grid;
-  width: 100%;
   max-width: 1100px;
   padding: 3rem;
   border-radius: 32px;
@@ -32,7 +14,7 @@
   border: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(12px);
   box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
   gap: 1.5rem;
 }
 
@@ -43,6 +25,7 @@ fieldset {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 10px;
 }
 
 fieldset label {
@@ -340,19 +323,11 @@ fieldset:has(#image-input),
   :host {
     padding: 2rem 1rem;
   }
-
-  .product-preview {
-    display: none !important;
-  }
   
   #product-form {
     padding: 2rem 1.5rem;
     border-radius: 24px;
-    grid-template-columns: 1 / -1;
-  }
-
-  #product-form fieldset {
-    grid-column: 1 / -1; 
+    grid-template-columns: 1fr;
   }
   
   #submit-button {

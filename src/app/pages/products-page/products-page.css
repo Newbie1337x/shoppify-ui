@@ -162,6 +162,8 @@
   display: flex;
   flex-direction: column;
   gap: clamp(1.5rem, 3vw, 2.4rem);
+  align-items: stretch; 
+  width: 100%;
 }
 
 .products-grid {
@@ -169,9 +171,6 @@
   flex-wrap: wrap;
   gap: clamp(1.5rem, 3vw, 2rem);
   justify-content: center;
-  overflow-x: hidden;
-  padding-top: 1rem;
-  padding-bottom: 5rem;
 }
 
 .products-toolbar {
@@ -224,7 +223,6 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  width: 90%;
   border-style: dashed;
   border-width: 2px;
   border-color: rgba(79, 70, 229, 0.35);
@@ -266,12 +264,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(2rem, 5vw, 3.5rem);
-  height: clamp(2rem, 5vw, 3.5rem);
+  width: clamp(3rem, 5vw, 3.5rem);
+  height: clamp(3rem, 5vw, 3.5rem);
   border-radius: 50%;
   background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
   color: #ffffff;
-  font-size: clamp(1rem, 3.5vw, 2.3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem);
   font-weight: 600;
   box-shadow: 0 18px 36px rgba(79, 70, 229, 0.25);
 }
@@ -284,11 +282,11 @@
 }
 
 .create-product-button__title {
-  font-size: clamp(10px, 1vw, 20px);
+  font-size: 1.05rem;
 }
 
 .create-product-button__helper {
-  font-size: clamp(10px, 1vw, 20px);
+  font-size: 0.95rem;
   font-weight: 500;
   color: #4f46e5;
 }
@@ -332,8 +330,8 @@
 }
 
 .admin-action svg {
-  width: clamp(1px, 1vw, 18px);
-  height: clamp(1px, 1vw, 18px);
+  width: 18px;
+  height: 18px;
 }
 
 .admin-action--delete {

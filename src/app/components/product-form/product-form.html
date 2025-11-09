@@ -1,15 +1,12 @@
-<section class="form-wrapper">
-    <article class="product-preview">
-             <app-product-card 
-             [product]="previewProduct"  
-             [isMostrarCuotas]="true" 
-             [isMostrarDescuento]="true" 
-             [isMostrarStock]="true" 
-             [isNavegar]="false">
-            </app-product-card>
-    </article>
+<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
+    <!-- ID -->
+    @if (this.product) {
+    <fieldset>
+        <label>ID</label>
+        <input type="text" id="id-input" formControlName="id" [disabled]="true" readonly>
+    </fieldset>
+    }
 
-    <form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
     <!-- Name -->
     <fieldset>
         <label for="name-input">Nombre*</label>
@@ -180,5 +177,4 @@
     </fieldset>
 
     <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid">
-</form>
-</section>
+        
