@@ -70,12 +70,21 @@ export class Register implements OnInit {
 
     const register: RegisterPayload = {
       user: { firstName, lastName, dni, phone, email },
-      credentials: { email, password, username }
+      credentials: { email, password }
     };
 
     this.authService.register(register).subscribe({
-      next: () => {
-        alert("registrado de forma exitosa.")
+      next: (res) => {
+        Swal.fire({
+          title: 'Registro exitoso 🎉',
+          text: 'Tu cuenta fue creada correctamente.',
+          icon: 'success',
+          background: '#f7f7f8',
+          color: 'black'
+        })
+
+        this.authService.setSession(res.token, Array.from(res.permits), res.user)
+        this.router.navigate(['/'])
       },
       error(err) {
         Swal.fire({
