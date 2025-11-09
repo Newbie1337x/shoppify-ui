@@ -1,30 +1,33 @@
-﻿import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+﻿﻿import { Component, HostListener, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
+
 import { Category } from '../../models/category';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { SwalService } from '../../services/swal-service';
 import { CategoryService } from '../../services/category-service';
-import { CommonModule } from '@angular/common';
-
+import { ProductCard } from '../product-card/product-card';
+import { Optional } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
     MatOptionModule,
-    CommonModule,
+    ProductCard,
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
@@ -34,20 +37,65 @@ export class ProductForm implements OnInit {
   form!: FormGroup
 
   @Input() product?: Product
-  @Output() saved = new EventEmitter<Product>()
   categories?: Category[]
+  
+  previewProduct!: Product
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private swal: SwalService,
-    private categoryService:CategoryService,
+    private categoryService: CategoryService,
+    @Optional() private dialogRef?: MatDialogRef<any>
   ) {}
 
   get controls() {
     return this.form.controls
   }
 
+  private updatePreview(): void {
+    if (!this.form) {
+
+      this.previewProduct = {
+        id: this.product?.id ?? 0,
+        name: this.product?.name ?? 'Producto sin nombre',
+        price: this.product?.price ?? 0,
+        unitPrice: this.product?.unitPrice ?? this.product?.price ?? 0,
+        stock: this.product?.stock ?? 0,
+        sku: this.product?.sku ?? '',
+        barcode: this.product?.barcode ?? '',
+        description: this.product?.description ?? '',
+        brand: this.product?.brand ?? '',
+        discountPercentage: this.product?.discountPercentage ?? 0,
+        priceWithDiscount: this.product?.priceWithDiscount ?? this.product?.price ?? 0,
+        imgURL: this.product?.imgURL ?? '',
+        soldQuantity: this.product?.soldQuantity ?? 0,
+        categories: this.product?.categories ?? [],
+        _links: this.product?._links
+      };
+      return;
+    }
+
+
+    const values = this.form.value;
+    this.previewProduct = {
+      id: Number(values['id'] ?? this.product?.id ?? 0),
+      name: values['name'] || 'Producto sin nombre',
+      price: (values['price']),
+      unitPrice: values['unitPrice'] ?? values['price'],
+      stock: values['stock'],
+      sku: values['sku'] || '',
+      barcode: values['barcode'] || '',
+      description: values['description'] || '',
+      discountPercentage: values['discountPercentage'] ?? 0,
+      priceWithDiscount: this.getDiscountedPrice(values['price'], values['discountPercentage']),
+      brand: values['brand'] || '',
+      imgURL: values['imgURL'] || '',
+      soldQuantity: this.product?.soldQuantity ?? 0,
+      categories: Array.isArray(values['categories']) ? values['categories'] : [],
+      _links: this.product?._links
+    };
+  }
 
 
   @HostListener('window:scroll')
@@ -80,6 +128,11 @@ export class ProductForm implements OnInit {
     } else {
       this.controls['id'].setValue(undefined)
     }
+    this.updatePreview();
+
+    this.form.valueChanges.subscribe(() => {
+      this.updatePreview();
+    });
 
     this.getCategories()
   }
@@ -95,8 +148,7 @@ export class ProductForm implements OnInit {
       this.form.markAllAsDirty()
       return;
     }
-
-    const formValues = this.form.getRawValue() as Product;
+    const formValues = this.previewProduct;
     const editMode = !!this.product
 
     const request = editMode
@@ -104,13 +156,13 @@ export class ProductForm implements OnInit {
       : this.productService.post(formValues)
 
     request.subscribe({
-      next: (productResponse: Product) => {
-        this.swal.success(editMode ? "Producto editado con Exito!" : "Producto agregado con Exito!")
+      next: () => {
+        this.swal.success(editMode ? "Producto editado con éxito!" : "Producto agregado con éxito!")
           .then(() => {
-            this.saved.emit(productResponse)
             if (!editMode) {
               this.form.reset();
             }
+            this.dialogRef?.close(true);
           });
       },
       error: (err) => {
@@ -121,6 +173,24 @@ export class ProductForm implements OnInit {
       }
     });
   }
+
+  private getDiscountedPrice(priceValue: unknown, discountValue: unknown): number {
+    const price = Number(priceValue ?? 0);
+    const discount = Number(discountValue ?? 0);
+
+    if (!isFinite(price) || price <= 0) {
+      return price > 0 ? price : 0;
+    }
+    const discountDecimal = discount / 100;
+
+    if (!isFinite(discountDecimal) || discountDecimal <= 0) {
+      return price;
+    }
+
+    const discounted = price - (price * discountDecimal);
+    return discounted > 0 ? discounted : 0;
+  }
+
 
   getCategories() {
     this.categoryService.getList().subscribe({
@@ -133,6 +203,3 @@ export class ProductForm implements OnInit {
     })
   }
 }
-
-
-

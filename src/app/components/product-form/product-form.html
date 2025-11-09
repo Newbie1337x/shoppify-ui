@@ -1,12 +1,15 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
-    <!-- ID -->
-    @if (this.product) {
-    <fieldset>
-        <label>ID</label>
-        <input type="text" id="id-input" formControlName="id" [disabled]="true" readonly>
-    </fieldset>
-    }
+<section class="form-wrapper">
+    <article class="product-preview">
+             <app-product-card 
+             [product]="previewProduct"  
+             [isMostrarCuotas]="true" 
+             [isMostrarDescuento]="true" 
+             [isMostrarStock]="true" 
+             [isNavegar]="false">
+            </app-product-card>
+    </article>
 
+    <form [formGroup]="form" (ngSubmit)="submitForm()" id="product-form" >
     <!-- Name -->
     <fieldset>
         <label for="name-input">Nombre*</label>
@@ -101,20 +104,6 @@
                 <h5>El descuento debe estar entre 0 y 100</h5>
             }
         }
-
-
-        @if(((+controls['price'].value || 0) > 0) && ((+controls['discountPercentage'].value || 0) > 0)) {
-            <div class="discount-preview">
-                <span>Precio con descuento</span>
-                <strong>
-                    ${{
-                        (+controls['price'].value || 0) -
-                        ((+controls['price'].value || 0) * (+controls['discountPercentage'].value || 0) / 100)
-                        | number:'1.2-2'
-                    }}
-                </strong>
-            </div>
-        }
     </fieldset>
 
 
@@ -131,8 +120,6 @@
             }
         }
     </fieldset>
-
-
 
     <!-- Image -->
     <fieldset>
@@ -177,4 +164,5 @@
     </fieldset>
 
     <input type="submit" id="submit-button" value="Enviar" [disabled]="form.invalid">
-        
+</form>
+</section>

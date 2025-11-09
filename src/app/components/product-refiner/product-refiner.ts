@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,16 +22,18 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { Category } from '../../models/category';
 import { ProductParams } from '../../models/filters/productParams';
-import { CardBodyComponent, CardComponent } from '@coreui/angular';
 
 type RefinerFormValue = {
   name: string;
   brand: string;
+  discountMin: string;
+  discountMax: string
   priceMin: string;
   priceMax: string;
   category: string[];
   nameSort: string;
   priceSort: string;
+  discountSort: string;
 };
 
 @Component({
@@ -40,26 +46,26 @@ type RefinerFormValue = {
     MatSelectModule,
     MatInputModule,
     MatOptionModule,
-    MatButtonModule,
-    CardComponent,
-    CardBodyComponent
+    MatButtonModule
   ],
   templateUrl: 'product-refiner.html',
   styleUrls: ['product-refiner.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProductsRefiner implements OnInit, OnChanges {
+export class ProductsRefiner implements OnInit, OnChanges{
   @Input() categories: Category[] = [];
   @Input() initialFilters: ProductParams = {};
   @Output() filterChange = new EventEmitter<ProductParams>();
 
+  @ViewChild('refinerPanel') refiner!: ElementRef<HTMLFormElement>
+
   filtersForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.patchFormWithFilters(this.initialFilters);
+    this.patchFormWithFilters(this.initialFilters)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,11 +82,14 @@ export class ProductsRefiner implements OnInit, OnChanges {
     this.filtersForm.reset({
       name: '',
       brand: '',
+      discountMin: '',
+      discountMax: '',
       priceMin: '',
       priceMax: '',
       category: [],
       nameSort: '',
-      priceSort: ''
+      priceSort: '',
+      discountSort: ''
     });
     this.filterChange.emit({});
   }
@@ -91,21 +100,27 @@ export class ProductsRefiner implements OnInit, OnChanges {
     const {
       name,
       brand,
+      discountMin,
+      discountMax,
       priceMin,
       priceMax,
       category,
       nameSort,
-      priceSort
+      priceSort,
+      discountSort
     } = this.filtersForm.getRawValue() as RefinerFormValue;
 
     return Boolean(
       this.cleanString(name) ||
       this.cleanString(brand) ||
+      this.cleanString(discountMin) ||
+      this.cleanString(discountMax) ||
       this.cleanString(priceMin) ||
       this.cleanString(priceMax) ||
       (Array.isArray(category) && category.length) ||
       this.cleanString(nameSort) ||
-      this.cleanString(priceSort)
+      this.cleanString(priceSort) ||
+      this.cleanString(discountSort)
     );
   }
 
@@ -113,11 +128,14 @@ export class ProductsRefiner implements OnInit, OnChanges {
     this.filtersForm = this.fb.group({
       name: [''],
       brand: [''],
+      discountMin: ['', [Validators.pattern('^[0-9]*$')]],
+      discountMax: ['', [Validators.pattern('^[0-9]*$')]],
       priceMin: ['', [Validators.pattern('^[0-9]*$')]],
       priceMax: ['', [Validators.pattern('^[0-9]*$')]],
       category: [[]],
       nameSort: [''],
-      priceSort: ['']
+      priceSort: [''],
+      discountSort: ['']
     });
   }
 
@@ -125,11 +143,14 @@ export class ProductsRefiner implements OnInit, OnChanges {
     const {
       name,
       brand,
+      discountMin,
+      discountMax,
       priceMin,
       priceMax,
       category,
       nameSort,
-      priceSort
+      priceSort,
+      discountSort
     } = this.filtersForm.getRawValue() as RefinerFormValue;
 
     const params: ProductParams = {};
@@ -143,24 +164,36 @@ export class ProductsRefiner implements OnInit, OnChanges {
       params.categories = category.join(',');
     }
 
-    const min = this.toNumber(priceMin);
-    const max = this.toNumber(priceMax);
+    const parsedPriceMin = this.toNumber(priceMin);
+    const parsedPriceMax = this.toNumber(priceMax);
+    if (parsedPriceMin !== null && parsedPriceMax !== null) {
+      params.priceBetween = `${Math.min(parsedPriceMin, parsedPriceMax)}, ${Math.max(parsedPriceMin, parsedPriceMax)}`;
+    } else if (parsedPriceMin !== null) {
+      params.priceGreater = parsedPriceMin;
+    } else if (parsedPriceMax !== null) {
+      params.priceLess = parsedPriceMax;
+    }
 
-    if (min !== null && max !== null) {
-      params.priceBetween = `${Math.min(min, max)},${Math.max(min, max)}`;
-    } else if (min !== null) {
-      params.priceGreater = min;
-    } else if (max !== null) {
-      params.priceLess = max;
+    const parsedDiscountMin = this.toNumber(discountMin);
+    const parsedDiscountMax = this.toNumber(discountMax);
+    if (parsedDiscountMin !== null && parsedDiscountMax !== null) {
+      params.discountBetween = `${Math.min(parsedDiscountMin, parsedDiscountMax)}, ${Math.max(parsedDiscountMin, parsedDiscountMax)}`;
+    } else if (parsedDiscountMin !== null) {
+      params.discountGreater = parsedDiscountMin;
+    } else if (parsedDiscountMax !== null) {
+      params.discountLess = parsedDiscountMax;
     }
 
     const trimmedNameSort = this.cleanString(nameSort);
     const trimmedPriceSort = this.cleanString(priceSort);
+    const trimmedDiscountSort = this.cleanString(discountSort)
 
     if (trimmedNameSort) {
       params.sort = `name,${trimmedNameSort}`;
     } else if (trimmedPriceSort) {
       params.sort = `price,${trimmedPriceSort}`;
+    } else if (trimmedDiscountSort) {
+      params.sort = `discountPercentage,${trimmedDiscountSort}`
     }
 
     return params;
@@ -172,9 +205,12 @@ export class ProductsRefiner implements OnInit, OnChanges {
       brand: filters.brand ?? '',
       priceMin: '',
       priceMax: '',
+      discountMin: '',
+      discountMax: '',
       category: filters.categories ? filters.categories.split(',') : [],
       nameSort: '',
-      priceSort: ''
+      priceSort: '',
+      discountSort: '',
     };
 
     if (filters.priceBetween) {
@@ -186,12 +222,23 @@ export class ProductsRefiner implements OnInit, OnChanges {
       if (filters.priceLess !== undefined) patchValue.priceMax = `${filters.priceLess ?? ''}`;
     }
 
+    if (filters.discountBetween) {
+      const [min, max] = filters.discountBetween.split(',').map(v => v.trim());
+      patchValue.discountMin = min ?? '';
+      patchValue.discountMax = max ?? '';
+    } else {
+      if (filters.discountGreater !== undefined) patchValue.discountMin = `${filters.discountGreater ?? ''}`;
+      if (filters.discountLess !== undefined) patchValue.discountMax = `${filters.discountLess ?? ''}`;
+    }
+
     if (filters.sort) {
       const [field, direction] = filters.sort.split(',');
       if (field === 'name') {
         patchValue.nameSort = direction ?? '';
       } else if (field === 'price') {
         patchValue.priceSort = direction ?? '';
+      } else if (field === 'discountPercentage') {
+        patchValue.discountSort = direction ?? '';
       }
     }
 
@@ -209,4 +256,25 @@ export class ProductsRefiner implements OnInit, OnChanges {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : null;
   }
+
+  private scroll(event: WheelEvent) {
+  const element = this.refiner.nativeElement as HTMLElement;
+  
+  if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) {
+    return; 
+  }
+
+  const isScrollingDown = event.deltaY > 0;
+  const isAtBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 1;
+  const isAtTop = element.scrollTop <= 1;
+  if ((isScrollingDown && isAtBottom) || (!isScrollingDown && isAtTop)) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  const speed = 40;
+  element.scrollTop += event.deltaY > 0 ? speed : -speed;
+}
 }
