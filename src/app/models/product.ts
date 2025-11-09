@@ -7,10 +7,15 @@ export interface Product extends HalResource{
   unitPrice: number;
   stock: number;
   sku: string;
+  discountPercentage : number
+  priceWithDiscount?: number 
   barcode: string;
   description: string;
   brand: string;
   imgURL: string;
   soldQuantity:number;
   categories: string[];
+
 }
+
+

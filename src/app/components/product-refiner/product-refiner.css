@@ -2,6 +2,25 @@
   display: block;
 }
 
+:host ::ng-deep c-card.refiner-card,
+:host ::ng-deep c-card.refiner-card .card,
+:host ::ng-deep c-card.refiner-card .card-body,
+:host ::ng-deep c-card.refiner-card .collapse-horizontal,
+:host ::ng-deep c-card.refiner-card .collapse {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.refiner-card-body {
+  width: 320px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
 .refiner-panel {
   display: flex;
   flex-direction: column;
@@ -111,7 +130,7 @@
   background: #ffffff;
 }
 
-.price-range {
+.price-range, .discount-range {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.9rem;
@@ -122,6 +141,11 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 0.9rem;
 }
+
+.sort-grid .field:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
 
 .panel-footer {
   display: flex;
@@ -250,5 +274,18 @@ app-products-refiner .mat-mdc-select-value-text {
   .price-range,
   .sort-grid {
     grid-template-columns: 1fr;
+  }
+
+  .refiner-card-body {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .refiner-panel {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    max-height: 700px;
   }
 }

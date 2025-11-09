@@ -5,8 +5,26 @@
   padding: 1rem 1.5rem;
 }
 
+.form-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;  
+}
+
+.product-preview {
+  display: block;
+  margin-top: 4rem;
+  background: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 32px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+  padding: 1rem;
+}
+
 #product-form {
   display: grid;
+  width: 100%;
   max-width: 1100px;
   padding: 3rem;
   border-radius: 32px;
@@ -14,7 +32,7 @@
   border: 1px solid rgba(148, 163, 184, 0.22);
   backdrop-filter: blur(12px);
   box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
-  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 1.5rem;
 }
 
@@ -25,7 +43,6 @@ fieldset {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-width: 10px;
 }
 
 fieldset label {
@@ -119,6 +136,62 @@ fieldset h6 {
 fieldset h6.over-limit {
   color: #ff5a6d;
   font-weight: 500;
+}
+
+.price-preview-fieldset {
+  gap: 0.4rem;
+}
+
+.price-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1.2rem;
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.16);
+}
+
+.price {
+  font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+  font-weight: 700;
+  color: #4f46e5;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.price-original {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.price-final {
+  color: #312e81;
+}
+
+.discount-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #047857;
+  background: rgba(16, 185, 129, 0.14);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.price-savings {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #047857;
 }
 
 app-product-form .mat-form-field {
@@ -267,14 +340,38 @@ fieldset:has(#image-input),
   :host {
     padding: 2rem 1rem;
   }
+
+  .product-preview {
+    display: none !important;
+  }
   
   #product-form {
     padding: 2rem 1.5rem;
     border-radius: 24px;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1 / -1;
+  }
+
+  #product-form fieldset {
+    grid-column: 1 / -1; 
   }
   
   #submit-button {
     font-size: 0.95rem;
   }
+}
+#product-form .discount-preview {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #2c2c2c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+#product-form .discount-preview strong {
+    color: #1b5e20;
+    font-size: 1rem;
 }

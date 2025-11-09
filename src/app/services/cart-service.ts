@@ -1,16 +1,17 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Product } from '../models/product';
-import { Transaction } from '../models/transaction';
 import { ProductService } from './product-service';
 import Swal from 'sweetalert2';
-import { Observable } from 'rxjs';
+import { SaleRequest } from '../models/sale';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  cartItems = signal<Product[]>([]);
+  cartItems = signal<Product[]>([])
+  itemsInCart = computed(() => this.cartItems().length)
+
   total = computed(() =>
     this.cartItems().reduce((sum, item) => sum + item.price * item.stock, 0)
   )
@@ -105,20 +106,31 @@ export class CartService {
     this.cartItems.set([])
   }
 
-  prepareTransaction(formValue: any, selectedProducts?: Product[]): Transaction {
-    const products = selectedProducts ?? this.cartItems();
+  prepareSaleRequest(formValue: any, userId?: number | null, selectedProducts?: Product[]): SaleRequest | null {
+    if (!userId) {
+      console.error('❌ No hay usuario logueado. No se puede preparar la venta.');
+      return null;
+    }
+    const products = selectedProducts ?? this.cartItems()
+
+    if (!products.length) {
+      console.warn('⚠️ No hay productos en el carrito.');
+      return null;
+    }
+
+    const detailTransactions = products.map(item => ({
+      productID: item.id,
+      quantity: item.stock,
+      subtotal: item.price * item.stock
+    }))
+
     return {
-      total: products.reduce((sum, item) => sum + item.price * item.stock, 0),
-      dateTime: new Date().toString(),
-      paymentMethod: formValue.paymentMethod === "" ? "CASH" : formValue.paymentMethod,
-      description: formValue.description === "" ? "No description" : formValue.description,
-      type: formValue.type === "" ? "SALE" : formValue.type,
-      storeName: formValue.storeName === "" ? "Default Store" : formValue.storeName,
-      detailTransactions: this.cartItems().map(item => ({
-        productId: item.id,
-        quantity: item.stock,
-        subtotal: item.price
-      }))
+      clientId: userId,
+      transaction: {
+        paymentMethod: formValue.paymentMethod || "CASH",
+        description: formValue.description || "Sin descripción",
+        detailTransactions
+      }
     }
   }
 }

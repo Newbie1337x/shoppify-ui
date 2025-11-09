@@ -1,4 +1,5 @@
 @use '@coreui/coreui/scss/coreui';
+@use "@coreui/chartjs/scss/coreui-chartjs";
   
 
 * {
@@ -22,4 +23,19 @@ app-root {
 
 main, router-outlet {
   flex: 1;
+}
+
+.swal2-toast-dark {
+    background: #ffffff !important; 
+    color: #ffffff !important; 
+    border: 1px solid #000000 !important;
+    box-shadow: 0 4px 15px #b08cee !important;
+}
+
+.swal2-toast-dark .swal2-title {
+    color: #7c3aed !important;
+}
+
+.swal2-toast-dark .swal2-timer-progress-bar {
+    background-color: #7c3aed !important;
 }

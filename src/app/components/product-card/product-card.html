@@ -1,28 +1,43 @@
 @if (product) {
-    <div id="card" (click)="getDetails(product.id)">
-        @if (product.imgURL){
-            <img [src]="product.imgURL" [alt]="product.name || 'Producto'">
-        }
-        @else {
-            <img [src]="'https://placehold.co/600x400?text=' + (product.name || 'Producto')" [alt]="product.name || 'Producto'">
-        }
+  <article id="card" (click)="getDetails(product.id)">
+    @if (product.imgURL) {
+      <img [src]="product.imgURL" [alt]="product.name || 'Producto'">
+    }
+    @else {
+      <img
+        [src]="'https://placehold.co/600x400?text=' + (product.name || 'Producto')"
+        [alt]="product.name || 'Producto'">
+    }
 
-        <div class="card-body">
-            <b id="product-Name">{{product.name}}</b>
-            <div class="card-footer">
-                <div class="pricing">
-                    <span class="price">$ {{ product.price | number:'1.0-2' }}</span>
-                @if (product.price > 1000 && isMostrarCuotas) {
-             <span class="installment">6 cuotas de $ {{ (product.price / 6) | number:'1.0-2' }}</span>
-                }
-                   
-                </div>
-                <div class="stock-slot">
-                    @if (product.stock < 10 && isMostrarStock) {
-                        <span id="product-Stock">solo quedan {{product.stock}} disponibles.</span>
-                    }
-                </div>
+    <div class="card-body">
+      <h3 class="product-name">{{ product.name }}</h3>
+
+      <div class="card-footer">
+        <div class="pricing">
+          @if (isMostrarDescuento && hasDiscount) {
+            <span class="price-original">$ {{ product.price | number:'1.0-2' }}</span>
+            <div class="price-row">
+              <span class="price price-final">$ {{ (product.priceWithDiscount ?? product.price) | number:'1.0-2' }}</span>
+              <span class="discount-badge">-{{ product.discountPercentage | number:'1.0-2' }}%</span>
             </div>
+          }
+          @else {
+            <span class="price">$ {{ product.price | number:'1.0-2' }}</span>
+          }
+
+          @if ((product.priceWithDiscount ?? product.price) > 1000 && isMostrarCuotas) {
+            <span class="installment">
+              6 cuotas de $ {{ ((product.priceWithDiscount ?? product.price) / 6) | number:'1.0-2' }}
+            </span>
+          }
         </div>
+
+        <div class="stock-slot">
+          @if (product.stock < 10 && isMostrarStock) {
+            <span id="product-Stock">solo quedan {{ product.stock }} disponibles.</span>
+          }
+        </div>
+      </div>
     </div>
+  </article>
 }
