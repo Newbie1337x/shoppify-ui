@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CategoryCard } from '../../components/category-card/category-card';
+import { CategoryForm } from '../../components/category-form/category-form';
 import { CategoryRefiner } from '../../components/category-refiner/category-refiner';
 import { CategoryParams } from '../../models/filters/category-params';
 import { SwalService } from '../../services/swal-service';
@@ -90,6 +91,7 @@ export class CategoriesPage implements OnInit {
       panelClass: 'category-dialog-panel'
     }).afterClosed().subscribe(result => {
       if (result) {
+        this.swal.success("La categoría se editó correctamente!")
         this.renderCategoriesWithFilters(this.currentFilters) 
       }
     })
@@ -114,6 +116,7 @@ export class CategoriesPage implements OnInit {
       panelClass: 'category-dialog-panel'
     }).afterClosed().subscribe(result => {
       if (result) {
+        this.swal.success("La categoría se agregó correctamente!")
         this.renderCategoriesWithFilters(this.currentFilters) 
       }
     })
