@@ -1,5 +1,4 @@
-
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
@@ -7,6 +6,7 @@ import { SwalService } from '../../services/swal-service';
 import { CommonModule } from '@angular/common'; 
 import {Router } from '@angular/router';
 import { CategoryCard } from '../category-card/category-card';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-category-form',
@@ -24,7 +24,8 @@ export class CategoryForm implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private swal: SwalService,
-    private router:Router
+    private router:Router,
+    @Optional() private dialogRef?: MatDialogRef<any>
   ) {}
 
   get controls() {
@@ -45,7 +46,7 @@ export class CategoryForm implements OnInit {
     this.previewCategory = {
       id: Number(values['id'] ?? this.category?.id ?? 0),
       name: values['name'] || 'Producto sin nombre',
-      imgUrl: values['imgURL'] || ''
+      imgUrl: values['imgUrl'] || ''
     };
   }
 
@@ -67,7 +68,6 @@ export class CategoryForm implements OnInit {
   }
 
   submitForm() {
-
     if (this.form.invalid) { 
       this.form.markAllAsDirty()
       return;
@@ -85,13 +85,12 @@ export class CategoryForm implements OnInit {
         this.swal.success(editMode ? "Categoría editada con éxito!" : "Categoría agregada con éxito!")
           .then(() => {
             this.form.reset();
-            this.router.navigate(["categories"]);
-          });
+          })
+          this.dialogRef?.close(true)
       },
       error: (err) => {
         const defaultMessage = editMode ? "Error al editar la categoría" : "Error al agregar la categoría";
         const errorMessage = err.error?.message || defaultMessage; 
-
         this.swal.error(errorMessage)
       }
     })
