@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal, computed, inject, OnInit } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { RegisterPayload } from '../models/auth/registerPayload';
 import { AuthResponse } from '../models/auth/authResponse';
 import { environment } from '../../environments/environment';
@@ -10,7 +10,7 @@ import { User } from '../models/auth/user';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit {
+export class AuthService {
 
   private http = inject(HttpClient)
   private storageService = inject(StorageService)
@@ -23,7 +23,11 @@ export class AuthService implements OnInit {
 
   readonly API_URL = `${environment.apiUrl}/auth`
 
-  ngOnInit(): void {
+  constructor() {
+    this.restoreSession()
+  }
+
+  private restoreSession() {
     this.user.set(this.getUser())
     this.permits.set(this.getPermits())
     const tk = this.getToken()
@@ -92,3 +96,4 @@ export class AuthService implements OnInit {
   return this.http.patch<AuthResponse>(`${this.API_URL}/update`, payload, { headers })
 }
 }
+
