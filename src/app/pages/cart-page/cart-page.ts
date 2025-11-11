@@ -118,11 +118,9 @@ export class CartPage implements OnInit {
       const payload = this.cService.prepareSaleRequest(this.checkoutForm.value, user.id)
 
       if (!payload) return
-      console.log("Payload a enviar :", payload)
 
       this.tService.postSale(payload).subscribe({
-        next: (transaction) => {
-          console.log("Transacción lista: ", transaction)
+        next: () => {
           this.selectedItems.set(new Set())
           this.cService.clearCart()
           this.checkoutForm.reset()

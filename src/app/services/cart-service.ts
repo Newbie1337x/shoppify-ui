@@ -96,13 +96,6 @@ export class CartService {
   }
 
   clearCart() {
-    this.cartItems().forEach(product =>
-      this.productService.get(product.id).subscribe(p => {
-        p.stock = p.stock + product.stock
-        this.productService.put(p).subscribe()
-      }
-      )
-    );
     this.cartItems.set([])
   }
 
@@ -120,16 +113,15 @@ export class CartService {
 
     const detailTransactions = products.map(item => ({
       productID: item.id,
-      quantity: item.stock,
-      subtotal: item.price * item.stock
+      quantity: item.stock
     }))
 
     return {
       clientId: userId,
       transaction: {
         paymentMethod: formValue.paymentMethod || "CASH",
-        description: formValue.description || "Sin descripción",
-        detailTransactions
+        detailTransactions,
+        description: formValue.description || "Sin descripción"
       }
     }
   }
