@@ -158,6 +158,10 @@
             </mat-select>
         </mat-form-field>
 
+        <button  class="btn-categoria" (click)="openCategoryDialog()">
+            Agregar Categoria
+        </button>
+
         @if (controls['categories'].dirty && controls['categories'].hasError('required')){
             <h5>Se debe elegir al menos una categoria</h5>
         }

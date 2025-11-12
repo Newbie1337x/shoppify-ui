@@ -4,8 +4,7 @@ import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ReactiveForm
 import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { catchError, debounceTime, map, of } from 'rxjs';
-import { Credentials } from '../../models/auth/credentials';
+import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-credentials-form',
