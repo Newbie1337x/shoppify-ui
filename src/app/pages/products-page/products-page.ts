@@ -124,6 +124,7 @@ export class ProductsPage {
     this.dialog.open(ProductFormDialog, {
       maxWidth: "none",
       width: '80vw',
+      height: '90vh',
       data: {
         product: product,
         products: this.refinedProducts, 
