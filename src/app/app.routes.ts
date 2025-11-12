@@ -49,7 +49,9 @@ export const routes: Routes = [
       { path: 'categories', component: CategoriesPage },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
       { path: 'purchases', component: Purchases, canActivate: [authGuard]},
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+
     ]
   },
   {
