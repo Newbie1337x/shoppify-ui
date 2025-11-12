@@ -24,10 +24,7 @@ export class AuthService implements OnInit {
   readonly API_URL = `${environment.apiUrl}/auth`
 
   ngOnInit(): void {
-    this.user.set(this.getUser())
-    this.permits.set(this.getPermits())
-    const tk = this.getToken()
-    this.token.set(tk || null)
+   
   }
 
   register(payload: RegisterPayload) {

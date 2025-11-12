@@ -20,6 +20,7 @@ import { Terms } from './pages/terms/terms';
 import { ConfigPages } from './layouts/config-pages/config-pages';
 import { Privacy } from './pages/privacy/privacy';
 import { CredentialsForm } from './pages/credentials-form/credentials-form';
+import { hasPermitsGuard } from './core/guards/has-permits-guard';
 
 export const routes: Routes = [
   {
@@ -30,9 +31,9 @@ export const routes: Routes = [
       { path: 'register', component: Register, canActivate: [publicGuard] },
       { path: 'settings', component:CredentialsForm, canActivate: [authGuard] },
       { path: 'admin', component: AdminPage, canActivate: [authGuard] },
-      { path: 'admin/edit/store',component:StoreForm},
-      { path: 'admin/edit/carousel',component:CarouselForm},
-      { path: 'admin/edit/carousel/:id',component:CarouselForm},
+      { path: 'admin/edit/store',component:StoreForm, canActivate: [authGuard,hasPermitsGuard]}, 
+      { path: 'admin/edit/carousel',component:CarouselForm , canActivate: [authGuard,hasPermitsGuard]},
+      { path: 'admin/edit/carousel/:id',component:CarouselForm , canActivate: [authGuard,hasPermitsGuard]},
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '**', redirectTo: 'login' }
     ]
@@ -47,7 +48,7 @@ export const routes: Routes = [
       { path: 'products/search/:q', component: ProductsPage },
       { path: 'categories', component: CategoriesPage },
       { path: 'cart', component: CartPage, canActivate: [authGuard] },
-      { path: 'purchases', component: Purchases, canActivate: [authGuard] },
+      { path: 'purchases', component: Purchases, canActivate: [authGuard]},
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },

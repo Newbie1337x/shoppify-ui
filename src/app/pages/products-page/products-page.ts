@@ -35,7 +35,7 @@ import { CreateProduct } from '../../services/create-product';
 export class ProductsPage {
   //Paginacion
   productsPage!: Page
-  defaultSize:number = 9
+  defaultSize:number = 8
   //Arreglos
   refinedProducts: Product[] = [];
   categories: Category[] = [];
