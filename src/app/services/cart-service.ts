@@ -55,7 +55,7 @@ export class CartService {
 
   updateQuantity(item: Product, newQty: number): Promise<Product[]> {
     return new Promise((resolve, reject) => {
-      const quantity = Number(newQty) //esto pasa el imput que viene como string a numero
+      const quantity = Number(newQty)
 
       if (quantity < 1) {
         reject(new Error("La cantidad mínima es 1"))
@@ -82,32 +82,27 @@ export class CartService {
     })
   }
 
-
   removeFromCart(productId: number) {
-    const product = this.cartItems().find(p => p.id === productId)
-    if (product) {
-      this.productService.get(productId).subscribe(p => {
-        p.stock = p.stock + product.stock
-        this.productService.put(p).subscribe()
-      }
-      )
-    }
     this.cartItems.set(this.cartItems().filter(i => i.id !== productId))
+  }
+
+  removeItemsByIds(productIds: number[]) {
+    const idsToRemove = new Set(productIds)
+    this.cartItems.update(items => items.filter(i => !idsToRemove.has(i.id)))
   }
 
   clearCart() {
     this.cartItems.set([])
   }
 
-  prepareSaleRequest(formValue: any, userId?: number | null, selectedProducts?: Product[]): SaleRequest | null {
+  prepareSaleRequest(formValue: any, userId: number | undefined, products: Product[]): SaleRequest | null {
     if (!userId) {
       console.error('❌ No hay usuario logueado. No se puede preparar la venta.');
       return null;
     }
-    const products = selectedProducts ?? this.cartItems()
 
-    if (!products.length) {
-      console.warn('⚠️ No hay productos en el carrito.');
+    if (!products || !products.length) {
+      console.warn('⚠️ No hay productos para la venta.');
       return null;
     }
 

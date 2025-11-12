@@ -67,7 +67,7 @@ export class CartPage implements OnInit {
 
   removeSelected() {
     const selected = this.selectedItems()
-    this.cService.cartItems.update(items => items.filter(i => !selected.has(i.id)))
+    this.cService.removeItemsByIds(Array.from(selected))
     this.selectedItems.set(new Set())
   }
 
@@ -98,9 +98,26 @@ export class CartPage implements OnInit {
     }
   }
 
-
   onSubmit() {
-    if (this.checkoutForm.valid && this.cartItems().length) {
+    const selectedIds = this.selectedItems()
+    let productsToBuy: Product[]
+
+    if (selectedIds.size > 0) {
+      productsToBuy = this.cartItems().filter(item => selectedIds.has(item.id))
+    } else {
+      productsToBuy = this.cartItems()
+    }
+
+    if (!productsToBuy.length) {
+      Swal.fire({
+        icon: "warning",
+        title: "Carrito Vacío",
+        text: "Debes tener al menos un producto en el carrito o seleccionado para comprar."
+      });
+      return
+    }
+
+    if (this.checkoutForm.valid) {
       const user = this.aService.user()
 
       if (!user) {
@@ -115,15 +132,20 @@ export class CartPage implements OnInit {
         return
       }
 
-      const payload = this.cService.prepareSaleRequest(this.checkoutForm.value, user.id)
+      const payload = this.cService.prepareSaleRequest(this.checkoutForm.value, user.id, productsToBuy)
 
       if (!payload) return
 
       this.tService.postSale(payload).subscribe({
         next: () => {
+          this.cService.removeItemsByIds(productsToBuy.map(p => p.id))
           this.selectedItems.set(new Set())
-          this.cService.clearCart()
-          this.checkoutForm.reset()
+          this.checkoutForm.reset({
+            paymentMethod: "CASH",
+            type: "SALE",
+            storeName: "",
+            description: ""
+          })
 
           Swal.fire({
             icon: "success",
