@@ -142,11 +142,16 @@
   padding-top: 10px;
 }
 
+li{
+  list-style: none;
+}
+
 .item-info {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
+  
 }
 
 .item-info img {

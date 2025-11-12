@@ -31,8 +31,7 @@ type RefinerFormValue = {
   priceMin: string;
   priceMax: string;
   category: string[];
-  nameSort: string;
-  priceSort: string;
+  namePriceSort: string;
   discountSort: string;
 };
 
@@ -87,8 +86,7 @@ export class ProductsRefiner implements OnInit, OnChanges{
       priceMin: '',
       priceMax: '',
       category: [],
-      nameSort: '',
-      priceSort: '',
+      namePriceSort: '',
       discountSort: ''
     });
     this.filterChange.emit({});
@@ -105,8 +103,7 @@ export class ProductsRefiner implements OnInit, OnChanges{
       priceMin,
       priceMax,
       category,
-      nameSort,
-      priceSort,
+      namePriceSort,
       discountSort
     } = this.filtersForm.getRawValue() as RefinerFormValue;
 
@@ -118,8 +115,7 @@ export class ProductsRefiner implements OnInit, OnChanges{
       this.cleanString(priceMin) ||
       this.cleanString(priceMax) ||
       (Array.isArray(category) && category.length) ||
-      this.cleanString(nameSort) ||
-      this.cleanString(priceSort) ||
+      this.cleanString(namePriceSort) ||
       this.cleanString(discountSort)
     );
   }
@@ -133,8 +129,7 @@ export class ProductsRefiner implements OnInit, OnChanges{
       priceMin: ['', [Validators.pattern('^[0-9]*$')]],
       priceMax: ['', [Validators.pattern('^[0-9]*$')]],
       category: [[]],
-      nameSort: [''],
-      priceSort: [''],
+      namePriceSort: [''],
       discountSort: ['']
     });
   }
@@ -148,8 +143,7 @@ export class ProductsRefiner implements OnInit, OnChanges{
       priceMin,
       priceMax,
       category,
-      nameSort,
-      priceSort,
+      namePriceSort,
       discountSort
     } = this.filtersForm.getRawValue() as RefinerFormValue;
 
@@ -184,14 +178,21 @@ export class ProductsRefiner implements OnInit, OnChanges{
       params.discountLess = parsedDiscountMax;
     }
 
-    const trimmedNameSort = this.cleanString(nameSort);
-    const trimmedPriceSort = this.cleanString(priceSort);
+    const trimmedNamePriceSort = this.cleanString(namePriceSort);
     const trimmedDiscountSort = this.cleanString(discountSort)
 
-    if (trimmedNameSort) {
-      params.sort = `name,${trimmedNameSort}`;
-    } else if (trimmedPriceSort) {
-      params.sort = `price,${trimmedPriceSort}`;
+    if (trimmedNamePriceSort) {
+      const sortMap: Record<string, string> = {
+        nameAsc: 'name,asc',
+        nameDesc: 'name,desc',
+        priceAsc: 'price,asc',
+        priceDesc: 'price,desc'
+      };
+
+      const mappedSort = sortMap[trimmedNamePriceSort];
+      if (mappedSort) {
+        params.sort = mappedSort;
+      }
     } else if (trimmedDiscountSort) {
       params.sort = `discountPercentage,${trimmedDiscountSort}`
     }
@@ -208,8 +209,7 @@ export class ProductsRefiner implements OnInit, OnChanges{
       discountMin: '',
       discountMax: '',
       category: filters.categories ? filters.categories.split(',') : [],
-      nameSort: '',
-      priceSort: '',
+      namePriceSort: '',
       discountSort: '',
     };
 
@@ -234,9 +234,9 @@ export class ProductsRefiner implements OnInit, OnChanges{
     if (filters.sort) {
       const [field, direction] = filters.sort.split(',');
       if (field === 'name') {
-        patchValue.nameSort = direction ?? '';
+        patchValue.namePriceSort = direction === 'desc' ? 'nameDesc' : 'nameAsc';
       } else if (field === 'price') {
-        patchValue.priceSort = direction ?? '';
+        patchValue.namePriceSort = direction === 'desc' ? 'priceDesc' : 'priceAsc';
       } else if (field === 'discountPercentage') {
         patchValue.discountSort = direction ?? '';
       }
