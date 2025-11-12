@@ -70,7 +70,7 @@ export class Register implements OnInit {
 
     const register: RegisterPayload = {
       user: { firstName, lastName, dni, phone, email },
-      credentials: { email, password }
+      credentials: { email, password, username }
     };
 
     this.authService.register(register).subscribe({

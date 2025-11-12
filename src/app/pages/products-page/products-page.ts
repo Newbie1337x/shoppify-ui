@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Product } from '../../models/product';
 import { Category } from '../../models/category';
@@ -16,6 +16,7 @@ import { ProductFormDialog } from '../../components/product-form-dialog/product-
 import { CommonModule } from '@angular/common';
 import { Page } from '../../models/hal/page';
 import { PaginationModule } from '@coreui/angular';
+import { CreateProduct } from '../../services/create-product';
 
 @Component({
   selector: 'app-products-page',
@@ -28,12 +29,13 @@ import { PaginationModule } from '@coreui/angular';
     PaginationModule
   ],
   templateUrl: './products-page.html',
-  styleUrl: './products-page.css'
+  styleUrl: './products-page.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductsPage {
   //Paginacion
   productsPage!: Page
-  defaultSize:number = 9
+  defaultSize:number = 8
   //Arreglos
   refinedProducts: Product[] = [];
   categories: Category[] = [];
@@ -51,7 +53,8 @@ export class ProductsPage {
     private swal: SwalService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private createProductService: CreateProduct
   ) { }
 
   ngOnInit(): void {
@@ -146,21 +149,12 @@ export class ProductsPage {
 
 
   createProduct() {
-    this.dialog.open(ProductFormDialog, {
-      maxWidth: "none",
-      width: '80vw',
-      data: {
-        products: this.refinedProducts,
-        categories: this.categories
-      },
-      disableClose: true,
-      panelClass: 'product-dialog-panel'
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        this.swal.success("El producto se agrego correctamente!")
-        this.renderRefinedProducts(this.currentFilters);
-      }
-    })
+    this.createProductService.openDialog(
+      this.refinedProducts,
+      this.categories,
+      this.currentFilters,
+      (filters: any) => this.renderRefinedProducts(filters)
+    )
   }
 
   private parseFilters(params: Params): ProductParams {

@@ -15,7 +15,15 @@ constructor(private router:Router){}
 
 @Input() category!:Category
 
-getDetails(id: number){
-  this.router.navigate(["categories/" + id]);
-}
+getDetails(name:string){
+ 
+    this.router.navigate(['/products'], {
+      queryParams: {
+        page: 0,
+        size: 8,
+        categories:name
+      },
+    })
+  }
+
 }
