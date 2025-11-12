@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SearchBar } from '../search-bar/search-bar';
 import { UserAvatar } from '../user-avatar/user-avatar';
 import { User } from '../../models/auth/user';
@@ -15,6 +15,9 @@ import { CartService } from '../../services/cart-service';
 })
 export class Header{
 
+
+   constructor(private router:Router){}
+ 
   private cService = inject(CartService)
 
   mostrarNav = false;
@@ -36,6 +39,21 @@ export class Header{
     }
   }
 
+  gotoHot() {
+    this.router.navigate(['/products'], {
+      queryParams: {
+        page: 0,
+        size: 8,
+        discountGreater: 0,
+      },
+    })
+  }
+
+
+
+
+
   
 }
+
 

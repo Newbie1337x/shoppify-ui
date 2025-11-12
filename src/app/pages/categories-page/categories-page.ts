@@ -22,7 +22,7 @@ import { CreateCategory } from '../../services/create-category';
 export class CategoriesPage implements OnInit {
   categories: Category[] = [] 
 
-  currentFilters: CategoryParams = { page: 0, size: 6 } 
+  currentFilters: CategoryParams = { page: 0, size: 8 } 
   editMode = false;
 
   constructor(
