@@ -84,7 +84,7 @@ export class ProductDetail implements OnInit {
   Swal.fire({
 
     toast: true,
-    position: 'top-end',
+    position: 'bottom-end',
     showConfirmButton: false,
     
     timer: 1500,

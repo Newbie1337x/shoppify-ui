@@ -6,6 +6,7 @@ import { AuditService } from '../../services/audit-service';
 import { SalesParams } from '../../models/filters/salesParams';
 import { FormsModule } from "@angular/forms";
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-purchases',
@@ -17,6 +18,7 @@ export class Purchases implements OnInit {
 
   AService = inject(AuditService)
   aService = inject(AuthService)
+  router = inject(Router)
   user = this.aService.user
   isAdmin = this.aService.permits().includes('ADMIN')
 
@@ -100,4 +102,7 @@ export class Purchases implements OnInit {
     })
   }
 
+  goToItem(id: number){
+    this.router.navigate(['/products/details/', id])
+  }
 }
