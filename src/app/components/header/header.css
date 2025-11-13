@@ -218,6 +218,7 @@ header button:focus-visible img {
 
 .header-bottom li {
   display: flex;
+  cursor :pointer;
 }
 
 .header-bottom a {
