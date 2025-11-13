@@ -60,9 +60,10 @@
           <h4>Productos</h4>
           <ul>
             @for (item of purchase.detailTransactions; track item.id) {
+           
             <li>
               <div class="item-info">
-                <img [src]="item.product?.imgURL" alt="{{ item.product?.name }}" (click)="goToItem(item.product!.id)"/>
+                <img (click)="gotoDetailsProduct(item.product?.id)" [src]="item.product?.imgURL" alt="{{ item.product?.name }}" />
                 <div class="item-text">
                   <p><strong>{{ item.product?.name }}</strong></p>
                   <p>Cantidad: {{ item.quantity }}</p>

@@ -6,11 +6,12 @@ import { AuditService } from '../../services/audit-service';
 import { SalesParams } from '../../models/filters/salesParams';
 import { FormsModule } from "@angular/forms";
 import Swal from 'sweetalert2';
+import { ImageFallbackDirective } from '../../directives/image-fallback';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-purchases',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,ImageFallbackDirective],
   templateUrl: './purchases.html',
   styleUrl: './purchases.css'
 })
@@ -102,7 +103,8 @@ export class Purchases implements OnInit {
     })
   }
 
-  goToItem(id: number){
-    this.router.navigate(['/products/details/', id])
+  gotoDetailsProduct(id?:number){
+   this.router.navigate(["/products/details", id]);
   }
+
 }
