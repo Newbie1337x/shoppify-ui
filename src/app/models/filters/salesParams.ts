@@ -5,9 +5,9 @@ export interface SalesParams {
   transactionId?: string;
   page?: number;
   size?: number;
-  startDate?: string;
-  endDate?: string;
+  startDate: string | null;
+  endDate: string | null;
   paymentMethod?: string;
-  minTotal?: number;
-  maxTotal?: number;
+  minPrice?: number;
+  maxPrice?: number;
 }

@@ -35,8 +35,8 @@ export class Purchases implements OnInit {
     startDate: '',
     endDate: '',
     paymentMethod: '',
-    minTotal: undefined,
-    maxTotal: undefined,
+    minPrice: undefined,
+    maxPrice: undefined,
     clientId: this.user()?.id?.toString() ?? '',
     page: this.currentPage,
     size: this.purchasesXPage
