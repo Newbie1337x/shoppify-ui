@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product-service';
 import { SwalService } from '../../services/swal-service';
@@ -27,7 +27,7 @@ export class ProductTable{
         this.swal.success("Producto eliminado con exito!")
         this.deleteEvent.emit()
       },
-      error: (err) => {
+      error: () => {
         this.swal.error("Ocurrio un error al eliminar el producto")
       }
     });

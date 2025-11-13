@@ -17,6 +17,7 @@
     <label>Mínimo: <input type="number" [(ngModel)]="filters.minPrice"></label>
     <label>Máximo: <input type="number" [(ngModel)]="filters.maxPrice"></label>
 
+    <button class="clear-filters" type="button" (click)="clearFilters()">Limpiar filtros</button>
     <button (click)="applyFilters()">Filtrar</button>
 
     @if (isAdmin) {
@@ -59,10 +60,29 @@
 
       <div class="purchase-details-wrapper" [class.show]="activePurchase() === i">
         <div class="purchase-details">
+          @if (isAdmin && purchase.clientId) {
+            <div class="buy-info-header">
+              <div class="buyer-info-row">
+                <p class="buyer-info"><strong>Comprador:</strong> ID: {{ purchase.clientId }}</p>
+                <button class="view-client-btn" type="button" (click)="toggleClientInfo(purchase.clientId)">
+                  {{ clientsExpanded().has(purchase.clientId) ? 'Ocultar comprador' : 'Ver comprador' }}
+                </button>
+              </div>
+
+              @if (clientsExpanded().has(purchase.clientId)) {
+                <div class="client-details">
+                  <p><strong>Nombre:</strong> {{ clientsCache().get(purchase.clientId)?.firstName }} {{ clientsCache().get(purchase.clientId)?.lastName }}</p>
+                  <p><strong>Email:</strong> {{ clientsCache().get(purchase.clientId)?.email }}</p>
+                  <p><strong>Teléfono:</strong> {{ clientsCache().get(purchase.clientId)?.phone }}</p>
+                  <p><strong>DNI:</strong> {{ clientsCache().get(purchase.clientId)?.dni }}</p>
+                </div>
+              }
+            </div>
+          }
+
           <h4>Productos</h4>
           <ul>
             @for (item of purchase.detailTransactions; track item.id) {
-
             <li>
               <div class="item-info">
                 <img (click)="gotoDetailsProduct(item.product?.id)" [src]="item.product?.imgURL"

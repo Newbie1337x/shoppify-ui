@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { SearchBar } from '../search-bar/search-bar';
 import { UserAvatar } from '../user-avatar/user-avatar';
 import { User } from '../../models/auth/user';
-import { ImageFallbackDirective } from '../../directives/image-fallback';
+import { ImageFallbackDirective } from '../../core/directives/image-fallback';
 import { BadgeComponent, ButtonDirective } from '@coreui/angular';
 import { CartService } from '../../services/cart-service';
 

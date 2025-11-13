@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category-service';
 import { SwalService } from '../../services/swal-service';
-import { CommonModule } from '@angular/common'; 
-import {Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { CategoryCard } from '../category-card/category-card';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -24,7 +23,6 @@ export class CategoryForm implements OnInit {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private swal: SwalService,
-    private router:Router,
     @Optional() private dialogRef?: MatDialogRef<any>
   ) {}
 

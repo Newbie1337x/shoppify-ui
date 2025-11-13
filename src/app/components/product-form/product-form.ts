@@ -2,7 +2,6 @@
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/product';
-
 import { Category } from '../../models/category';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
