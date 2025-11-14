@@ -6,7 +6,6 @@ import { Product } from '../../models/product';
 import { CartService } from '../../services/cart-service';
 import { ProductCard } from '../../components/product-card/product-card';
 import Swal from 'sweetalert2';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
@@ -85,7 +84,7 @@ export class ProductDetail implements OnInit {
   Swal.fire({
 
     toast: true,
-    position: 'top-end',
+    position: 'bottom-end',
     showConfirmButton: false,
     
     timer: 1500,
